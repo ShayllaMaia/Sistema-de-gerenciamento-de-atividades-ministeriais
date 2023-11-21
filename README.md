@@ -1,7 +1,7 @@
 <h1 align="center">:file_cabinet: SIGAM - SISTEMA DE GERENCIAMENTO DE ATIVIDADES MINISTERIAIS </h1>
 
 ## :memo: Descrição
-O Sistema de Gestão de Escala para Ministérios da Igreja visa otimizar e simplificar o processo de escalonamento de fiéis em diferentes ministérios. Atualmente, a igreja enfrenta desafios com escalas manuais, falta de controle de entrada/saída e possíveis conflitos de escala. Este sistema propõe uma solução eficiente, transparente e personalizada para atender às necessidades da comunidade.
+O Sistema de gerenciamento de atividades ministeriais visa otimizar e simplificar o processo de escalonamento de fiéis em diferentes ministérios. Atualmente, a igreja, em específico a Igreja Batista do Bosque (IBB), enfrenta desafios com escalas manuais, falta de controle de entrada/saída e possíveis conflitos de escala. Este sistema propõe uma solução eficiente, transparente e personalizada para atender às necessidades da comunidade.
 
 ## :books: Funcionalidades
 * <b>Cadastro de membros</b>: Cadastro de informações como nome, e-mail, telefone, ministérios participantes e horários disponíveis.
@@ -85,4 +85,4 @@ Este projeto foi desenvolvido como parte da disciplina de Engenharia de Software
 </table>
 
 ## :dart: Status do projeto
-O Sistema de Gestão de Escala está atualmente em desenvolvimento ativo. Estamos comprometidos em fornecer uma solução eficaz e personalizada para atender às necessidades da igreja, melhorando continuamente a experiência de administração e participação da comunidade no que se refere às atividades ministeriais.
+O sistema está atualmente em desenvolvimento ativo. Estamos comprometidos em fornecer uma solução eficaz e personalizada para atender às necessidades da igreja, buscando melhorar a experiência de administração e participação da comunidade no que se refere às atividades ministeriais.
