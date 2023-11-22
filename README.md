@@ -30,7 +30,7 @@ O Sistema de gerenciamento de atividades ministeriais visa otimizar e simplifica
 * Prisma ORM (Object-Relational Mapping);
 * GitHub (controle de versão);
 * WhatsApp (comunicação);
-* Carva (plataforma de videoconferência);
+* Canva (plataforma para criar designs de marketing, apresentações e outros tipos de conteúdo visual);
 * Meet (plataforma de videoconferência);
 * Bootstrap (framework de design responsivo).
 
