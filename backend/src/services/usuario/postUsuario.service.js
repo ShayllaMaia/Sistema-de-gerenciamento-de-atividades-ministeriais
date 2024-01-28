@@ -5,15 +5,15 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 const postUsuarioService = async (data) => {
-    let{nome, email, senha, telefone, endereco, dataNascimento} = data;
-    
+    let{nome, email, senha, telefone, endereco, dataNascimento,cu} = data;
+    console.log(nome,email,senha,telefone,endereco,dataNascimento,cu);
     //verificando se o usuário já existe
     const usuarioJaExiste = await prisma.usuario.findUnique({
 		where: {
 			email: email,
 		},
 	});
-
+    
     console.log(usuarioJaExiste);
 
     if(usuarioJaExiste){
@@ -24,9 +24,11 @@ const postUsuarioService = async (data) => {
         //criptografando a senha
         senha = await bcrypt.hash(senha, 8);
     }
+    
+
     //convertendo a data para o formato do banco de dados
     dataNascimento = new Date(dataNascimento).toISOString();
-
+    
     //criando o usuário
     const novoUsuario = await prisma.usuario.create({
         data:{
