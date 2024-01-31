@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(errorHandler);//tratamento de erro
 app.use(cors());
 // rotas
-app.use("/usuario",validaToken);
+app.use("/usuario",usuarioRoutes);
 app.use("/login",loginRoutes);
 
 
