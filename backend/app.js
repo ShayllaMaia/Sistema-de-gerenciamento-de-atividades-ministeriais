@@ -3,6 +3,8 @@ import { errorHandler } from "./src/errors/appError.js";
 import cors from "cors";
 import "express-async-errors";
 import { usuarioRoutes } from './src/routes/usuario.routes.js';
+import { loginRoutes } from './src/routes/login.routes.js';
+
 
 
 //configuração para uso do express
@@ -13,7 +15,8 @@ app.use(express.json());
 app.use(errorHandler);//tratamento de erro
 app.use(cors());
 // rotas
-app.use("/usuario", usuarioRoutes);
+app.use("/usuario",validaToken);
+app.use("/login",loginRoutes);
 
 
 //iniciando o servidor
