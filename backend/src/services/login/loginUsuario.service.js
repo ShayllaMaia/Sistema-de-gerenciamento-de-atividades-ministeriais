@@ -14,7 +14,9 @@ const loginUsuarioService = async (senha, email) => {
   //verificando se o usuário existe e se a senha está correta
   if (usuario && bcrypt.compareSync(senha, usuario.senha)) {
     //gera um token com base numa chave secreta
-    const token = jwt.sign({ usuario }, "teste");
+    const token = jwt.sign({
+      id: usuario.id,
+    }, process.env.SECRET);
 
     return token;
   }

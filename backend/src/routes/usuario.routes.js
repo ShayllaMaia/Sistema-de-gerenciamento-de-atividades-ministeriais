@@ -3,6 +3,7 @@ import { getUsuariosControler } from "../controllers/usuario/getUsuarios.control
 import { postUsuarioController } from "../controllers/usuario/postUsuariocontroller.js";
 import { deleteUsuariosControler } from "../controllers/usuario/deleteUsuarios.controller.js";
 import { updateUsuarioController } from "../controllers/usuario/updateUsuarios.controller.js";
+
 const usuarioRoutes = Router();
 
 usuarioRoutes.get("/", getUsuariosControler);
