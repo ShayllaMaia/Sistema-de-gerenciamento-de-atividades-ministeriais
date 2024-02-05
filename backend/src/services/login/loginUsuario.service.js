@@ -10,6 +10,10 @@ const loginUsuarioService = async (senha, email) => {
       email: email,
     },
   });
+  
+  if (!usuario) {
+    throw new AppError("Usuário não encontrado", 404);
+  }
 
   //verificando se o usuário existe e se a senha está correta
   if (usuario && bcrypt.compareSync(senha, usuario.senha)) {
