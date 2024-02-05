@@ -5,8 +5,7 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 const postUsuarioService = async (data) => {
-    let{nome, email, senha, telefone, endereco, dataNascimento,cu} = data;
-    console.log(nome,email,senha,telefone,endereco,dataNascimento,cu);
+    let{nome, email, senha, telefone, endereco, dataNascimento} = data;
     //verificando se o usuário já existe
     const usuarioJaExiste = await prisma.usuario.findUnique({
 		where: {
@@ -14,7 +13,6 @@ const postUsuarioService = async (data) => {
 		},
 	});
     
-    console.log(usuarioJaExiste);
 
     if(usuarioJaExiste){
         //lança um erro, tem dois parâmetros, o primeiro é a mensagem de erro e o segundo é o status code
