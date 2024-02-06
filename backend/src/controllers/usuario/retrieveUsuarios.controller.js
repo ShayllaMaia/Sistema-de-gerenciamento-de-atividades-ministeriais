@@ -3,9 +3,9 @@ import { retrieveUsuariosService } from "../../services/usuario/retrieveUsuarios
 const retrieveUsuariosController = async(req,res) => {
     const {id} = req.params;
 
-    const client = await retrieveUsuariosService(id);
+    const usuario = await retrieveUsuariosService(id);
 
-    res.status(200).json(client);
+    res.status(200).json(usuario);
 }
 
 export {retrieveUsuariosController};
