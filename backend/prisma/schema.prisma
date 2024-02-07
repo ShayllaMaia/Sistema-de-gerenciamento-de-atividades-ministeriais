@@ -5,15 +5,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Use a configuração mongodb para o provedor de dados
+// Use a configuração mysql para o provedor de dados
 datasource db {
-  provider = "mongodb"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-// Altere o tipo de dados do campo `id` para `String` para acomodar UUIDs
+// Mantenha o tipo de dados do campo `id` como `String` para acomodar UUIDs
 model Usuario {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  id   Int                   @id @default(autoincrement())
   nome            String
   email           String    @unique
   senha           String
