@@ -7,17 +7,18 @@
                     <h1 class="mb-0">ENTRAR NA CONTA</h1>
                 </div>
           <div>
-            <form>
+            <div *ngIf="erroLogin" class="alert alert-danger">{{ erroLogin }}</div>
+            <form (ngSubmit)="fazerLogin()" #loginForm="ngForm">
               <!-- Email input -->
               <div class="form-outline mb-4">
                 <label class="form-label" for="formemail">Usuário:</label>
-                <input type="email" class="form-control form-control-lg" />
+                <input type="email" class="form-control form-control-lg" id="email" name="email" [(ngModel)]="email" required/>
               </div>
               
               <!-- Password input -->
               <div class="form-outline mb-4">
                 <label class="form-label" for="formsenha">Senha:</label>
-                <input type="password" id="formsenha" class="form-control form-control-lg" />
+                <input type="password" id="formsenha" class="form-control form-control-lg" id="senha" name="senha" [(ngModel)]="senha" required/>
               </div>
               
               
@@ -25,7 +26,7 @@
               <div class="d-flex justify-content-end mb-4">
                 <a href="#!">Esqueceu a senha?</a>
               </div>
-  
+
               <!-- Submit button -->
               <button type="submit" class="btn btn-warning btn-md btn-block custom-orange-bg">Entrar</button>
   
@@ -33,7 +34,7 @@
                 <p class="text-center fw-bold mx-3 mb-0 text-muted">OU</p>
               </div>
   
-              <button type="submit" class="btn btn-primary btn-md btn-block">Registrar agora</button>
+              <button routerLink="/cadastro" type="submit" class="btn btn-primary btn-md btn-block">Registrar agora</button>
             </form>
           </div>
         </div>
