@@ -36,10 +36,8 @@ const postUsuarioService = async (data) => {
             telefone: telefone,
             endereco: endereco,
             dataNascimento: dataNascimento,
-    
         }
     });
-
     return novoUsuario;
 }
 export { postUsuarioService };

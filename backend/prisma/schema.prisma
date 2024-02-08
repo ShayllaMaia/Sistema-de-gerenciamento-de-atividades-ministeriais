@@ -1,23 +1,76 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
-
-// Use a configuração mysql para o provedor de dados
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-// Mantenha o tipo de dados do campo `id` como `String` para acomodar UUIDs
+// Enum para definir os tipos de usuario
+enum TipoUsuario {
+  NORMAL
+  LIDER
+  ADMIN
+}
+
+// Enum para definir os tipos de evento
+enum TipoEvento {
+  CULTO
+  EVENTO
+}
+
+// Modelo para a tabela Ministerios
+model Ministerio {
+  id          Int         @id @default(autoincrement())
+  nome        String      @unique
+  descricao   String
+  lider_id    Int?
+}
+
+// Modelo para a tabela Atividade
+model Atividade {
+  id            Int         @id @default(autoincrement())
+  nome          String
+  descricao     String
+}
+
+// Modelo para a tabela Usuario
 model Usuario {
-  id   Int                   @id @default(autoincrement())
-  nome            String
-  email           String    @unique
-  senha           String
-  telefone        String
-  endereco        String
-  dataNascimento  DateTime
+  id                 Int         @id @default(autoincrement())
+  nome               String
+  endereco           String
+  telefone           String      @default("000-000-0000")
+  email              String      @unique
+  senha              String
+  dataNascimento     DateTime
+  tipoUsuario        TipoUsuario @default(NORMAL)
+}
+
+// Modelo para a tabela MembrosMinisterios
+model MembrosMinisterios {
+  id          Int         @id @default(autoincrement())
+}
+
+// Modelo para a tabela Eventos
+model Eventos {
+  id          Int         @id @default(autoincrement())
+  data        DateTime
+  tipoEvento  TipoEvento  @default(CULTO)
+  hora_inicio DateTime
+  hora_fim    DateTime
+  descricao   String?
+}
+
+// Modelo para a tabela Escala
+model Escala {
+  id            Int         @id @default(autoincrement())
+  data          DateTime
+  recorrente    Boolean
+  dia_semana    Int
+  evento_id     Int
+}
+
+// Modelo para a tabela Participacao
+model Participacao {
+  id         Int         @id @default(autoincrement())
 }

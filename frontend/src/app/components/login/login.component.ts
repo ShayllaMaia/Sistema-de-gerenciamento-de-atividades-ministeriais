@@ -18,7 +18,7 @@ export class LoginComponent {
     this.erroLogin = ''; 
     this.loginService.fazerLogin({ email: this.email, senha: this.senha }).subscribe(
       (response) => {
-        localStorage.setItem('token', response.token); 
+        localStorage.setItem('token', response); 
         this.router.navigate(['/sidebar']); 
       },
       (error) => {
