@@ -6,17 +6,17 @@
           <div class="text-center mb-4">
             <h1>REGISTRE-SE</h1>
           </div>
-          <form>
+          <form (ngSubmit)="submit(form)" #form="ngForm">
             <div class="row">
               <!-- Nome Completo input -->
               <div class="col-md-6 mb-4">
                 <label class="form-label" for="form1Example13">Nome completo:</label>
-                <input type="text" class="form-control form-control-lg" />
+                <input type="text" class="form-control form-control-lg" [(ngModel)]="registro.nome" name="nome"/>
               </div>
               <!-- Email input -->
               <div class="col-md-6 mb-4">
                 <label class="form-label" for="formEmail">Email:</label>
-                <input type="email" id="formEmail" class="form-control form-control-lg" />
+                <input type="email" id="formEmail" class="form-control form-control-lg" [(ngModel)]="registro.email" name="email" />
               </div>
             </div>
   
@@ -24,29 +24,35 @@
               <!-- Telefone input -->
               <div class="col-md-6 mb-4">
                 <label class="form-label" for="formTelefone">Telefone:</label>
-                <input type="tel" id="formTelefone" class="form-control form-control-lg" />
+                <input type="tel" id="formTelefone" class="form-control form-control-lg" [(ngModel)]="registro.telefone" name="telefone"/>
               </div>
               <!-- Endereço input -->
               <div class="col-md-6 mb-4">
                 <label class="form-label" for="formdatanascimento">Data de Nascimento:</label>
-                <input type="date" id="formdatanascimento" class="form-control form-control-lg" />
+                <input type="date" id="formdatanascimento" class="form-control form-control-lg" [(ngModel)]="registro.dataNascimento" name="dataNascimento" />
               </div>
             </div>
   
             <!-- Data de Nascimento input -->
             <div class="form-outline mb-4">
               <label class="form-label" for="formEndereco">Endereço:</label>
-              <input type="text" id="formEndereco" class="form-control form-control-lg" />
+              <input type="text" id="formEndereco" class="form-control form-control-lg"[(ngModel)]="registro.endereco" name="endereco" />
             </div>
   
             <!-- Senha input -->
             <div class="form-outline mb-4">
               <label class="form-label" for="formSenha">Senha:</label>
-              <input type="password" id="formSenha" class="form-control form-control-lg" />
+              <input type="password" id="formSenha" class="form-control form-control-lg" [(ngModel)]="registro.senha" name="senha"/>
             </div>
   
             <!-- Submit button -->
-            <button type="submit" class="btn btn-warning btn-md btn-block custom-orange-bg">Registrar</button>
+            
+            <button type="submit" class="btn btn-warning btn-md btn-block custom-orange-bg" [disabled]="isSubmit">
+              <span *ngIf="!isSubmit">Cadastrar</span>
+              <span *ngIf="isSubmit">
+                <i class="fa-regular fa-clipboard"></i>
+              </span>
+            </button>
           </form>
         </div>
       </div>
