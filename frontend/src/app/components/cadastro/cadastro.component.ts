@@ -42,4 +42,13 @@ export class CadastroComponent implements IForm<UsuarioInterface> {
       }
     })
   }
+
+  formatarTelefone(event: any): void {
+  const input = event.target;
+  const value = input.value.replace(/\D/g, '');
+  const formattedValue = value.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
+  input.value = formattedValue;
+  this.registro.telefone = formattedValue;
+}
+
 }
