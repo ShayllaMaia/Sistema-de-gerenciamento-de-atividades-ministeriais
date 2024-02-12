@@ -10,13 +10,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TipoEvento {
+  CULTO
+  EVENTO
+}
 
 model Usuario {
-  id        Int       @id @default(autoincrement())
+  id        String       @id @default(uuid())
   nome      String
   email     String    @unique
   senha     String
   telefone  String
   endereco  String
   dataNascimento DateTime
+}
+
+model Eventos {
+  id   Int                   @id @default(autoincrement())
+  data        DateTime
+  tipoEvento  TipoEvento  @default(CULTO)
+  hora_inicio DateTime
+  hora_fim    DateTime
+  descricao   String?
+  //escalas     Escala[]// naõ mexer
 }

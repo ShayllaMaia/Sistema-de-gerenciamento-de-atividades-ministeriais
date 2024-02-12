@@ -3,9 +3,10 @@ import { AppError } from "../../errors/appError.js";
 const prisma = new PrismaClient();
 
 const retrieveUsuariosService = async (id) =>{
+    console.log(id)
     const usuario = await prisma.usuario.findUnique({
         where:{
-            id: parseInt(id),
+            id:id,
         },
         select:{
             id: true,
