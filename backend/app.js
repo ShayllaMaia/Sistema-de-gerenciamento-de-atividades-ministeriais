@@ -4,6 +4,7 @@ import cors from "cors";
 import "express-async-errors";
 import { usuarioRoutes } from './src/routes/usuario.routes.js';
 import { loginRoutes } from './src/routes/login.routes.js';
+import { atividadeRoutes } from './src/routes/atividade.routes.js';
 
 
 
@@ -17,6 +18,7 @@ app.use(cors());
 // rotas
 app.use("/usuario",usuarioRoutes);
 app.use("/login",loginRoutes);
+app.use("/atividade", atividadeRoutes)
 
 
 //iniciando o servidor
