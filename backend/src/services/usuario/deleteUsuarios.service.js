@@ -4,10 +4,10 @@ import { AppError } from "../../errors/appError.js";
 const prisma = new PrismaClient();
 
 const deleteUsuarioService =  async (id) => {
-    
+
     const usuario = await prisma.usuario.delete({
         where: {
-            id: parseInt(id),
+            id:id,
         },
     });
 
