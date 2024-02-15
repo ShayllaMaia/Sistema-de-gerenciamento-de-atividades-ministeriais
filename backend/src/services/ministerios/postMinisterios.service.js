@@ -15,12 +15,13 @@ const postMinisterioService = async (data) => {
   if (ministerioJaExiste) {
     throw new AppError("O ministério já existe!", 400);
   }
+  lider_id = parseInt(lider_id);
 
   const novoMinisterio = await prisma.ministerio.create({
      data:{
       nome: nome,
       descricao: descricao,
-      lider_id: lider_id || null,
+      lider_id: lider_id,
     },
   });
 
