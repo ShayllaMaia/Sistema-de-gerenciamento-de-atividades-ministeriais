@@ -7,6 +7,7 @@ import { loginRoutes } from './src/routes/login.routes.js';
 import { ministerioRoutes } from './src/routes/ministerios.routes.js';
 import { eventosRoutes } from './src/routes/eventos.routes.js';
 import { escalaRoutes } from './src/routes/escalas.routes.js';
+import { atividadeRoutes } from './src/routes/atividade.routes.js';
 
 
 
@@ -23,6 +24,7 @@ app.use("/login",loginRoutes);
 app.use("/escala",escalaRoutes)
 app.use("/eventos",eventosRoutes);
 app.use("/ministerio",ministerioRoutes)
+app.use("/atividade", atividadeRoutes)
 
 
 //iniciando o servidor
