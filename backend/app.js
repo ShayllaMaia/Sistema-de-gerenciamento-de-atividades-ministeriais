@@ -6,6 +6,7 @@ import { usuarioRoutes } from './src/routes/usuario.routes.js';
 import { loginRoutes } from './src/routes/login.routes.js';
 import { ministerioRoutes } from './src/routes/ministerios.routes.js';
 import { eventosRoutes } from './src/routes/eventos.routes.js';
+import { escalaRoutes } from './src/routes/escalas.routes.js';
 
 
 
@@ -19,6 +20,7 @@ app.use(cors());
 // rotas
 app.use("/usuario",usuarioRoutes);
 app.use("/login",loginRoutes);
+app.use("/escala",escalaRoutes)
 app.use("/eventos",eventosRoutes);
 app.use("/ministerio",ministerioRoutes)
 
