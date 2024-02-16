@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const postMembroMinisterioService = async (data) => {
   let{ usuarioId, ministerioId } = data;
-
+// console.log(data);
   const usuario = await prisma.usuario.findUnique({
     where: {
       id: usuarioId,
@@ -22,14 +22,20 @@ const postMembroMinisterioService = async (data) => {
   }
 
   const novoMembroMinisterio = await prisma.membrosMinisterios.create({
-    data:{
-      usuario_id: {
-        connect:usuario.id
-      }},
-        ministerio_id: {
-            connect: ministerio.id
-        },
+    data: {
+      usuario: {
+        connect: { id: usuario.id }
+      },
+      ministerio: {
+        connect: { id: ministerio.id } 
+      }
+    },
+    include: {
+      ministerio: true,
+      usuario: true
+    }
   });
+  
 
   return novoMembroMinisterio;
 };
