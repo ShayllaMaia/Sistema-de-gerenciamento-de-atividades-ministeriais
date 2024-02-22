@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const postMinisterioService = async (data) => {
   let{ nome, descricao, lider_id } = data;
-  let lider = ""
+
   const ministerioJaExiste = await prisma.ministerio.findUnique({
     where: {
       nome: nome,
@@ -28,7 +28,6 @@ const postMinisterioService = async (data) => {
     throw new AppError("O ministério já existe!", 400);
   }
   
-  console.log(lider)
   const novoMinisterio = await prisma.ministerio.create({
      data:{
       nome: nome,

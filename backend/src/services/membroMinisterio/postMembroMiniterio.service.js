@@ -4,38 +4,54 @@ import { AppError } from "../../errors/appError.js";
 const prisma = new PrismaClient();
 
 const postMembroMinisterioService = async (data) => {
-  let{ usuarioId, ministerioId } = data;
-// console.log(data);
+
+  let{ usuario_id, ministerio_id, preferenciasAtividades } = data;
+
   const usuario = await prisma.usuario.findUnique({
     where: {
-      id: usuarioId,
+      id: usuario_id,
     },
   });
+
   const ministerio = await prisma.ministerio.findUnique({
     where: {
-      id: ministerioId,
+      id: ministerio_id,
     },
   });
 
   if(!usuario || !ministerio){
     throw new AppError("Usuário ou ministério não encontrado!", 404);
   }
-
-  const novoMembroMinisterio = await prisma.membrosMinisterios.create({
-    data: {
-      usuario: {
-        connect: { id: usuario.id }
-      },
-      ministerio: {
-        connect: { id: ministerio.id } 
-      }
-    },
-    include: {
-      ministerio: true,
-      usuario: true
+  if(!preferenciasAtividades) throw new AppError("deve ter atividades preferenciais", 401)
+  
+  //substituindo os id por objetos correspondentes a cada atividade
+for (let i = 0; i < preferenciasAtividades.length; i++) {
+  const atividadeId = preferenciasAtividades[i];
+  const atividade = await prisma.atividade.findUnique({
+    where: {
+      id: atividadeId
     }
   });
-  
+  preferenciasAtividades[i] = atividade;
+}
+
+const novoMembroMinisterio = await prisma.membrosMinisterios.create({
+  data: {
+    usuario: {
+      connect: { id: usuario_id } 
+    },
+    ministerio: {
+      connect: { id: ministerio_id } 
+    },
+    preferenciasAtividades: preferenciasAtividades
+  },
+  include: {
+    usuario: true,
+    ministerio: true,
+    
+  }
+});
+
 
   return novoMembroMinisterio;
 };

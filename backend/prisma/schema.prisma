@@ -12,13 +12,13 @@ enum TipoUsuario {
   LIDER
   ADMIN
 }
-enum TipoEvento{
-CULTO
-EVENTOS
-
+enum TipoEvento {
+  CULTO
+  EVENTO
 }
+
 model Ministerio {
-  id        String       @id @default(uuid())
+  id                 String               @id @default(cuid())
   nome      String   @unique
   descricao String
   lider_id  Json?
@@ -29,7 +29,7 @@ model Ministerio {
 
 // Definição do modelo para a tabela Atividade
 model Atividade {
-  id           String       @id @default(uuid())
+  id                 String               @id @default(cuid())
   nome         String
   descricao    String
   ministerio   Ministerio @relation(fields: [ministerio_id], references: [id])
@@ -39,14 +39,13 @@ model Atividade {
 
 // Definição do modelo para a tabela Usuario
 model Usuario {
-  id                 String       @id @default(uuid())
+  id                 String               @id @default(cuid())
   nome               String
   endereco           String
   telefone          String
   email              String              @unique
   dataNascimento     DateTime
   senha              String
-  preferencias_atividades String?
   tipoUsuario       TipoUsuario           @default(NORMAL)       // Usando ENUM para o campo tipoUsuario
   membrosMinisterios MembrosMinisterios[]
   participacoes      Participacao[]
@@ -55,16 +54,17 @@ model Usuario {
 
 // Definição do modelo para a tabela MembrosMinisterios
 model MembrosMinisterios {
-  id          String       @id @default(uuid())
+  id                 String               @id @default(cuid())
   ministerio  Ministerio @relation(fields: [ministerio_id], references: [id])
   ministerio_id String
   usuario      Usuario    @relation(fields: [usuario_id], references: [id])
   usuario_id  String
+  preferenciasAtividades Json
 }
 
 // Definição do modelo para a tabela HorariosCulto
 model Eventos {
-  id          String       @id @default(uuid())
+  id                 String               @id @default(cuid())
   data        DateTime
 	tipoEvento  TipoEvento  @default(CULTO)
   hora_inicio DateTime
@@ -75,7 +75,7 @@ model Eventos {
 
 // Definição do modelo para a tabela Escala
 model Escala {
-  id            String       @id @default(uuid())
+  id                 String               @id @default(cuid())
   data          DateTime
   eventos       Eventos @relation(fields: [eventos_id], references: [id])
   eventos_id    String
@@ -90,7 +90,7 @@ model Escala {
 
 // Definição do modelo para a tabela Participacao
 model Participacao {
-  id          String       @id @default(uuid())
+  id                 String               @id @default(cuid())
   usuario      Usuario  @relation(fields: [usuario_id], references: [id])
   usuario_id   String
   escala      Escala   @relation(fields: [escala_id], references: [id])
