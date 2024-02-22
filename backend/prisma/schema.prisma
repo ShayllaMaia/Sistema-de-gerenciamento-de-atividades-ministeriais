@@ -6,71 +6,93 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Enum para definir os tipos de usuario
+// Definição do modelo para a tabela Ministerio
 enum TipoUsuario {
   NORMAL
   LIDER
   ADMIN
 }
-
-// Enum para definir os tipos de evento
 enum TipoEvento {
   CULTO
   EVENTO
 }
 
-// Modelo para a tabela Ministerios
 model Ministerio {
-  id          Int         @id @default(autoincrement())
-  nome        String      @unique
-  descricao   String
-  lider_id    Int?
+  id                 String               @id @default(cuid())
+  nome      String   @unique
+  descricao String
+  lider_id  Json?
+  atividades Atividade[]
+  membros MembrosMinisterios[]
+  escalas           Escala[]
 }
 
-// Modelo para a tabela Atividade
+// Definição do modelo para a tabela Atividade
 model Atividade {
-  id            Int         @id @default(autoincrement())
-  nome          String
-  descricao     String
+  id                 String               @id @default(cuid())
+  nome         String
+  descricao    String
+  ministerio   Ministerio @relation(fields: [ministerio_id], references: [id])
+  ministerio_id String
+  escalas      Escala[]
 }
 
-// Modelo para a tabela Usuario
+// Definição do modelo para a tabela Usuario
 model Usuario {
-  id                 Int         @id @default(autoincrement())
+  id                 String               @id @default(cuid())
   nome               String
   endereco           String
-  telefone           String      @default("000-000-0000")
-  email              String      @unique
-  senha              String
+  telefone          String
+  email              String              @unique
   dataNascimento     DateTime
-  tipoUsuario        TipoUsuario @default(NORMAL)
+  senha              String
+  tipoUsuario       TipoUsuario           @default(NORMAL)       // Usando ENUM para o campo tipoUsuario
+  membrosMinisterios MembrosMinisterios[]
+  participacoes      Participacao[]
+  
 }
 
-// Modelo para a tabela MembrosMinisterios
+// Definição do modelo para a tabela MembrosMinisterios
 model MembrosMinisterios {
-  id          Int         @id @default(autoincrement())
+  id                 String               @id @default(cuid())
+  ministerio  Ministerio @relation(fields: [ministerio_id], references: [id])
+  ministerio_id String
+  usuario      Usuario    @relation(fields: [usuario_id], references: [id])
+  usuario_id  String
+  preferenciasAtividades Json
 }
 
-// Modelo para a tabela Eventos
+// Definição do modelo para a tabela HorariosCulto
 model Eventos {
-  id          Int         @id @default(autoincrement())
+  id                 String               @id @default(cuid())
   data        DateTime
-  tipoEvento  TipoEvento  @default(CULTO)
+	tipoEvento  TipoEvento  @default(CULTO)
   hora_inicio DateTime
   hora_fim    DateTime
-  descricao   String?
+	descricao   String?
+  escalas     Escala[]
 }
 
-// Modelo para a tabela Escala
+// Definição do modelo para a tabela Escala
 model Escala {
-  id            Int         @id @default(autoincrement())
+  id                 String               @id @default(cuid())
   data          DateTime
+  eventos       Eventos @relation(fields: [eventos_id], references: [id])
+  eventos_id    String
+  ministerio    Ministerio   @relation(fields: [ministerio_id], references: [id])
+  ministerio_id String
+  atividade     Atividade    @relation(fields: [atividade_id], references: [id])
+  atividade_id  String
   recorrente    Boolean
   dia_semana    Int
-  evento_id     Int
+  participacoes Participacao[]
 }
 
-// Modelo para a tabela Participacao
+// Definição do modelo para a tabela Participacao
 model Participacao {
-  id         Int         @id @default(autoincrement())
+  id                 String               @id @default(cuid())
+  usuario      Usuario  @relation(fields: [usuario_id], references: [id])
+  usuario_id   String
+  escala      Escala   @relation(fields: [escala_id], references: [id])
+  escala_id   String
 }

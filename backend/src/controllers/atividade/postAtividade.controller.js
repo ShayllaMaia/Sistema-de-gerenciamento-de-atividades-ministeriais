@@ -3,18 +3,18 @@ import { postAtivadadeService } from "../../services/atividade/postAtividade.ser
 
 
 const postAtividadeController = async (req, res) => {
-    const { nome, descricao } = validaPayload(req.body);
-    const atividadeCriada = await postAtivadadeService(nome, descricao);
+    const data = req.body;
+    const atividadeCriada = await postAtivadadeService(data);
 
     return res.status(201).json(atividadeCriada);
 };
 
 
-const validaPayload = ({ nome, descricao }) => {
-    if (typeof nome !== "string" || typeof descricao !== "string") throw new AppError("Tipo inválido na entrada [ambos os campos são strings]", 422);
-    // parse to lower
-    [nome, descricao] = [nome.toLowerCase(), descricao.toLocaleLowerCase()]
-    return { nome, descricao };
-};
+// const validaPayload = ({ nome, descricao,ministerio_id }) => {
+//     if (typeof nome !== "string" || typeof descricao !== "string") throw new AppError("Tipo inválido na entrada [ambos os campos são strings]", 422);
+//     // parse to lower
+//     [nome, descricao,ministerio_id] = [nome.toLowerCase(), descricao.toLocaleLowerCase(),]
+//     return { nome, descricao,ministerio_id };
+// };
 
 export { postAtividadeController };

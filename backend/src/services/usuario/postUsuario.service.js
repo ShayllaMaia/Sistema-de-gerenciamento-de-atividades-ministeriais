@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 const postUsuarioService = async (data) => {
-    let{nome, email, senha, telefone, endereco, dataNascimento} = data;
+    let{nome, email, senha, telefone, endereco, dataNascimento,tipoUsuario} = data;
     //verificando se o usuário já existe
     const usuarioJaExiste = await prisma.usuario.findUnique({
 		where: {
@@ -36,6 +36,7 @@ const postUsuarioService = async (data) => {
             telefone: telefone,
             endereco: endereco,
             dataNascimento: dataNascimento,
+            tipoUsuario: tipoUsuario
         }
     });
     return novoUsuario;
