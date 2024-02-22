@@ -1,0 +1,42 @@
+<body id="body-pd">
+    <header class="header" id="header">
+        <div class="header_toggle"> 
+            <i class="fa-solid fa-bars" style="color: #ffffff;" id="header-toggle"></i>
+        </div>
+    
+    </header>
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div>
+                <a class="nav_logo" id="logo">
+                    <img src="../../../assets/img/logoIBB.png" alt="">
+                </a>
+                <div class="nav_list">
+                    <a routerLink="/" routerLinkActive="active" class="nav_link "> <i class="fa-solid fa-calendar-days" title="ministerios"></i>
+                        <span class="nav_name">Minhas escalas</span>
+                    </a>
+                    <a routerLink="/" routerLinkActive="active" class="nav_link"> <i class="fa-solid fa-chart-simple" title="escalas"></i>
+                        <span class="nav_name">Ministérios</span>
+                    </a>
+                    <a routerLink="/" routerLinkActive="active" class="nav_link"> <i class="fa-regular fa-calendar-check" title="relatorios"></i>
+                        <span class="nav_name">Cadastros</span>
+                    </a>
+                    <a routerLink="/" routerLinkActive="active" class="nav_link"> <i class="fa-solid fa-clipboard-list" title="cadastros"></i>
+                        <span class="nav_name">Relatórios</span>
+                    </a>
+                    <a routerLink="/" routerLinkActive="active" class="nav_link"> <i class="fa-solid fa-person-circle-question" title="meu perfil"></i>
+                        <span class="nav_name">Membros</span>
+                    </a>
+                    <a routerLink="/" routerLinkActive="active" class="nav_link"> <i class="fa-solid fa-rectangle-xmark" title="membros"></i>
+                        <span class="nav_name">Meu perfil</span>
+                    </a>
+
+                </div>
+            </div>
+            <a id="logout" class="nav_link" (click)="logout()">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span> Sair </span>
+            </a>
+        </nav>
+    </div>
+</body>
