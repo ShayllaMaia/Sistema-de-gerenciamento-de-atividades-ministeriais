@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 
 const postUsuarioService = async (data) => {
     let{nome, email, senha, telefone, endereco, dataNascimento,tipoUsuario} = data;
+    console.log(tipoUsuario);
     //verificando se o usuário já existe
     const usuarioJaExiste = await prisma.usuario.findUnique({
 		where: {
