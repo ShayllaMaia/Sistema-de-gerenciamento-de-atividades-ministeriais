@@ -15,34 +15,34 @@ const postMinisterioService = async (data) => {
     throw new AppError("O ministério já existe!", 400);
   }
 
-  if(lider_id){
-    const lider = await prisma.usuario.findUnique({
-      where: {
-        id: lider_id,
-      },
-    },
-    );
+  // if(lider_id){
+  //   const lider = await prisma.usuario.findUnique({
+  //     where: {
+  //       id: lider_id,
+  //     },
+  //   },
+  //   );
     
-    const updateLider = await prisma.usuario.update({
-      where: {
-        id: lider.id,
-      },
-      data: {
-        tipoUsuario: "LIDER",
-      }
-    })
-    if(!lider){
-      throw new AppError("Líder não encontrado!", 404);
-    }
+  //   const updateLider = await prisma.usuario.update({
+  //     where: {
+  //       id: lider.id,
+  //     },
+  //     data: {
+  //       tipoUsuario: "LIDER",
+  //     }
+  //   })
+  //   if(!lider){
+  //     throw new AppError("Líder não encontrado!", 404);
+  //   }
     const novoMinisterio = await prisma.ministerio.create({
       data:{
        nome: nome,
        descricao: descricao,
-       lider_id: updateLider,
+      //  lider_id: updateLider,
      },
    });
    return novoMinisterio;
-  }
+  // }
 };
 
 export { postMinisterioService };

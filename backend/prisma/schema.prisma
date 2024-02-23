@@ -18,13 +18,20 @@ enum TipoEvento {
 }
 
 model Ministerio {
-  id                 String               @id @default(cuid())
+  id                 String   @id @default(cuid())
   nome      String   @unique
   descricao String
-  lider_id  Json?
+  lideres MinisterioLider[]
   atividades Atividade[]
   membros MembrosMinisterios[]
   escalas           Escala[]
+}
+model MinisterioLider {
+  @@id([ministerio_id, lider_id])
+  ministerio_id String
+  lider_id      String
+  ministerio    Ministerio  @relation(fields: [ministerio_id], references: [id])
+  lider        Usuario     @relation(fields: [lider_id], references: [id])
 }
 
 // Definição do modelo para a tabela Atividade
@@ -49,7 +56,7 @@ model Usuario {
   tipoUsuario       TipoUsuario           @default(NORMAL)       // Usando ENUM para o campo tipoUsuario
   membrosMinisterios MembrosMinisterios[]
   participacoes      Participacao[]
-  
+  liderDe          MinisterioLider[]
 }
 
 // Definição do modelo para a tabela MembrosMinisterios
