@@ -9,6 +9,8 @@ import { LoginComponent } from './components/login/login.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { EventoCadastroComponent } from './components/evento-cadastro/evento-cadastro.component';
+import { EventoListarComponent } from './components/evento-listar/evento-listar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
     CadastroComponent,
     FooterComponent,
     LoginComponent,
-    SidebarComponent
+    SidebarComponent,
+    EventoCadastroComponent,
+    EventoListarComponent
   ],
   imports: [
     BrowserModule,

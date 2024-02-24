@@ -1,0 +1,48 @@
+<section class="vh-100 custom-background cadastro d-flex justify-content-center align-items-center">
+    <div class="container-fluid">
+      <div>
+        <div>
+          <div class="text-center mb-4">
+            <h1>CADASTRO DE EVENTO</h1>
+          </div>
+          <form>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label class="form-label" for="data">Data:</label>
+                <input type="date" class="form-control form-control-lg" />
+              </div>
+              <div class="col-md-6 mb-4">
+                <label class="form-label" for="tipoEvento">Tipo de Evento:</label>
+                <select class="form-control form-control-lg">
+                  <option value="CULTO">Culto</option>
+                  <option value="EXTERNO">Externo</option>
+                </select>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label class="form-label" for="horaInicio">Hora de Início:</label>
+                <input type="time" class="form-control form-control-lg" />
+              </div>
+              <div class="col-md-6 mb-4">
+                <label class="form-label" for="horaFim">Hora de Fim:</label>
+                <input type="time" class="form-control form-control-lg" />
+              </div>
+            </div>
+  
+            <div class="form-outline mb-4">
+              <label class="form-label" for="descricao">Descrição:</label>
+              <textarea class="form-control form-control-lg"></textarea>
+            </div>
+  
+            <button type="button" class="btn btn-warning btn-md btn-block">
+              Cadastrar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <app-footer></app-footer>
+  
