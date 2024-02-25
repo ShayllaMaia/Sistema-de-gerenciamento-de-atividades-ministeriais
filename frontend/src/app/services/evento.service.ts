@@ -1,0 +1,20 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { EventoInterface } from '../model/evento.interface';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class EventoService {
+  private baseUrl = environment.API_URL;
+
+  constructor(private http: HttpClient) {}
+
+  criarEvento(evento: EventoInterface): Observable<any> {
+    console.log('Enviando evento:', evento);
+
+    return this.http.post(`${this.baseUrl}/eventos`, evento);
+  }
+}
