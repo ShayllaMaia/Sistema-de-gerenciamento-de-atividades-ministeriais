@@ -1,3 +1,4 @@
+// membro-listar.component.ts
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { UsuarioInterface } from 'src/app/model/usuario.interface';
@@ -17,7 +18,7 @@ export class MembroListarComponent implements OnInit {
   }
 
   carregarMembros(): void {
-    this.usuarioService.getListaMembros().subscribe(
+    this.usuarioService.ListaMembros().subscribe(
       (data: UsuarioInterface[]) => {
         this.membros = data;
       },

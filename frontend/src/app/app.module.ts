@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MembroListarComponent } from './components/membro-listar/membro-listar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     CadastroComponent,
     FooterComponent,
     LoginComponent,
-    SidebarComponent
+    SidebarComponent,
+    MembroListarComponent
   ],
   imports: [
     BrowserModule,

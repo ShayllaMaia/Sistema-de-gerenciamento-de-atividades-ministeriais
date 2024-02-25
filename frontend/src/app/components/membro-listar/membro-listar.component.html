@@ -1,5 +1,21 @@
 <!-- membro-listar.component.html -->
-<div *ngFor="let membro of membros">
-    <p>{{ membro.nome }} - {{ membro.email }} - {{ membro.telefone }}</p>
+<section class="vh-100 custom-background">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 mt-4">
+        <div class="text-center mb-4">
+          <h1>Lista de Membros</h1>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let membro of membros">
+            <p>Nome: {{ membro.nome }}</p>
+            <p>Email: {{ membro.email }}</p>
+            <p>Telefone: {{ membro.telefone }}</p>
+            <p>Endereço: {{ membro.endereco }}</p>
+            <p>Data de Nascimento: {{ membro.dataNascimento | date:'dd/MM/yyyy' }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-  
+</section>
