@@ -3,8 +3,11 @@ import { postAtivadadeService } from "../../services/atividade/postAtividade.ser
 
 
 const postAtividadeController = async (req, res) => {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    
     const data = req.body;
-    const atividadeCriada = await postAtivadadeService(data);
+    const atividadeCriada = await postAtivadadeService(data,token);
 
     return res.status(201).json(atividadeCriada);
 };

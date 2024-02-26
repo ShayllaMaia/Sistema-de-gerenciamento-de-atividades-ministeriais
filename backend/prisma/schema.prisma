@@ -37,11 +37,19 @@ model MinisterioLider {
 // Definição do modelo para a tabela Atividade
 model Atividade {
   id                 String               @id @default(cuid())
-  nome         String
+  nome         String @unique
   descricao    String
   ministerio   Ministerio @relation(fields: [ministerio_id], references: [id])
   ministerio_id String
   escalas      Escala[]
+  membrosAtividades MembrosAtividade[]
+}
+model MembrosAtividade {
+  @@id([atividade_id, usuario_id])
+  atividade_id String
+  usuario_id   String
+  atividade    Atividade @relation(fields: [atividade_id], references: [id])
+  usuario      Usuario   @relation(fields: [usuario_id], references: [id])
 }
 
 // Definição do modelo para a tabela Usuario
@@ -57,6 +65,7 @@ model Usuario {
   membrosMinisterios MembrosMinisterios[]
   participacoes      Participacao[]
   liderDe          MinisterioLider[]
+  membrosAtividades MembrosAtividade[]
 }
 
 // Definição do modelo para a tabela MembrosMinisterios
@@ -72,6 +81,7 @@ model MembrosMinisterios {
 // Definição do modelo para a tabela HorariosCulto
 model Eventos {
   id                 String               @id @default(cuid())
+  nome        String
   data        DateTime
 	tipoEvento  TipoEvento  @default(CULTO)
   hora_inicio DateTime
