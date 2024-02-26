@@ -5,7 +5,7 @@ const loginUsuarioController = async (req, res) => {
 
   const usuario = await loginUsuarioService(senha, email);
 
-  return res.json(usuario);
+  return res.json(usuario)
 };
 
 export { loginUsuarioController };

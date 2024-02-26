@@ -1,33 +1,56 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-
-
+import { PrismaClient } from "@prisma/client";
+import { AppError } from "../../errors/appError.js";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
-const postEventosService = async (data) => {
-    
-        let{date,hora_inicio,hora_fim,descricao} = data;
-        console.log(data)
-        if (new Date(hora_inicio) >= new Date(hora_fim)) {
-            throw new Error('A hora de início deve ser anterior à hora de término.');
-          }
-      
-          // Certifique-se de que as datas estão no formato correto
-          const dataFormatada = new Date(date);
-          const horaInicioFormatada = new Date(hora_inicio);
-          const horaFimFormatada = new Date(hora_fim);
-        const novoEvento = await prisma.eventos.create({
-            data:{
-                data: dataFormatada,
-                hora_inicio: horaInicioFormatada,
-                hora_fim: horaFimFormatada,
-                descricao: descricao,
-            }
-            
-        });
+const postEventosService = async (dados, token) => {
 
-        return novoEvento;
-    
-}
+  let { nome, data, hora_inicio, hora_fim, descricao,isRecorrente, tipoEvento } = dados;
 
-export {postEventosService};
+  // Verificando se o token foi enviado e se é válido
+  const secreto = process.env.SECRET;
+  if (!token) throw new AppError("Acesso não autorizado", 401);
+  const usuario = jwt.verify(token, secreto);
+  usuario.toString();
+  console.log(dados)
+  // pegando o tipo de usuario
+  const tipoUsuario = await prisma.usuario.findUnique({
+    where: {
+      id: usuario.usuario_id,
+    },
+    select: {
+      tipoUsuario: true,
+    }
+  })
+  // Verificando se o tipo de usuario é o correto
+  if (tipoUsuario.tipoUsuario != "ADMIN") throw new AppError("Acesso não autorizado:Somente admim podem criar eventos", 401);
+
+  // Convertendo a string de hora para um objeto Date
+  const dataFormatada = new Date(data).toISOString();
+  const horaInicioObj = new Date(Date.parse(`${data}T${hora_inicio}+00:00`));
+  const horaFimObj = new Date(Date.parse(`${data}T${hora_fim}+00:00`));
+
+  // Verificando se a hora de início é anterior à hora de término
+  if (horaInicioObj >= horaFimObj) {
+    throw new AppError('A hora de início deve ser anterior à hora de término.', 400);
+  }
+
+  const novoEvento = await prisma.eventos.create({
+    data: {
+      nome: nome,
+      data: dataFormatada,
+      // tipo de eventos deve ser enviado no body da requisição
+      tipoEvento: tipoEvento, // Definindo o tipo de evento como CULTO
+      hora_inicio: horaInicioObj,
+      hora_fim: horaFimObj,
+      descricao: descricao,
+      isRecorrente: isRecorrente,
+    }
+  });
+
+  return novoEvento;
+
+};
+
+export { postEventosService };

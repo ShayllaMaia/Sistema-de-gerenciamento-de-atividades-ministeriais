@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const deleteMinisterioService = async (id) => {
   const ministerio = await prisma.ministerio.delete({
     where: {
-      id: parseInt(id),
+      id: id,
     },
   });
 

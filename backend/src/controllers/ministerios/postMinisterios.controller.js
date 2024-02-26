@@ -2,8 +2,9 @@ import { postMinisterioService } from "../../services/ministerios/postMinisterio
 
 const postMinisterioController = async (req, res) => {
     const data = req.body;
-    const novoMinisterio = await postMinisterioService(data);
 
+    const novoMinisterio = await postMinisterioService(data);
+    
     return res.status(201).json(novoMinisterio);
 };
 

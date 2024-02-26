@@ -11,19 +11,62 @@ const updateMinisterioService = async (id, data) => {
       id: ministerioId,
     },
   });
-
+  
   if (!ministerio) {
     throw new AppError("Ministério não encontrado!", 404);
   }
 
-  const updatedMinisterio = await prisma.ministerio.update({
-    where: {
-      id: ministerioId,
-    },
-     data,
-  });
+  if(data.lider_id == ministerio.lider_id["id"]){
+    const updatedMinisterio = await prisma.ministerio.update({
+      where: {
+        id: ministerioId,
+      },
+      data: {
+        nome: data.nome,
+        descricao: data.descricao
+      }
+    });
+    return updatedMinisterio;
+  } else{
+    await prisma.usuario.update({
+      where:{
+        id: ministerio.lider_id["id"],
+      },
+      data:{
+        tipoUsuario: "NORMAL"
+      }
+    })
+    const novoLider = await prisma.usuario.findUnique({
+      where: {
+        id: data.lider_id,
+      }
+    })
 
-  return updatedMinisterio;
+    if(!novoLider){
+      throw new AppError("Líder não encontrado!", 404);
+    }
+    
+    const novoLiderUpdate = await prisma.usuario.update({
+      where:{
+        id: data.lider_id,
+      },
+      data:{
+        tipoUsuario: "LIDER"
+      }
+    })
+    
+    const updatedMinisterio = await prisma.ministerio.update({
+      where:{
+        id: ministerioId,
+      },
+      data: {
+        nome:data.nome,
+        descricao: data.descricao,
+        lider_id: novoLiderUpdate,
+      }
+    })
+    return updatedMinisterio;
+  }
 };
 
 export { updateMinisterioService };

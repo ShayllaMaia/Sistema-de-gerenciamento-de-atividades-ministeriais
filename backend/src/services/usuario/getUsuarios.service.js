@@ -11,11 +11,12 @@ const getUsuariosService = async () => {
       telefone: true,
       endereco: true,
       dataNascimento: true,
-      tipoUsuario: false,
+      tipoUsuario: true,
     },
   });
-
+    
     return usuarios;
+    
 };
 
 export { getUsuariosService };
