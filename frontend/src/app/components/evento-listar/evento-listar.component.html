@@ -1,0 +1,24 @@
+<section class="vh-100 custom-background">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 mt-4">
+        <div class="text-center mb-4">
+          <h1>Lista de Eventos</h1>
+        </div>
+        <button (click)="navegarParaCadastro()">Cadastrar Novo Evento</button>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let evento of registro">
+            <p>Data: {{ evento.data }}</p>
+            <p>Tipo: {{ evento.tipoEvento }}</p>
+            <p>Hora de Início: {{ evento.horaInicio }}</p>
+            <p>Hora de Fim: {{ evento.horaFim }}</p>
+            <p>Descrição: {{ evento.descricao }}</p>
+            <button (click)="editarEvento(evento)">Editar</button>
+            <button (click)="excluirEvento(evento.id)">Excluir</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>
