@@ -14,8 +14,6 @@ O Sistema de gerenciamento de atividades ministeriais visa otimizar e simplifica
 * <b> Cadastro de cultos</b>: Permitir que líderes do ministério escalem membros em tarefas
 * <b> Opção de aceitar ou não a tarefa</b>: Permitir que os membros aceitem ou recusem tarefas, de acordo com suas preferências.
 * <b> Notificação aos membros das tarefas</b>: Notificar os membros sobre as tarefas que foram escalados para realizar.
-* <b> Relatórios</b>: Gerar relatórios sobre a escalação de membros, incluindo informações sobre a disponibilidade e o envolvimento dos membros.	
-
 
 
 ## :wrench: Tecnologias utilizadas

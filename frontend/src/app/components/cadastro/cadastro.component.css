@@ -1,32 +1,46 @@
 .custom-background {
-    background-image: url('../../../assets/img/igreja.png'); 
-    background-size: cover;
-    background-position: center;
-  }
+  background-image: url('../../../assets/img/igreja.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
 
-.cadastro{
-    color: #fff;
-    font-size: 15px;
+.cadastro {
+  color: #fff;
+  font-size: 15px;
 
 }
 
 
 .custom-orange-bg {
-    background-color: #FF9F00;
-    border-color: #FF9F00; 
-    color: #fff;
-  }
+  background-color: #FF9F00;
+  border-color: #FF9F00;
+  color: #fff;
+}
 
 .custom-margin-left {
-    margin-right: 20px; 
+  margin-right: 20px;
 }
 
 .logo-img {
-    max-width: 150px; 
-    max-height: 100px; 
+  max-width: 150px;
+  max-height: 100px;
 }
 
 .btn-primary:hover {
-    background-color: #FFA500;
-    border-color: #FFA500;
+  background-color: #FFA500;
+  border-color: #FFA500;
+}
+
+
+@media (max-width: 768px) {
+
+  .form {
+    width: 90%;
+  }
+
+  .logo-img {
+    max-width: -webkit-fill-available;
+  }
+
 }
