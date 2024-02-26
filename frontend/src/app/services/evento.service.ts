@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EventoInterface } from '../model/evento.interface';
 import { environment } from 'src/environments/environment';
@@ -9,23 +9,28 @@ import { environment } from 'src/environments/environment';
 })
 export class EventoService {
   private baseUrl = environment.API_URL;
+  private token = localStorage.getItem('token');
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   criarEvento(evento: EventoInterface): Observable<any> {
     console.log('Enviando evento:', evento);
-    return this.http.post(`${this.baseUrl}/eventos`, evento);
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.post(`${this.baseUrl}/eventos`, evento, { headers });
   }
 
   getEventos(): Observable<EventoInterface[]> {
-    return this.http.get<EventoInterface[]>(`${this.baseUrl}/eventos`);
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.get<EventoInterface[]>(`${this.baseUrl}/eventos`, { headers });
   }
 
   excluirEvento(eventoId: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/eventos/${eventoId}`);
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.delete(`${this.baseUrl}/eventos/${eventoId}`, { headers });
   }
 
   editarEvento(eventoId: string, evento: EventoInterface): Observable<any> {
-    return this.http.put(`${this.baseUrl}/eventos/${eventoId}`, evento);
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.put(`${this.baseUrl}/eventos/${eventoId}`, evento, { headers });
   }
 }

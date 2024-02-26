@@ -26,7 +26,7 @@ app.use(cors());
 app.use("/usuario",usuarioRoutes);
 app.use("/login",loginRoutes);
 app.use("/escala",escalaRoutes)
-app.use("/eventos",eventosRoutes);
+app.use("/eventos",validaToken,eventosRoutes);
 app.use("/ministerio",ministerioRoutes);
 app.use("/atividade", validaToken,atividadeRoutes);
 app.use("/membroMinisterio",membroMinisterioRoutes);

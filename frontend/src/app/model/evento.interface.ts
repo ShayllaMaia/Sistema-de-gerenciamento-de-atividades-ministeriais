@@ -1,10 +1,10 @@
 
 export interface EventoInterface {
     id: string;
+    nome:string;
     data: string;
     tipoEvento: string;
-    horaInicio: string;
-    horaFim: string;
+    hora_inicio: string;
+    hora_fim: string;
     descricao: string;
   }
-  

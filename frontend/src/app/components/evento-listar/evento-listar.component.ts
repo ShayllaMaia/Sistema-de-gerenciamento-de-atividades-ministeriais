@@ -29,7 +29,7 @@ export class EventoListarComponent implements OnInit {
         console.error('Erro ao carregar eventos:', error);
       }
 
-  
+
     );
   }
 
@@ -54,5 +54,18 @@ export class EventoListarComponent implements OnInit {
   navegarParaCadastro(): void {
     // Implementar a navegação para a página de cadastro
     this.router.navigate(['/cadastro-evento']);
+  }
+  formatarHora(dataISO: string): string {
+    const data = new Date(dataISO);
+    const hora = data.getHours().toString().padStart(2, '0');
+    const minutos = data.getMinutes().toString().padStart(2, '0');
+    return `${hora}:${minutos}`;
+  }
+  formatarData(dataISO: string): string {
+    const data = new Date(dataISO);
+    const dia = data.getDate().toString().padStart(2, '0');
+    const mes = (data.getMonth() + 1).toString().padStart(2, '0'); // Mês é base 0, então somamos 1
+    const ano = data.getFullYear().toString();
+    return `${dia}/${mes}/${ano}`;
   }
 }

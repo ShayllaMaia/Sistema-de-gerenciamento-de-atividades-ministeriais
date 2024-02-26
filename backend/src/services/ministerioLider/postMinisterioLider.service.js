@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { AppError } from "../../errors/appError.js";
 
 const prisma = new PrismaClient();
 
@@ -14,7 +15,6 @@ const postMinisterioLiderService = async (data) => {
     if (!ministerio) {
       throw new AppError("Ministério não encontrado!", 404);
     }
-  
     const lideres = await prisma.usuario.findMany({
       where: {
         id: {
@@ -22,15 +22,16 @@ const postMinisterioLiderService = async (data) => {
         },
       },
     });
+    
   
-    if (lideres.length !== lideres_ids.length) {
+    if (lideres.length <1) {
       throw new AppError("Um ou mais líderes não foram encontrados!", 404);
     }
   
     await prisma.ministerioLider.createMany({
-      data: lideres_ids.map((id) => ({
+      data: lideres.map((lider) => ({  // Mapeie para extrair apenas o ID do líder
         ministerio_id: ministerio_id,
-        lider_id: id, // Adicione o campo 'lider_id' ao objeto 'data'
+        lider_id: lider.id,
       })),
     });
   

@@ -87,6 +87,7 @@ model Eventos {
   hora_inicio DateTime
   hora_fim    DateTime
 	descricao   String?
+  isRecorrente Boolean
   escalas     Escala[]
 }
 

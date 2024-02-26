@@ -8,12 +8,13 @@
         <button (click)="navegarParaCadastro()">Cadastrar Novo Evento</button>
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let evento of registro">
-            <p>Data: {{ evento.data }}</p>
+            <h2>{{ evento.nome }}</h2>
+            <p>Data: {{ formatarData(evento.data) }}</p>
             <p>Tipo: {{ evento.tipoEvento }}</p>
-            <p>Hora de Início: {{ evento.horaInicio }}</p>
-            <p>Hora de Fim: {{ evento.horaFim }}</p>
+            <p>Hora de Início: {{ formatarHora(evento.hora_inicio) }}</p>
+            <p>Hora de Fim: {{ formatarHora(evento.hora_fim) }}</p>
             <p>Descrição: {{ evento.descricao }}</p>
-            <button (click)="editarEvento(evento)">Editar</button>
+            <button (click)="editarEvento(evento)" class="pr-10">Editar</button>
             <button (click)="excluirEvento(evento.id)">Excluir</button>
           </li>
         </ul>
