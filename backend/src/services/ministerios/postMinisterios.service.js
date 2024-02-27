@@ -1,11 +1,29 @@
 import { PrismaClient } from "@prisma/client";
 import { AppError } from "../../errors/appError.js";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
-const postMinisterioService = async (data) => {
+const postMinisterioService = async (data,token) => {
   let{ nome, descricao, lider_id } = data;
+  
 
+  const secreto = process.env.SECRET;
+  if(!token) throw new AppError("Acesso não autorizado",401);
+  const usuario = jwt.verify(token,secreto);
+  
+  usuario.toString();
+  console.log(usuario)
+  const tipoUsuario = await prisma.usuario.findUnique({
+    where:{
+      id: usuario.usuario_id,
+    },
+    select:{
+      tipoUsuario: true,
+    }
+  })
+
+  if( tipoUsuario.tipoUsuario != "ADMIN") throw new AppError("Acesso não autorizado: Somente admin pode criar ministérios",401)
   const ministerioJaExiste = await prisma.ministerio.findUnique({
     where: {
       nome: nome,
@@ -15,30 +33,10 @@ const postMinisterioService = async (data) => {
     throw new AppError("O ministério já existe!", 400);
   }
 
-  // if(lider_id){
-  //   const lider = await prisma.usuario.findUnique({
-  //     where: {
-  //       id: lider_id,
-  //     },
-  //   },
-  //   );
-    
-  //   const updateLider = await prisma.usuario.update({
-  //     where: {
-  //       id: lider.id,
-  //     },
-  //     data: {
-  //       tipoUsuario: "LIDER",
-  //     }
-  //   })
-  //   if(!lider){
-  //     throw new AppError("Líder não encontrado!", 404);
-  //   }
     const novoMinisterio = await prisma.ministerio.create({
       data:{
        nome: nome,
        descricao: descricao,
-      //  lider_id: updateLider,
      },
    });
    return novoMinisterio;
