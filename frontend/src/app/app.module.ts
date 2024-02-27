@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { EventoCadastroComponent } from './components/evento-cadastro/evento-cadastro.component';
 import { EventoListarComponent } from './components/evento-listar/evento-listar.component';
+import { MembroListarComponent } from './components/membro-listar/membro-listar.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,8 @@ import { EventoListarComponent } from './components/evento-listar/evento-listar.
     SidebarComponent,
     EventoCadastroComponent,
     EventoListarComponent
+    SidebarComponent,
+    MembroListarComponent
   ],
   imports: [
     BrowserModule,
