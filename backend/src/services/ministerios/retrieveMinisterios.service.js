@@ -4,7 +4,6 @@ import { AppError } from "../../errors/appError.js";
 const prisma = new PrismaClient();
 
 const retrieveMinisterioService = async (id) => {
-  id = parseInt(id);
   const ministerio = await prisma.ministerio.findUnique({
     where: {
       id: id,
@@ -13,7 +12,6 @@ const retrieveMinisterioService = async (id) => {
       id: true,
       nome: true,
       descricao: true,
-      lider_id: true,
     },
   });
 

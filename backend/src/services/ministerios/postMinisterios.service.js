@@ -4,7 +4,7 @@ import { AppError } from "../../errors/appError.js";
 const prisma = new PrismaClient();
 
 const postMinisterioService = async (data) => {
-  let{ nome, descricao, lider_id } = data;
+  let{ nome, descricao } = data;
 
   const ministerioJaExiste = await prisma.ministerio.findUnique({
     where: {
