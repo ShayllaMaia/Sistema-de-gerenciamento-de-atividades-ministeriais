@@ -7,11 +7,13 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { EventoCadastroComponent } from './components/evento-cadastro/evento-cadastro.component';
 import { EventoListarComponent } from './components/evento-listar/evento-listar.component';
-import { MembroListarComponent } from './components/membro-listar/membro-listar.component';
+import { MinisterioCadastroComponent } from './components/ministerio-cadastro/ministerio-cadastro.component';
+import { MinisterioListarComponent } from './components/ministerio-listar/ministerio-listar.component';
+
 
 @NgModule({
   declarations: [
@@ -21,16 +23,17 @@ import { MembroListarComponent } from './components/membro-listar/membro-listar.
     LoginComponent,
     SidebarComponent,
     EventoCadastroComponent,
-    EventoListarComponent
-    SidebarComponent,
-    MembroListarComponent
+    EventoListarComponent,
+    MinisterioCadastroComponent,
+    MinisterioListarComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
