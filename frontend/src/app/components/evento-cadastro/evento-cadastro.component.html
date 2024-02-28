@@ -1,0 +1,55 @@
+<section class="vh-100 custom-background cadastro d-flex justify-content-center align-items-center">
+    <div class="container-fluid">
+        <div>
+            <div>
+                <div class="text-center mb-4">
+                    <h1>CADASTRO DE EVENTO</h1>
+                </div>
+                <form (ngSubmit)="submit(form)" #form="ngForm">
+                    <label for="nome" class="nome">Nome</label>
+                    <input type="text" class="form-control form-control-lg" [(ngModel)]="registro.nome" name="nome" required />
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label" for="data">Data:</label>
+                            <input type="date" class="form-control form-control-lg" [(ngModel)]="registro.data" name="data" required />
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label" for="tipoEvento">Tipo de Evento:</label>
+                            <select class="form-control form-control-lg" [(ngModel)]="registro.tipoEvento" name="tipoEvento" required>
+                                <option value="CULTO">Culto</option>
+                                <option value="EVENTO">Externo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label" for="hora_inicio">Hora de Início:</label>
+                            <input type="time" class="form-control form-control-lg" [(ngModel)]="registro.hora_inicio" name="hora_inicio" required />
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label" for="hora_fim">Hora de Fim:</label>
+                            <input type="time" class="form-control form-control-lg" [(ngModel)]="registro.hora_fim" name="hora_fim" required />
+                        </div>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="descricao">Descrição:</label>
+                        <textarea class="form-control form-control-lg" [(ngModel)]="registro.descricao" name="descricao" required></textarea>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="isRecorrente" [(ngModel)]="registro.isRecorrente" name="isRecorrente" />
+                        <label class="form-check-label" for="isRecorrente">Evento Recorrente</label>
+                    </div>
+                    
+
+                    <button type="submit" class="btn btn-warning btn-md btn-block">
+                        Cadastrar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<app-footer></app-footer>
