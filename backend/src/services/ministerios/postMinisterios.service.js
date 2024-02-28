@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
-const postMinisterioService = async (data) => {
+const postMinisterioService = async (data,token) => {
   let{ nome, descricao } = data;
 
   const secreto = process.env.SECRET;
