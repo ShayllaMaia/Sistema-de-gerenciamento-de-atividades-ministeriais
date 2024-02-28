@@ -4,9 +4,8 @@ import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
-const postMinisterioService = async (data,token) => {
-  let{ nome, descricao, lider_id } = data;
-  
+const postMinisterioService = async (data) => {
+  let{ nome, descricao } = data;
 
   const secreto = process.env.SECRET;
   if(!token) throw new AppError("Acesso não autorizado",401);
