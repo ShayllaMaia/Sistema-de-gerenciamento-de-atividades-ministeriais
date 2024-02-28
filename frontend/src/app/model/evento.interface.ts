@@ -7,4 +7,5 @@ export interface EventoInterface {
     hora_inicio: string;
     hora_fim: string;
     descricao: string;
+    isRecorrente: false;
   }
