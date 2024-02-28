@@ -8,6 +8,7 @@ import { EventoCadastroComponent } from './components/evento-cadastro/evento-cad
 import { EventoListarComponent } from './components/evento-listar/evento-listar.component';
 import { MinisterioCadastroComponent } from './components/ministerio-cadastro/ministerio-cadastro.component';
 import { MinisterioListarComponent } from './components/ministerio-listar/ministerio-listar.component';
+import { MembroListarComponent } from './components/membro-listar/membro-listar.component';
 
 const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'lista-evento', component: EventoListarComponent },
   { path: 'cadastro-ministerio', component: MinisterioCadastroComponent },
   { path: 'lista-ministerio', component: MinisterioListarComponent },
+  { path: 'lista-membro', component: MembroListarComponent },
 ];
 
 @NgModule({

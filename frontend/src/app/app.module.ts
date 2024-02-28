@@ -13,6 +13,7 @@ import { EventoCadastroComponent } from './components/evento-cadastro/evento-cad
 import { EventoListarComponent } from './components/evento-listar/evento-listar.component';
 import { MinisterioCadastroComponent } from './components/ministerio-cadastro/ministerio-cadastro.component';
 import { MinisterioListarComponent } from './components/ministerio-listar/ministerio-listar.component';
+import { MembroListarComponent } from './components/membro-listar/membro-listar.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { MinisterioListarComponent } from './components/ministerio-listar/minist
     EventoListarComponent,
     MinisterioCadastroComponent,
     MinisterioListarComponent,
+    MembroListarComponent
 
   ],
   imports: [
