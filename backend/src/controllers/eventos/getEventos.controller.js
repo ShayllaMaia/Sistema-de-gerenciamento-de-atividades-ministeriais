@@ -1,6 +1,6 @@
 import { getEventosService } from "../../services/eventos/getEventos.service.js";
 
-const getEventosController = async(req,res) => {
+const getEventosController = async(req,res ) => {
     const eventos = await getEventosService();
     const authHeader = req.headers["authorization"];
 

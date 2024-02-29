@@ -10,7 +10,6 @@ import { IForm } from 'src/app/i-form';
 import { EventoInterface } from 'src/app/model/evento.interface';
 import { EventoService } from 'src/app/services/evento.service';
 
-// Decorator @Component define a estrutura do componente Angular
 @Component({
   selector: 'app-evento-cadastro', // Seletor do componente no HTML
   templateUrl: './evento-cadastro.component.html', // Caminho do arquivo HTML associado ao componente

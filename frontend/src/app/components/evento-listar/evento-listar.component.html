@@ -1,33 +1,39 @@
 <section class="vh-100 custom-background">
   <div class="container">
     <div class="row">
-      <div class="col-lg-12 mt-4">
-        <div class="text-center mb-4">
-          <!-- Destacando e aumentando o tamanho do H1 -->
-          <h1 class="display-5 font-weight-bold">Lista de Eventos</h1>
-        </div>
-        <button (click)="navegarParaCadastro()" class="btn btn-warning">Cadastrar</button>
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let evento of registro">
-              <!-- Diminuindo um pouco o tamanho do nome do evento -->
-              <h2 class="mb-3 font-weight-bold display-5">{{ evento.nome }}</h2>
-              <p>Data: {{ formatarData(evento.data) }}</p>
-              <p>Tipo: {{ evento.tipoEvento }}</p>
-              <p>Hora de Início: {{ formatarHora(evento.hora_inicio) }}</p>
-              <p>Hora de Fim: {{ formatarHora(evento.hora_fim) }}</p>
-              <p>Descrição: {{ evento.descricao }}</p>
-              <div class="mb-3">
-                <button (click)="editarEvento(evento)" class="btn btn-warning pr-2">Editar</button>
-                <!-- Adicionando um espaço entre os botões -->
-                <span class="px-2"></span>
-                <button (click)="excluirEvento(evento.id)" class="btn btn-warning">Excluir</button>
+      <!-- Sidebar -->
+      <div class="col-lg-3">
+        <app-sidebar></app-sidebar>
+      </div>
+      <!-- Lista de Eventos -->
+      <div class="col-lg-9 mt-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 mt-4">
+              <div class="text-center mb-4">
+                <h6>Lista de Eventos</h6>
               </div>
-          </li>
-      </ul>
+              <button routerLink="/cadastro-evento" class="btn btn-warning">Cadastrar Novo Evento</button>
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let evento of registro">
+                  <h2 class="mb-3 font-weight-bold display-5">{{ evento.nome }}</h2>
+                  <p>Data: {{ formatarData(evento.data) }}</p>
+                  <p>Tipo: {{ evento.tipoEvento }}</p>
+                  <p>Hora de Início: {{ formatarHora(evento.hora_inicio) }}</p>
+                  <p>Hora de Fim: {{ formatarHora(evento.hora_fim) }}</p>
+                  <p>Descrição: {{ evento.descricao }}</p>
+                  <div class="mb-3">
+                    <button (click)="editarEvento(evento)" class="btn btn-warning pr-2">Editar</button>
+                    <span class="px-2"></span>
+                    <button (click)="excluirEvento(evento.id)" class="btn btn-warning">Excluir</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
- 
 </section>
 <app-footer></app-footer>
-

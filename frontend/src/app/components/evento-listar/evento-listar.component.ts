@@ -12,7 +12,11 @@ import { Router } from '@angular/router';
 })
 export class EventoListarComponent implements OnInit {
   registro: EventoInterface[] = [];
-  constructor(private eventoService: EventoService, private router: Router) {}
+
+  constructor(
+    private eventoService: EventoService, 
+    private router: Router,
+    ) { }
 
 
   ngOnInit(): void {
@@ -50,10 +54,6 @@ export class EventoListarComponent implements OnInit {
         console.error('Erro ao carregar eventos:', error);
       }
     );
-  }
-  navegarParaCadastro(): void {
-    // Implementar a navegação para a página de cadastro
-    this.router.navigate(['/cadastro-evento']);
   }
   formatarHora(dataISO: string): string {
     const data = new Date(dataISO);
