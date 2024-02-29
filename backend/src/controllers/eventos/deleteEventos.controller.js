@@ -1,16 +1,14 @@
 import { deleteEventosService } from "../../services/eventos/deleteEventos.service.js";
 
-const deleteEventosController = async (req,res) => {
-    try{
-        const {id} = req.params;
-        await deleteEventosService(id);
-        res.status(200).send();
-    } catch(error){
-        res.status(400).send(error);
-    }
-    
+const deleteEventosController = async (req, res) => {
+    const { id } = req.params;
+    const authHeader = req.headers["authorization"];
+
+    await deleteEventosService(id,authHeader);
+    res.status(200);
+
 
 
 };
 
-export {deleteEventosController};
+export { deleteEventosController };

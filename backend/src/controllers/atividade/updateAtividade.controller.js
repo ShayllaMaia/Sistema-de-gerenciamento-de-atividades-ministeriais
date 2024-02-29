@@ -3,8 +3,10 @@ import { updateAtivadadeService } from "../../services/atividade/updateAtividade
 
 const updateAtividadeController = async (req, res) => {
     const { id } = req.params;
-    const { nome, descricao } = validaPayload(req.body);
-    const atividadeCriada = await updateAtivadadeService(Number(id), nome, descricao);
+    const authHeader = req.headers["authorization"];
+    
+    const { nome, descricao } = req.body;
+    const atividadeCriada = await updateAtivadadeService(id, nome, descricao,authHeader);
 
     return res.status(200).json(atividadeCriada);
 };

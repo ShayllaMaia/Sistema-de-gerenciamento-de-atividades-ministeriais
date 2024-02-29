@@ -3,8 +3,10 @@ import { retrieveEventosService } from "../../services/eventos/retreveEventos.se
 
 const retriveEventosController = async (req, res) => {
     const { id } = req.params;
-    const atividade = await retrieveEventosService(id);
-    
+    const authHeader = req.headers["authorization"];
+
+    const atividade = await retrieveEventosService(id, authHeader);
+
     return res.status(200).json(atividade)
 };
 
