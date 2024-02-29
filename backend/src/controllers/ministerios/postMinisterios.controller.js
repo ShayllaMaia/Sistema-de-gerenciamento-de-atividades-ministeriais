@@ -2,11 +2,10 @@ import { postMinisterioService } from "../../services/ministerios/postMinisterio
 
 const postMinisterioController = async (req, res) => {
     const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
     const data = req.body;
-    
-    const novoMinisterio = await postMinisterioService(data,token);
-    
+
+    const novoMinisterio = await postMinisterioService(data, authHeader);
+
     return res.status(201).json(novoMinisterio);
 };
 

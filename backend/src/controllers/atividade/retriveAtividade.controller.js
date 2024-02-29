@@ -2,7 +2,9 @@ import { retrieveAtividadeService } from "../../services/atividade/retrieveAtivi
 
 const retriveAtividadeController = async (req, res) => {
     const { id } = req.params;
-    const atividade = await retrieveAtividadeService(Number(id));
+    const authHeader = req.headers["authorization"];
+    
+    const atividade = await retrieveAtividadeService(id, authHeader);
     
     return res.status(200).json(atividade)
 };

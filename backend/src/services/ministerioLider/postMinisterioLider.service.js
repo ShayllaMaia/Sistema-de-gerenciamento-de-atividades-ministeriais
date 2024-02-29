@@ -1,24 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 import { AppError } from "../../errors/appError.js";
-import jwt from "jsonwebtoken";
+import { retornaInfoToken } from "../../../middlewares/retornaInfoToen.middliwares.js";
+import { retornaTipoUsuario } from "../../../middlewares/retornaTipoUsuario.middliweres.js";
 const prisma = new PrismaClient();
 
 const postMinisterioLiderService = async (data,token) => {
     const { ministerio_id, lider_id } = data;
-    const secreto = process.env.SECRET;
- 
-    if(!token) throw new AppError("Acesso não autorizado",401);
-    const usuario = jwt.verify(token,secreto);
+    
+    token = await retornaInfoToken(token);
 
-    const tipoUsuario = await prisma.usuario.findUnique({
-      where:{
-        id: usuario.usuario_id,
-      },
-      select:{
-        tipoUsuario: true,
-      }
-    })
-  
+    const tipoUsuario = await retornaTipoUsuario(token);
+
+    if(!tipoUsuario) throw new AppError("Usuário não encontrado",404);
+    
     if( tipoUsuario.tipoUsuario != "ADMIN") throw new AppError("Acesso não autorizado: Somente admin pode aderir um lider a um ministério",401)
     
     const ministerio = await prisma.ministerio.findUnique({
@@ -45,7 +39,7 @@ const postMinisterioLiderService = async (data,token) => {
         lider_id: true
       }
     });
-
+    
     if(lideresConectados.length === 0){
       const lideres = await prisma.usuario.findMany({
         where: {
@@ -76,12 +70,12 @@ const postMinisterioLiderService = async (data,token) => {
     } else {
 
       let lideresConectadosIds = lideresConectados.map(entry => entry.lider_id);
-      console.log(lideresConectadosIds);
+      
       if(lideresConectadosIds.length === lider_id.length){
-        throw new AppError("pinto",405);
+        throw new AppError("Já são lideres de um ministerio",405);
       } else{
         let lideresNaoConectadosID = lider_id.filter(liderId => !lideresConectadosIds.includes(liderId));
-        console.log(lideresNaoConectadosID);
+        
         let lideresNaoConectadosObjeto = await prisma.usuario.findMany({
             where:{
               id:{
@@ -89,7 +83,7 @@ const postMinisterioLiderService = async (data,token) => {
               }
             }
         });
-        console.log(lideresNaoConectadosObjeto);
+        
         await prisma.ministerioLider.createMany({
           data: lideresNaoConectadosObjeto.map((liderId) => ({
             ministerio_id:ministerio_id,

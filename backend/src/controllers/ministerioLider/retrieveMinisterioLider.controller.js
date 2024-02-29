@@ -2,7 +2,8 @@ import { retrieveMinisterioLiderService } from "../../services/ministerioLider/r
 
 const retrieveMinisterioLiderController = async (req, res) => {
     const ministerioId = req.params.id;
-    const lideres = await retrieveMinisterioLiderService(ministerioId);
+    const authHeader = req.headers["authorization"];
+    const lideres = await retrieveMinisterioLiderService(ministerioId,authHeader);
     res.status(200).json(lideres);
 };
 export { retrieveMinisterioLiderController };

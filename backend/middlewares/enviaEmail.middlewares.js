@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 // Defina a função sendEmail
 const sendEmail = async (to, subject, html) => {
   const mailOptions = {
-    from: 'Sigam',
+    from: 'SIGAM - Sistema de gerênciamento de atividades ministeriais',
     to,
     subject,
     html,

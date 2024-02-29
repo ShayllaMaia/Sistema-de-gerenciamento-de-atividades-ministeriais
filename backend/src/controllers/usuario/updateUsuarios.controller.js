@@ -3,7 +3,8 @@ import { updateUsuarioService } from "../../services/usuario/updateUsuarios.serv
 const updateUsuarioController = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
-  const updateUsuario = await updateUsuarioService(id, data);
+  const authHeader = req.headers["authorization"];
+  const updateUsuario = await updateUsuarioService(id, data, authHeader);
 
   res.status(200).json(updateUsuario);
 };

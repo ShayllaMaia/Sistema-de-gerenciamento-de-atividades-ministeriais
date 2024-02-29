@@ -3,7 +3,9 @@ import { AppError } from "../../errors/appError.js";
 
 const prisma = new PrismaClient();
 
-const retrieveEventosService = async (id) => {
+const retrieveEventosService = async (id,token) => {
+  token = await retornaInfoToken(token);
+  
   const evento = await prisma.eventos.findUnique({
     where: {
       id: id,
