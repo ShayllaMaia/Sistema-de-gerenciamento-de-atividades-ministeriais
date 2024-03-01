@@ -20,44 +20,58 @@ function email(nome, email) {
   const subject = 'Bem-vindo à nossa comunidade';
   const html = `
   <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+  <html lang="pt-BR">
+  
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email de Boas-Vindas</title>
-</head>
-<body style="background-color: black; color: orange;">
-    <table style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;">
-        <tr>
-            <td style="padding: 20px 0; text-align: center;">
-                <h2 style="color: orange;">Bem-vindo, ${nome}</h2>
-                <p>Obrigado por se juntar à nossa comunidade. Estamos muito felizes em tê-lo conosco.</p>
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <a href="https://example.com" style="background-color: orange; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Comece agora</a>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 20px 0; text-align: center; font-style: italic;">
-                <p>Salmo 23:4 - "Ainda que eu ande pelo vale da sombra da morte, não temerei mal algum, porque tu estás comigo; a tua vara e o teu cajado me consolam."</p>
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <p style="font-size: 14px;">SIGAM - Sistema de Gerenciamento Ministerial</p>
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                <a href="https://example.com/login" style="background-color: orange; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Fazer Login</a>
-            </td>
-        </tr>
+    <style>
+      .citação {
+        margin: 0px 10px;
+        max-width: 200px;
+        height: 60px;
+        padding: 10px;
+        background-color: #fff;
+        color: #000;
+        border-left: 5px solid #ff7f00;
+        font-style: italic;
+        font-size: 10px;
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  
+  <body style="background-color: black; color: orange; font-family: Arial, sans-serif;">
+    <table style="max-width: 600px; margin: 0 auto; padding: 20px;">
+      <tr>
+        <td style="padding: 20px 0; text-align: center;">
+          <h2 style="color: orange;">Bem-vindo, ${nome}</h2>
+          <p>Obrigado por se juntar à nossa comunidade. Estamos muito felizes em tê-lo conosco.</p>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">
+          <a href="https://example.com/login"
+            style="background-color: orange; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Fazer
+            Login</a>
+        </td>
+      </tr>
     </table>
-</body>
-</html>
+    <p style="padding: 20px 0; text-align: center;">Se precisar de qualquer assistência ou tiver dúvidas, não hesite em
+      nos contatar.</p>
+    <p>Atenciosamente,<br>Equipe do SIGAM</p>
+    <p style="font-size:10px;">Este é um e-mail automático, por favor, não responda.</p>
+    <div class="citação" style="float: right;">
+      <p> "Mas quem quiser tornar-se grande entre vocês deverá ser servo, e quem quiser ser o primeiro deverá ser escravo
+        de todos." - Marcos 10:43-44 (NVI)</p>
+    </div>
+    <div style="clear: both;"></div>
+  </body>
+  
+  </html>
 
   
   `;
