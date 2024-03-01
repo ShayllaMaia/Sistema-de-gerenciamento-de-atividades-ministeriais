@@ -35,8 +35,8 @@ export class EventoListarComponent implements OnInit {
 
   editarEvento(evento: EventoInterface): void {
     console.log('Editar evento:', evento);
-    const eventoIdString = evento.id.toString();
-    this.eventoService.editarEvento(eventoIdString, this.formatarDadosEvento(evento)).subscribe(
+    // Remova a chamada para this.formatarDadosEvento(evento) se não for necessário
+    this.eventoService.editarEvento(evento.id.toString(), evento).subscribe(
       (response) => {
         console.log('Evento editado com sucesso:', response);
       },
@@ -47,7 +47,7 @@ export class EventoListarComponent implements OnInit {
   }
 
   salvarEdicaoEvento(evento: EventoInterface): void {
-    this.eventoService.editarEvento(evento.id.toString(), this.formatarDadosEvento(evento)).subscribe(
+    this.eventoService.editarEvento(evento.id.toString(), evento).subscribe(
       () => {
         console.log('Evento editado com sucesso');
         this.fecharModalEvento('editarModalEvento' + evento.id);
@@ -93,19 +93,7 @@ export class EventoListarComponent implements OnInit {
     }
   }
 
-  formatarDadosEvento(evento: EventoInterface): EventoInterface {
-    // Formata os dados do evento antes de enviá-los para o serviço
-    const dataFormatada = new Date(evento.data).toISOString();
-    const horaInicioFormatada = new Date(evento.hora_inicio).toISOString();
-    const horaFimFormatada = new Date(evento.hora_fim).toISOString();
-
-    return {
-      ...evento,
-      data: dataFormatada,
-      hora_inicio: horaInicioFormatada,
-      hora_fim: horaFimFormatada
-    };
-  }
+  
 
   formatarHora(dataISO: string): string {
     const data = new Date(dataISO);
