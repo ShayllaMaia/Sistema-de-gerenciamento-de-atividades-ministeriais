@@ -13,7 +13,7 @@
               <div class="text-center mb-4">
                 <h6>Lista de Eventos</h6>
               </div>
-              <button routerLink="/cadastro-evento" class="btn btn-warning">Cadastrar Novo Evento</button>
+              <button routerLink="/cadastro-evento" class="btn btn-warning pr-2">Cadastrar</button>
               <ul class="list-group">
                 <li class="list-group-item" *ngFor="let evento of registro">
                   <h2 class="mb-3 font-weight-bold display-5">{{ evento.nome }}</h2>
@@ -23,9 +23,63 @@
                   <p>Hora de Fim: {{ formatarHora(evento.hora_fim) }}</p>
                   <p>Descrição: {{ evento.descricao }}</p>
                   <div class="mb-3">
-                    <button (click)="editarEvento(evento)" class="btn btn-warning pr-2">Editar</button>
+                    <button type="button" (click)="abrirModalEvento('editarModalEvento' + evento.id)" class="btn btn-warning pr-2">
+                      Editar
+                    </button>
+
                     <span class="px-2"></span>
-                    <button (click)="excluirEvento(evento.id)" class="btn btn-warning">Excluir</button>
+
+                    <button (click)="excluirEvento(evento.id)" class="btn btn-warning pr-2">
+                      Excluir
+                    </button>
+
+                    <!-- Modal de edição do evento -->
+                    <div class="modal fade" [id]="'editarModalEvento' + evento.id" tabindex="-1" role="dialog" aria-labelledby="editarModalEventoLabel"
+                      aria-hidden="true" >
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="editarModalEventoLabel">Editar Evento</h5>
+                            <button type="button" class="btn-close" (click)="fecharModalEvento('editarModalEvento' + evento.id)"
+                              aria-label="Fechar"></button>
+                          </div>
+                          <div class="modal-body">
+                            <!-- Campos de edição do evento -->
+                            <div class="form-group">
+                              <label for="nomeEvento">Nome:</label>
+                              <input type="text" class="form-control" id="nomeEvento" [(ngModel)]="evento.nome">
+                            </div>
+                            <div class="form-group">
+                              <label for="dataEvento">Data:</label>
+                              <input type="date" class="form-control" id="dataEvento" [(ngModel)]="evento.data">
+                            </div>
+                            <div class="form-group">
+                              <label for="tipoEvento">Tipo de Evento:</label>
+                              <input type="text" class="form-control" id="tipoEvento" [(ngModel)]="evento.tipoEvento">
+                            </div>
+                            <div class="form-group">
+                              <label for="horaInicio">Hora de Início:</label>
+                              <input type="time" class="form-control" id="horaInicio" [(ngModel)]="evento.hora_inicio">
+                            </div>
+                            <div class="form-group">
+                              <label for="horaFim">Hora de Fim:</label>
+                              <input type="time" class="form-control" id="horaFim" [(ngModel)]="evento.hora_fim">
+                            </div>
+                            <div class="form-group">
+                              <label for="descricaoEvento">Descrição:</label>
+                              <textarea class="form-control" id="descricaoEvento" [(ngModel)]="evento.descricao"></textarea>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" (click)="salvarEdicaoEvento(evento)" class="btn btn-warning pr-2">Salvar mudanças</button>
+                            <button type="button" class="btn btn-warning pr-2" (click)="fecharModalEvento('editarModalEvento' + evento.id)">
+                              Fechar
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </li>
               </ul>

@@ -27,9 +27,10 @@ const updateEventosService = async (id, data, token) => {
     if (new Date(hora_inicio) >= new Date(hora_fim)) {
         throw new Error('A hora de início deve ser anterior à hora de término.');
     }
-    const dataFormatada = new Date(date);
-    const horaInicioFormatada = new Date(hora_inicio);
-    const horaFimFormatada = new Date(hora_fim);
+    const dataFormatada = new Date(date).toISOString();
+    const horaInicioFormatada = new Date(Date.parse(`${data}T${hora_inicio}+00:00`));
+    const horaFimFormatada = new Date(Date.parse(`${data}T${hora_fim}+00:00`));
+
     const updateEvento = await prisma.eventos.update({
         where: {
             id: evento.id,
