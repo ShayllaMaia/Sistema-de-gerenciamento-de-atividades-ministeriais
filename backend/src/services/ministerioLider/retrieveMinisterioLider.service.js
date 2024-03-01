@@ -1,10 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { AppError } from "../../errors/appError.js";
+import { retornaInfoToken } from "../../../middlewares/retornaInfoToen.middliwares.js";
 
 const prisma = new PrismaClient();
 
-const retrieveMinisterioLiderService = async (ministerioId) => {
+const retrieveMinisterioLiderService = async (ministerioId, token) => {
     // Verifica se o ministério existe
+    token = await retornaInfoToken(token);
     const ministerio = await prisma.ministerio.findUnique({
         where: {
             id: ministerioId,

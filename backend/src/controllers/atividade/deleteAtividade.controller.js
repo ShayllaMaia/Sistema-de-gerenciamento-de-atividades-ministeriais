@@ -2,8 +2,10 @@ import { deleteAtividadeService } from "../../services/atividade/deleteAtividade
 
 const deletarAtividadeController = async (req, res) => {
   const { id } = req.params;
-  await deleteAtividadeService(Number(id));
+  const authHeader = req.headers["authorization"];
+ 
+  await deleteAtividadeService(id, authHeader);
 
-  return res.status(204).send();
+  return res.status(204);
 };
 export { deletarAtividadeController };
