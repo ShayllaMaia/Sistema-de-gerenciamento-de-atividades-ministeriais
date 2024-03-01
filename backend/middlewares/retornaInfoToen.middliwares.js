@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { AppError } from "../src/errors/appError.js";
 const retornaInfoToken = async (token) => {
+
     if (!token) throw new AppError("Acesso não autorizado", 401);
     
     token = token && token.split(" ")[1];
