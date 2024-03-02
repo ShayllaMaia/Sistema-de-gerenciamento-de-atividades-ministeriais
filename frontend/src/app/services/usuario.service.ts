@@ -23,5 +23,4 @@ export class UsuarioService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<UsuarioInterface[]>(`${this.baseUrl}/usuario`, { headers });
   }
-  
 }

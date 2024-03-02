@@ -22,6 +22,10 @@
                   Editar
                 </button>
 
+                <button type="button" class="btn btn-primary" (click)="verMembrosMinisterio(ministerio.id)">
+                  Ver membros do ministério
+                </button>
+
                 <!-- Modal de edição -->
                 <div class="modal fade" id="editarModal{{ ministerio.id }}" tabindex="-1" role="dialog"
                   aria-labelledby="editarModalLabel" aria-hidden="true">

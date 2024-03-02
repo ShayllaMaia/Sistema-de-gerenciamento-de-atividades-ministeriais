@@ -16,6 +16,7 @@ import { MinisterioListarComponent } from './components/ministerio-listar/minist
 import { MembroListarComponent } from './components/membro-listar/membro-listar.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MembrosMinisterioComponent } from './components/membros-ministerio/membros-ministerio.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EventoListarComponent,
     MinisterioCadastroComponent,
     MinisterioListarComponent,
-    MembroListarComponent
+    MembroListarComponent,
+    MembrosMinisterioComponent
 
   ],
   imports: [

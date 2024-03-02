@@ -108,4 +108,8 @@ export class MinisterioListarComponent implements OnInit {
       modal.style.display = 'none';
     }
   }
+
+  verMembrosMinisterio(ministerioId: string): void {
+    this.router.navigate(['/membros-ministerio', ministerioId]);
+  }
 }
