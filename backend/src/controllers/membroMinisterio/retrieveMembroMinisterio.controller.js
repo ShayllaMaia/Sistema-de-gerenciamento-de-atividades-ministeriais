@@ -1,3 +1,4 @@
+import { retrieveMembroMinisterioService } from "../../services/membroMinisterio/retrieveMembroMinisterio.service.js";
 const retrieveMembroMinisterioController = async (req, res) => {
     const { id } = req.params;
     const authHeader = req.headers["authorization"];
