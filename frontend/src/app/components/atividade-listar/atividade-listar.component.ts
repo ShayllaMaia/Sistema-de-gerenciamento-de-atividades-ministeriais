@@ -25,10 +25,10 @@ export class AtividadeListarComponent implements OnInit {
 
     carregarAtividades(): void {
         this.atividadeService.listarAtividades().subscribe(
-            (atividade) => {
-              console.log('atividades carregadas:', atividade);
+            (atividades) => {
+              console.log('atividades carregadas:', atividades);
 
-              this.atividades = atividade;
+              this.atividades = atividades.filter(atividade => atividade.ministerio_id === this.idMinisterio);
             },
             (error) => {
               console.error('Erro ao carregar atividade:', error);
