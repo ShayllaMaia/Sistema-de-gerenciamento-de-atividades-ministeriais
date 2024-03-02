@@ -14,6 +14,8 @@ import { EventoListarComponent } from './components/evento-listar/evento-listar.
 import { MinisterioCadastroComponent } from './components/ministerio-cadastro/ministerio-cadastro.component';
 import { MinisterioListarComponent } from './components/ministerio-listar/ministerio-listar.component';
 import { MembroListarComponent } from './components/membro-listar/membro-listar.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -36,6 +38,12 @@ import { MembroListarComponent } from './components/membro-listar/membro-listar.
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule, // Adicione o módulo de animações do Angular
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      preventDuplicates: true,
+    }),
+    ToastrModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

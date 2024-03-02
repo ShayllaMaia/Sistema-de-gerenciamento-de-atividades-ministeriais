@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 const deleteEventosService = async (id, token) => {
     token = await retornaInfoToken(token);
-    const tipoUsuario = retornaTipoUsuario(token);
+    const tipoUsuario = await retornaTipoUsuario(token);
 
     if (tipoUsuario.tipoUsuario == "NORMAL") throw new AppError("Acesso não autorizado: Somente admin e lideres podem deletar um evento", 401);
 
