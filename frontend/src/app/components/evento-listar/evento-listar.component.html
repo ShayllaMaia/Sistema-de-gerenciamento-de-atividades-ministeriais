@@ -17,10 +17,10 @@
               <ul class="list-group">
                 <li class="list-group-item" *ngFor="let evento of registro">
                   <h2 class="mb-3 font-weight-bold display-5">{{ evento.nome }}</h2>
-                  <p>Data: {{ formatarData(evento.data) }}</p>
+                  <p>Data: {{formatarData(evento.data)}}</p>
                   <p>Tipo: {{ evento.tipoEvento }}</p>
-                  <p>Hora de Início: {{ formatarHora(evento.hora_inicio) }}</p>
-                  <p>Hora de Fim: {{ formatarHora(evento.hora_fim) }}</p>
+                  <p>Hora de Início: {{ evento.hora_inicio }}</p>
+                  <p>Hora de Fim: {{evento.hora_fim }}</p>
                   <p>Descrição: {{ evento.descricao }}</p>
                   <div class="mb-3">
                     <button type="button" (click)="abrirModalEvento('editarModalEvento' + evento.id)" class="btn btn-warning pr-2">
@@ -34,7 +34,7 @@
                     </button>
 
                     <!-- Modal de edição do evento -->
-                    <div class="modal fade" [id]="'editarModalEvento' + evento.id" tabindex="-1" role="dialog" aria-labelledby="editarModalEventoLabel"
+                    <div class="modal fade " [id]="'editarModalEvento' + evento.id" tabindex="-1" role="dialog" aria-labelledby="editarModalEventoLabel"
                       aria-hidden="true" >
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
@@ -57,13 +57,15 @@
                               <label for="tipoEvento">Tipo de Evento:</label>
                               <input type="text" class="form-control" id="tipoEvento" [(ngModel)]="evento.tipoEvento">
                             </div>
-                            <div class="form-group">
-                              <label for="horaInicio">Hora de Início:</label>
-                              <input type="time" class="form-control" id="horaInicio" [(ngModel)]="evento.hora_inicio">
-                            </div>
-                            <div class="form-group">
-                              <label for="horaFim">Hora de Fim:</label>
-                              <input type="time" class="form-control" id="horaFim" [(ngModel)]="evento.hora_fim">
+                            <div class="form-group row">
+                              <div class="col-md-6">
+                                <label for="horaInicio" class="col-form-label">Hora de Início:</label>
+                                <input type="time" class="form-control" id="horaInicio" [(ngModel)]="evento.hora_inicio">
+                              </div>
+                              <div class="col-md-6">
+                                <label for="horaFim" class="col-form-label">Hora de Fim:</label>
+                                <input type="time" class="form-control" id="horaFim" [(ngModel)]="evento.hora_fim">
+                              </div>
                             </div>
                             <div class="form-group">
                               <label for="descricaoEvento">Descrição:</label>

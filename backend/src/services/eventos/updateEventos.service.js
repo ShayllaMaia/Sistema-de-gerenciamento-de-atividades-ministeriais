@@ -3,17 +3,15 @@ import { AppError } from "../../errors/appError.js";
 import { retornaInfoToken } from "../../../middlewares/retornaInfoToen.middliwares.js";
 import { retornaTipoUsuario } from "../../../middlewares/retornaTipoUsuario.middliweres.js";
 
-
 const prisma = new PrismaClient();
 
-const updateEventosService = async (id, data, token) => {
+const updateEventosService = async (id, dados, token) => {
     const eventoId = id;
-    let { date, hora_inicio, hora_fim, descricao } = data;
-
+    let { nome,data, hora_inicio, hora_fim, descricao } = dados;
     token = await retornaInfoToken(token);
-    const tipoUsuario = retornaTipoUsuario(token);
-    if (tipoUsuario.tipoUsuario == "ADMIN") throw new AppError("Acesso não autorizado: Somente admin podem atualizar um evento", 401);
+    const tipoUsuario = await retornaTipoUsuario(token);
 
+    if (tipoUsuario.tipoUsuario != "ADMIN") throw new AppError("Acesso não autorizado: Somente admin podem atualizar um evento", 401);
 
     const evento = await prisma.eventos.findUnique({
         where: {
@@ -27,16 +25,18 @@ const updateEventosService = async (id, data, token) => {
     if (new Date(hora_inicio) >= new Date(hora_fim)) {
         throw new Error('A hora de início deve ser anterior à hora de término.');
     }
-    const dataFormatada = new Date(date).toISOString();
-    const horaInicioFormatada = new Date(Date.parse(`${data}T${hora_inicio}+00:00`));
-    const horaFimFormatada = new Date(Date.parse(`${data}T${hora_fim}+00:00`));
+
+    // Criando objetos Date para as horas de início e fim
+    const horaInicioFormatada = new Date(Date.parse(`1970-01-01T${hora_inicio}Z`));
+    const horaFimFormatada = new Date(Date.parse(`1970-01-01T${hora_fim}Z`));
 
     const updateEvento = await prisma.eventos.update({
         where: {
             id: evento.id,
         },
         data: {
-            data: dataFormatada,
+            nome:nome,
+            data: new Date(data), // Mantendo a data como está, pois já está no formato esperado
             hora_inicio: horaInicioFormatada,
             hora_fim: horaFimFormatada,
             descricao: descricao,
