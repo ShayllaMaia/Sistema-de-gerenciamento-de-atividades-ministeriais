@@ -14,54 +14,52 @@
                         </div>
                         <button routerLink="/cadastro-ministerio">Cadastrar Novo Ministério</button>
                         <ul class="list-group">
-                            <li class="list-group-item" *ngFor="let ministerio of ministerios">
-                                <p>Nome: {{ ministerio.nome }}</p>
-                                <p>Descrição: {{ ministerio.descricao }}</p>
+                            <li class="list-group-item" *ngFor="let atividade of atividades">
+                                <p>Nome: {{ atividade.nome }}</p>
+                                <p>Descrição: {{ atividade.descricao }}</p>
                                 <!-- Botão para acionar modal de edição -->
-                                <button type="button" class="btn btn-primary"
-                                    (click)="abrirModal('editarModal' + ministerio.id)">
+                                <!-- <button type="button" class="btn btn-primary"
+                                    (click)="abrirModal('editarModal' + atividade.id)">
                                     Editar
-                                </button>
+                                </button> -->
 
                                 <!-- Modal de edição -->
-                                <div class="modal fade" id="editarModal{{ ministerio.id }}" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="editarModal{{ atividade.id }}" tabindex="-1" role="dialog"
                                     aria-labelledby="editarModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="editarModalLabel">Editar Ministério</h5>
-                                                <button type="button" class="btn-close"
+                                                <!-- <button type="button" class="btn-close"
                                                     (click)="fecharModal('editarModal' + ministerio.id)"
-                                                    aria-label="Fechar"></button>
+                                                    aria-label="Fechar"></button> -->
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Campos de edição do ministério -->
                                                 <div class="form-group">
                                                     <label for="nomeMinisterio">Nome:</label>
                                                     <input type="text" class="form-control" id="nomeMinisterio"
-                                                        [(ngModel)]="ministerio.nome" name="nomeMinisterio">
+                                                        [(ngModel)]="atividade.nome" name="nomeMinisterio">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="descricaoMinisterio">Descrição:</label>
                                                     <textarea class="form-control" id="descricaoMinisterio"
-                                                        [(ngModel)]="ministerio.descricao"
+                                                        [(ngModel)]="atividade.descricao"
                                                         name="descricaoMinisterio"></textarea>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
+                                                <!-- <button type="button" class="btn btn-secondary"
                                                     (click)="fecharModal('editarModal' + ministerio.id)">Fechar</button>
                                                 <button type="button" (click)="salvarEdicaoMinisterio(ministerio)"
-                                                    class="btn btn-primary">Salvar mudanças</button>
+                                                    class="btn btn-primary">Salvar mudanças</button> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <button class="btn-close"
-                                    (click)="confirmarExcluirMinisterio(ministerio.id.toString())">Excluir</button>
-                                <button routerLink="/lista-atividade">Listar
-                                    Atividades</button>
+                                <!-- <button class="btn-close"
+                                    (click)="confirmarExcluirMinisterio(ministerio.id.toString())">Excluir</button> -->
                             </li>
                         </ul>
                     </div>
