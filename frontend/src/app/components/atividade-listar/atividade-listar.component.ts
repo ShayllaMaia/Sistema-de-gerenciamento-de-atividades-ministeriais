@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AtividadeInterface } from 'src/app/model/ativade.interface';
 import { AtividadeService } from 'src/app/services/atividade.service';
 
@@ -10,10 +11,15 @@ import { AtividadeService } from 'src/app/services/atividade.service';
 export class AtividadeListarComponent implements OnInit {
     atividades: AtividadeInterface[] = []
     isSubmit: boolean = false;
-    
-    constructor(private atividadeService: AtividadeService) {}
+    idMinisterio: string = "";
+        
+    constructor(private atividadeService: AtividadeService, private route: ActivatedRoute,) {}
 
     ngOnInit(): void {
+        this.route.queryParams.subscribe(params => {
+            this.idMinisterio = params['idMinisterio'];
+        });
+
         this.carregarAtividades();
     }
 
@@ -21,10 +27,58 @@ export class AtividadeListarComponent implements OnInit {
         this.atividadeService.listarAtividades().subscribe(
             (atividade) => {
               console.log('atividades carregadas:', atividade);
+
               this.atividades = atividade;
             },
             (error) => {
               console.error('Erro ao carregar atividade:', error);
+            }
+        );
+    }
+
+    salvarEdicaoAtividade(atividade: AtividadeInterface): void {
+        this.atividadeService.editarAtividade(atividade.id.toString(), atividade).subscribe(
+          () => {
+            console.log('Ativiade editada com sucesso');
+            this.fecharModal('editarModal' + atividade.id);
+            this.carregarAtividades();
+          },
+          (error: any) => {
+            console.error('Erro ao editar atividade:', error);
+          }
+        );
+      }
+
+    abrirModal(modalId: string): void {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.add('show');
+          modal.style.display = 'block';
+        }
+      }
+    
+      fecharModal(modalId: string): void {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.remove('show');
+          modal.style.display = 'none';
+        }
+      }
+
+    confirmarExcluirAtividade(atividadeId: string) {
+        if (confirm('Tem certeza que deseja excluir esta atividade?')) {
+            this.excluirAtividade(atividadeId);
+          }
+    }
+
+    excluirAtividade(atividadeId: string) {
+        this.atividadeService.excluirAtividade(atividadeId).subscribe(
+            () => {
+              console.log('Atividade excluído com sucesso');
+              this.carregarAtividades();
+            },
+            (error: any) => {
+              console.error('Erro ao excluir atividade:', error);
             }
           );
     }

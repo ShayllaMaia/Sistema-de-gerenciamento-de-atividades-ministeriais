@@ -13,7 +13,7 @@ import { Observable } from "rxjs";
   
     constructor(private http: HttpClient) {}
 
-    criarAtividade(atividade: AtividadeInterface): Observable<any> {
+    criarAtividade(atividade: any): Observable<any> {
         console.log('Enviando atividade:', atividade);
         const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
         return this.http.post(`${this.baseUrl}/atividade`, atividade, { headers });
@@ -23,4 +23,14 @@ import { Observable } from "rxjs";
         const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
         return this.http.get<AtividadeInterface[]>(`${this.baseUrl}/atividade`, { headers });
     }
-  }
+
+    editarAtividade(ativivdadeId: string, atividade: AtividadeInterface): Observable<any> {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+        return this.http.put(`${this.baseUrl}/atividade/${ativivdadeId}`, atividade, { headers });
+      }
+
+    excluirAtividade(ativivdadeId: string): Observable<any> {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+        return this.http.delete(`${this.baseUrl}/atividade/${ativivdadeId}`, { headers });
+    }
+}

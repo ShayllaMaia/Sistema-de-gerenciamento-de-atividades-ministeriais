@@ -60,7 +60,8 @@
 
                                 <button class="btn-close"
                                     (click)="confirmarExcluirMinisterio(ministerio.id.toString())">Excluir</button>
-                                <button routerLink="/lista-atividade">Listar
+                                <button [routerLink]="['/lista-atividade']"
+                                    [queryParams]="{ idMinisterio: ministerio.id.toString() }">Listar
                                     Atividades</button>
                             </li>
                         </ul>
