@@ -15,11 +15,11 @@ const routes: Routes = [
   {path:'login', component: LoginComponent},
   { path: 'sidebar', component: SidebarComponent, canActivate: [AuthGuardService] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },// Redireciona para '/login' quando a rota for vazia
-  { path: 'cadastro-evento', component: EventoCadastroComponent },
-  { path: 'lista-evento', component: EventoListarComponent },
-  { path: 'cadastro-ministerio', component: MinisterioCadastroComponent },
-  { path: 'lista-ministerio', component: MinisterioListarComponent },
-  { path: 'lista-membro', component: MembroListarComponent },
+  { path: 'cadastro-evento', component: EventoCadastroComponent, canActivate: [AuthGuardService] },
+  { path: 'lista-evento', component: EventoListarComponent, canActivate: [AuthGuardService] },
+  { path: 'cadastro-ministerio', component: MinisterioCadastroComponent, canActivate: [AuthGuardService] },
+  { path: 'lista-ministerio', component: MinisterioListarComponent, canActivate: [AuthGuardService] },
+  { path: 'lista-membro', component: MembroListarComponent, canActivate: [AuthGuardService] },
 ];
 
 @NgModule({
