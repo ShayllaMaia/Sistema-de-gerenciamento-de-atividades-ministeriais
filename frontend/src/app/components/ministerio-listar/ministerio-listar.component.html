@@ -9,24 +9,47 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 mt-4">
-            <div class="text-center mb-4">
-              <h6>Lista de Ministérios</h6>
+            <div class="text-center mb-4 font-weight-bold">
+              <h2>Ministérios Cadastrados</h2>
             </div>
-            <button routerLink="/cadastro-ministerio">Cadastrar Novo Ministério</button>
+            <div class="text-right mb-4">
+              <button routerLink="/cadastro-ministerio" class="btn btn-warning pr-2">Cadastrar Novo Ministério</button>
+            </div>
             <ul class="list-group">
+              <li class="list-group-item">
+                <div class="d-flex justify-content-between ">
+                  <div>
+                    <h6 class="font-weight-bold">Nome</h6>
+                  </div>
+                  <div class="ml-auto px-80">
+                    <h6 class="font-weight-bold">Descrição</h6>
+                  </div>
+                  <div>
+                    <h6 class="font-weight-bold px-14">Ações</h6>
+                  </div>
+                </div>
+              </li>
               <li class="list-group-item" *ngFor="let ministerio of ministerios">
-                <p>Nome: {{ ministerio.nome }}</p>
-                <p>Descrição: {{ ministerio.descricao }}</p>
-                <!-- Botão para acionar modal de edição -->
-                <button type="button" class="btn btn-primary" (click)="abrirModal('editarModal' + ministerio.id)">
-                  Editar
-                </button>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h2 class="mb-3 font-weight-bold display-5">{{ ministerio.nome }}</h2>
+                    <button type="button" class="btn btn-warning pr-2" (click)="verMembrosMinisterio(ministerio.id)">
+                      Ver membros do ministério
+                    </button>
+                  </div>
 
-                <button type="button" class="btn btn-primary" (click)="verMembrosMinisterio(ministerio.id)">
-                  Ver membros do ministério
-                </button>
+                  <div class="ml-auto">
+                    <p>{{ ministerio.descricao }}</p>
+                  </div>
 
-                <!-- Modal de edição -->
+                  <div class="ml-auto">
+                    <button type="button" (click)="abrirModal('editarModal' + ministerio.id)"
+                      class="btn btn-warning pr-2">Editar</button>
+                    <span class="px-2"></span>
+                    <button (click)="confirmarExcluirMinisterio(ministerio.id.toString())"
+                      class="btn btn-warning pr-2">Excluir</button>
+                  </div>
+                </div>
                 <div class="modal fade" id="editarModal{{ ministerio.id }}" tabindex="-1" role="dialog"
                   aria-labelledby="editarModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -37,7 +60,6 @@
                           aria-label="Fechar"></button>
                       </div>
                       <div class="modal-body">
-                        <!-- Campos de edição do ministério -->
                         <div class="form-group">
                           <label for="nomeMinisterio">Nome:</label>
                           <input type="text" class="form-control" id="nomeMinisterio" [(ngModel)]="ministerio.nome"
@@ -47,18 +69,17 @@
                           <label for="descricaoMinisterio">Descrição:</label>
                           <textarea class="form-control" id="descricaoMinisterio" [(ngModel)]="ministerio.descricao"
                             name="descricaoMinisterio"></textarea>
-                        </div>             
+                        </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
+                        <button type="button" (click)="salvarEdicaoMinisterio(ministerio)"
+                          class="btn btn-warning pr-2">Salvar mudanças</button>
+                        <button type="button" class="btn btn-warning pr-2"
                           (click)="fecharModal('editarModal' + ministerio.id)">Fechar</button>
-                        <button type="button" (click)="salvarEdicaoMinisterio(ministerio)" class="btn btn-primary">Salvar mudanças</button>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <button class="btn-close" (click)="confirmarExcluirMinisterio(ministerio.id.toString())">Excluir</button>
               </li>
             </ul>
           </div>
