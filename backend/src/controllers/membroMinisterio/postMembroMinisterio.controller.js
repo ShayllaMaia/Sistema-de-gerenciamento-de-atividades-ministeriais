@@ -2,7 +2,8 @@ import { postMembroMinisterioService } from "../../services/membroMinisterio/pos
 
 const postMembrominiterioController = async (req, res) => {
   const data = req.body;
-  const novoMembroMinisterio = await postMembroMinisterioService(data);
+  const authHeader = req.headers["authorization"];
+  const novoMembroMinisterio = await postMembroMinisterioService(data, authHeader);
   res.status(201).json(novoMembroMinisterio);
 };
 
