@@ -13,13 +13,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EventoListarComponent implements OnInit {
   registro: EventoInterface[] = [];
-  erroLogin: string = ''; 
+  erroLogin: string = '';
 
   constructor(
     private eventoService: EventoService,
     private router: Router,
     private toastr: ToastrService
-    
+
   ) { }
 
   ngOnInit(): void {
@@ -71,7 +71,7 @@ export class EventoListarComponent implements OnInit {
       },
       (error) => {
         console.error('Erro ao fazer login:', error);
-        if (error.status === 401) { 
+        if (error.status === 401) {
           this.erroLogin = 'Usuário ou senha incorretos. Por favor, verifique suas credenciais.';
         } else {
           this.erroLogin = 'Erro ao fazer login. Por favor, tente novamente mais tarde.';
@@ -150,8 +150,8 @@ export class EventoListarComponent implements OnInit {
     const dia = data.getUTCDate().toString().padStart(2, '0');
     const mes = (data.getUTCMonth() + 1).toString().padStart(2, '0');
     const ano = data.getUTCFullYear().toString();
-  
+
     return `${ano}-${mes}-${dia}`;
   }
-  
+
 }

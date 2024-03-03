@@ -13,22 +13,23 @@
                             <h6>Lista de Atividades</h6>
                         </div>
                         <div class="text-right mb-4">
-                            <button class="btn btn-warning pr-2" [routerLink]="['/cadastro-atividade']" [queryParams]="{ idMinisterio }">Cadastrar Atividade</button>
+                            <button class="btn btn-warning pr-2" [routerLink]="['/cadastro-atividade']"
+                                [queryParams]="{ idMinisterio }">Cadastrar Atividade</button>
                         </div>
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between ">
-                                  <div>
-                                    <h6 class="font-weight-bold">Nome</h6>
-                                  </div>
-                                  <div class="ml-auto px-80">
-                                    <h6 class="font-weight-bold">Descrição</h6>
-                                  </div>
-                                  <div>
-                                    <h6 class="font-weight-bold px-14">Ações</h6>
-                                  </div>
+                                    <div>
+                                        <h6 class="font-weight-bold">Nome</h6>
+                                    </div>
+                                    <div class="ml-auto px-80">
+                                        <h6 class="font-weight-bold">Descrição</h6>
+                                    </div>
+                                    <div>
+                                        <h6 class="font-weight-bold px-14">Ações</h6>
+                                    </div>
                                 </div>
-                              </li>
+                            </li>
                             <li class="list-group-item" *ngFor="let atividade of atividades">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
@@ -38,7 +39,7 @@
                                         <p>{{ atividade.descricao }}</p>
                                     </div>
                                     <div class="ml-auto">
-                                        <button type="button" class="btn btn-outline-warning"
+                                        <button type="button" class="btn btn-warning pr-2"
                                             (click)="abrirModal('editarModal' + atividade.id)">
                                             Editar
                                         </button>
@@ -48,7 +49,7 @@
                                             Excluir
                                         </button>
                                     </div>
-                                </div>                      
+                                </div>
                                 <!-- Modal de edição -->
                                 <div class="modal fade" id="editarModal{{ atividade.id }}" tabindex="-1" role="dialog"
                                     aria-labelledby="editarModalLabel" aria-hidden="true">
@@ -75,15 +76,15 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    (click)="fecharModal('editarModal' + atividade.id)">Fechar</button>
                                                 <button type="button" (click)="salvarEdicaoAtividade(atividade)"
                                                     class="btn  btn-warning">Salvar mudanças</button>
+                                                <button type="button" class="btn btn-warning pr-2"
+                                                    (click)="fecharModal('editarModal' + atividade.id)">Fechar</button>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </li>
                         </ul>
                     </div>
