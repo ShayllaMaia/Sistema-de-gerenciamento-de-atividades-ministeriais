@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3">
+            <app-sidebar></app-sidebar>
+        </div>
+        <!-- Lista de Ministérios -->
+        <div class="col-lg-9 mt-5 vh-100 custom-background">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 mt-4">
+                        <div class="text-center mb-4">
+                            <h6>Lista de Atividades</h6>
+                        </div>
+                        <button [routerLink]="['/cadastro-atividade']" [queryParams]="{ idMinisterio }">Cadastrar
+                            Nova Atividade</button>
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let atividade of atividades">
+                                <p>Nome: {{ atividade.nome }}</p>
+                                <p>Descrição: {{ atividade.descricao }}</p>
+                                <!-- Botão para acionar modal de edição -->
+                                <button type="button" class="btn btn-primary"
+                                    (click)="abrirModal('editarModal' + atividade.id)">
+                                    Editar
+                                </button>
+
+                                <!-- Modal de edição -->
+                                <div class="modal fade" id="editarModal{{ atividade.id }}" tabindex="-1" role="dialog"
+                                    aria-labelledby="editarModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editarModalLabel">Editar Atividades</h5>
+                                                <button type="button" class="btn-close"
+                                                    (click)="fecharModal('editarModal' + atividade.id)"
+                                                    aria-label="Fechar"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Campos de edição do ministério -->
+                                                <div class="form-group">
+                                                    <label for="nomeAtivdade">Nome:</label>
+                                                    <input type="text" class="form-control" id="nomeAtivdade"
+                                                        [(ngModel)]="atividade.nome" name="nomeAtivdade">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="descricaoAtivdade">Descrição:</label>
+                                                    <textarea class="form-control" id="descricaoAtivdade"
+                                                        [(ngModel)]="atividade.descricao"
+                                                        name="descricaoAtivdade"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    (click)="fecharModal('editarModal' + atividade.id)">Fechar</button>
+                                                <button type="button" (click)="salvarEdicaoAtividade(atividade)"
+                                                    class="btn btn-primary">Salvar mudanças</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn-close"
+                                    (click)="confirmarExcluirAtividade(atividade.id.toString())">Excluir</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -77,14 +77,18 @@
                         <button type="button" class="btn btn-warning pr-2"
                           (click)="fecharModal('editarModal' + ministerio.id)">Fechar</button>
                       </div>
+                                <button class="btn-close"
+                                    (click)="confirmarExcluirMinisterio(ministerio.id.toString())">Excluir</button>
+                                <button [routerLink]="['/lista-atividade']"
+                                    [queryParams]="{ idMinisterio: ministerio.id.toString() }">Listar
+                                    Atividades</button>
+                            </li>
+                        </ul>
                     </div>
-                  </div>
                 </div>
               </li>
             </ul>
           </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>

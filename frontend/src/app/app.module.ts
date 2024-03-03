@@ -17,6 +17,8 @@ import { MembroListarComponent } from './components/membro-listar/membro-listar.
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MembrosMinisterioComponent } from './components/membros-ministerio/membros-ministerio.component';
+import { AtividadeCadastroComponent } from './components/atividade-cadastro/atividade-cadastro.component';
+import { AtividadeListarComponent } from './components/atividade-listar/atividade-listar.component';
 
 
 @NgModule({
@@ -31,8 +33,9 @@ import { MembrosMinisterioComponent } from './components/membros-ministerio/memb
     MinisterioCadastroComponent,
     MinisterioListarComponent,
     MembroListarComponent,
-    MembrosMinisterioComponent
-
+    MembrosMinisterioComponent,
+    AtividadeCadastroComponent,
+    AtividadeListarComponent,
   ],
   imports: [
     BrowserModule,
