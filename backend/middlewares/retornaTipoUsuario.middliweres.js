@@ -11,6 +11,7 @@ const retornaTipoUsuario = async(id)=>{
         },
         select:{
           tipoUsuario: true,
+          id:true
         }
       });
       return tipoUsuario;
