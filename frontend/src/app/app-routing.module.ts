@@ -12,6 +12,7 @@ import { MembroListarComponent } from './components/membro-listar/membro-listar.
 import { MembrosMinisterioComponent } from './components/membros-ministerio/membros-ministerio.component';
 import { AtividadeCadastroComponent } from './components/atividade-cadastro/atividade-cadastro.component';
 import { AtividadeListarComponent } from './components/atividade-listar/atividade-listar.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'lista-membro', component: MembroListarComponent, canActivate: [AuthGuardService] },
   { path: 'membros-ministerio/:ministerioId', component: MembrosMinisterioComponent, canActivate: [AuthGuardService] },
   { path: 'lista-atividade', component: AtividadeListarComponent, canActivate: [AuthGuardService] },
-  { path: 'cadastro-atividade', component: AtividadeCadastroComponent, canActivate: [AuthGuardService] }
+  { path: 'cadastro-atividade', component: AtividadeCadastroComponent, canActivate: [AuthGuardService] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({
