@@ -1,3 +1,3 @@
 export const environment = {
-    API_URL: 'http://localhost:3200',
+    API_URL: 'https://sistema-de-gerenciamento-de-atividades.onrender.com/',
   };
