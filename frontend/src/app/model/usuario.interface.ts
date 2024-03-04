@@ -6,4 +6,12 @@ export interface UsuarioInterface {
   telefone: string;
   endereco: string;
   dataNascimento: string;
+
+  usuario?: {
+    id: string;
+    nome: string;
+    endereco: string;
+    telefone: string;
+    email: string;
+  }
 }

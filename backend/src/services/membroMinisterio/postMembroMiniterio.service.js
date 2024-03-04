@@ -9,7 +9,7 @@ const postMembroMinisterioService = async (data,token) => {
 
   let{ usuario_id, ministerio_id, preferenciasAtividades } = data;
   token = await retornaInfoToken(token);
-  const tipoUsuario = retornaTipoUsuario(token);
+  const tipoUsuario = await retornaTipoUsuario(token);
   if(tipoUsuario.tipoUsuario == "NORMAL") throw new AppError("Acesso não autorizado: Somente admin e lideres pode adicionar um membro a um ministério", 401);
 
   const usuario = await prisma.usuario.findUnique({

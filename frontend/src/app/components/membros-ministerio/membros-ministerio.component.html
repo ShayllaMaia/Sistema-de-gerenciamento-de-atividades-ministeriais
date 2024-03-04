@@ -1,0 +1,35 @@
+<section class="vh-100 custom-background">
+  <div class="container">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-3">
+        <app-sidebar></app-sidebar>
+      </div>
+      <!-- Lista de Membros -->
+      <div class="col-lg-9 mt-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 mt-4">
+              <div class="text-center mb-4">
+                <h6>Lista de Membros</h6>
+              </div>
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let membro of membros">
+                  <ng-container *ngIf="membro.usuario"> 
+                    <h2 class="mb-3 font-weight-bold display-5">{{ membro.usuario.nome }}</h2>
+                    <p>Email: {{ membro.usuario.email }}</p>
+                    <p>Telefone: {{ membro.usuario.telefone }}</p>
+                    <p>Endereço: {{ membro.usuario.endereco }}</p>
+                  </ng-container>
+                  <ng-container *ngIf="!membro.usuario"> 
+                    <p>Nenhum usuário encontrado.</p>
+                  </ng-container>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

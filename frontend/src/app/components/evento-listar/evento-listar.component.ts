@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { EventoService } from 'src/app/services/evento.service';
 import { EventoInterface } from 'src/app/model/evento.interface';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 @Component({
   selector: 'app-evento-listar',
@@ -10,11 +13,13 @@ import { Router } from '@angular/router';
 })
 export class EventoListarComponent implements OnInit {
   registro: EventoInterface[] = [];
+  erroLogin: string = '';
 
   constructor(
     private eventoService: EventoService,
     private router: Router,
-    
+    private toastr: ToastrService
+
   ) { }
 
   ngOnInit(): void {
@@ -22,10 +27,18 @@ export class EventoListarComponent implements OnInit {
   }
 
   carregarEventos(): void {
+    this.toastr.success('Mensagem de sucesso!', 'Sucesso');
     this.eventoService.getEventos().subscribe(
       (eventos) => {
         console.log('Eventos carregados:', eventos);
+        for (let i = 0; i < eventos.length; i++) {
+          eventos[i].data = this.formatarDataInput(eventos[i].data);
+          eventos[i].hora_inicio = this.formatarHora(eventos[i].hora_inicio);
+          eventos[i].hora_fim = this.formatarHora(eventos[i].hora_fim);
+        };
+        console.log('Eventos formatados:', eventos);
         this.registro = eventos;
+        console.log('Eventos:', this.registro);
       },
       (error) => {
         console.error('Erro ao carregar eventos:', error);
@@ -39,22 +52,30 @@ export class EventoListarComponent implements OnInit {
     this.eventoService.editarEvento(eventoIdString, this.formatarDadosEvento(evento)).subscribe(
       (response) => {
         console.log('Evento editado com sucesso:', response);
+        this.toastr.success('Mensagem de sucesso!', 'Sucesso');
       },
       (error) => {
         console.error('Erro ao editar evento:', error);
+        this.toastr.error('Mensagem de erro!', 'Erro');
       }
     );
   }
 
   salvarEdicaoEvento(evento: EventoInterface): void {
-    this.eventoService.editarEvento(evento.id.toString(), this.formatarDadosEvento(evento)).subscribe(
+    this.eventoService.editarEvento(evento.id.toString(), evento).subscribe(
       () => {
         console.log('Evento editado com sucesso');
+        this.toastr.success('Mensagem de sucesso!', 'Sucesso');
         this.fecharModalEvento('editarModalEvento' + evento.id);
         this.carregarEventos();
       },
-      (error: any) => {
-        console.error('Erro ao editar evento:', error);
+      (error) => {
+        console.error('Erro ao fazer login:', error);
+        if (error.status === 401) {
+          this.erroLogin = 'Usuário ou senha incorretos. Por favor, verifique suas credenciais.';
+        } else {
+          this.erroLogin = 'Erro ao fazer login. Por favor, tente novamente mais tarde.';
+        }
       }
     );
   }
@@ -102,23 +123,35 @@ export class EventoListarComponent implements OnInit {
     return {
       ...evento,
       data: dataFormatada,
-      hora_inicio: horaInicioFormatada,
-      hora_fim: horaFimFormatada
+      // hora_inicio: horaInicioFormatada,
+      // hora_fim: horaFimFormatada
     };
   }
 
   formatarHora(dataISO: string): string {
-    const data = new Date(dataISO);
-    const hora = data.getHours().toString().padStart(2, '0');
-    const minutos = data.getMinutes().toString().padStart(2, '0');
-    return `${hora}:${minutos}`;
+    // Divida a string de data e hora no "T"
+    const partes = dataISO.split('T');
+    const horaCompleta = partes[1];
+    const partesHora = horaCompleta.split(':');
+    const hora = partesHora[0];
+    const minuto = partesHora[1];
+    return `${hora}:${minuto}`;
   }
 
   formatarData(dataISO: string): string {
     const data = new Date(dataISO);
-    const dia = data.getDate().toString().padStart(2, '0');
-    const mes = (data.getMonth() + 1).toString().padStart(2, '0');
-    const ano = data.getFullYear().toString();
+    const dia = data.getUTCDate().toString().padStart(2, '0');
+    const mes = (data.getUTCMonth() + 1).toString().padStart(2, '0');
+    const ano = data.getUTCFullYear().toString();
     return `${dia}/${mes}/${ano}`;
   }
+  formatarDataInput(dataISO: string): string {
+    const data = new Date(dataISO);
+    const dia = data.getUTCDate().toString().padStart(2, '0');
+    const mes = (data.getUTCMonth() + 1).toString().padStart(2, '0');
+    const ano = data.getUTCFullYear().toString();
+
+    return `${ano}-${mes}-${dia}`;
+  }
+
 }
