@@ -42,14 +42,6 @@ model Atividade {
   ministerio   Ministerio @relation(fields: [ministerio_id], references: [id])
   ministerio_id String
   escalas      Escala[]
-  membrosAtividades MembrosAtividade[]
-}
-model MembrosAtividade {
-  @@id([atividade_id, usuario_id])
-  atividade_id String
-  usuario_id   String
-  atividade    Atividade @relation(fields: [atividade_id], references: [id])
-  usuario      Usuario   @relation(fields: [usuario_id], references: [id])
 }
 
 // Definição do modelo para a tabela Usuario
@@ -65,7 +57,6 @@ model Usuario {
   membrosMinisterios MembrosMinisterios[]
   participacoes      Participacao[]
   liderDe          MinisterioLider[]
-  membrosAtividades MembrosAtividade[]
 }
 
 // Definição do modelo para a tabela MembrosMinisterios
