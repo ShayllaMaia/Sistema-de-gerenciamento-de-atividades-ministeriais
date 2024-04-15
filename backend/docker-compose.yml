@@ -1,16 +1,15 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:latest
-    container_name: mysql_db
+  postgres:
+    image: postgres:latest  # Usando a imagem mais recente do PostgreSQL
+    container_name: postgres_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: sigamdb
-      MYSQL_USER: sigam
-      MYSQL_PASSWORD: senha
+      POSTGRES_USER: sigam  # Define o usuário do PostgreSQL
+      POSTGRES_PASSWORD: senha  # Define a senha do PostgreSQL
+      POSTGRES_DB: sigamdb  # Define o nome do banco de dados
     ports:
-      - "3306:3306"
+      - "5432:5432"  # Mapeia a porta do contêiner do PostgreSQL para a porta do host
     volumes:
-      - ./mysql-data:/var/lib/mysql
+      - ./postgres-data:/var/lib/postgresql/data  # Mapeia o volume para armazenar os dados do PostgreSQL
