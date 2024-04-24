@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MembrosMinisterioComponent } from './components/membros-ministerio/membros-ministerio.component';
 import { AtividadeCadastroComponent } from './components/atividade-cadastro/atividade-cadastro.component';
 import { AtividadeListarComponent } from './components/atividade-listar/atividade-listar.component';
+import Swal from 'sweetalert2';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { AtividadeListarComponent } from './components/atividade-listar/atividad
     MembrosMinisterioComponent,
     AtividadeCadastroComponent,
     AtividadeListarComponent,
+  
   ],
   imports: [
     BrowserModule,

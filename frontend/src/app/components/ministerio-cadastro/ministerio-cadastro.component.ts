@@ -6,6 +6,7 @@ import { MinisterioInterface } from 'src/app/model/ministerio.interface';
 import { MinisterioService } from 'src/app/services/ministerio.service';
 import { IForm } from 'src/app/i-form';
 import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-ministerio-cadastro',
   templateUrl: './ministerio-cadastro.component.html',
@@ -26,13 +27,13 @@ export class MinisterioCadastroComponent implements IForm<MinisterioInterface>{
 
     this.ministerioService.criarMinisterio(this.registro).pipe(
       catchError((error) => {
+        Swal.fire('Erro', 'Erro ao cadastrar ministério', 'error');
         this.isSubmit = false;
-        console.log('Erro:', error);
         return error;
       })
     ).subscribe({
       complete: () => {
-        console.log('Cadastro completo');
+        Swal.fire('Sucesso', 'Ministério cadastrado com sucesso', 'success');
         this.router.navigate(['/lista-ministerio']);
       }
     });
