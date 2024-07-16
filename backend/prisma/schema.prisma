@@ -1,8 +1,9 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"  // Alterado para o provedor PostgreSQL
   url      = env("DATABASE_URL")
 }
 
@@ -19,29 +20,39 @@ enum TipoEvento {
 
 model Ministerio {
   id                 String   @id @default(cuid())
-  nome      String   @unique
-  descricao String
-  lideres MinisterioLider[]
-  atividades Atividade[]
-  membros MembrosMinisterios[]
-  escalas           Escala[]
+  nome               String   @unique
+  descricao           String
+  lideres             MinisterioLider[]
+  atividades          Atividade[]
+  membros             MembrosMinisterios[]
+  escalas             Escala[]
 }
+
 model MinisterioLider {
   @@id([ministerio_id, lider_id])
   ministerio_id String
   lider_id      String
   ministerio    Ministerio  @relation(fields: [ministerio_id], references: [id])
-  lider        Usuario     @relation(fields: [lider_id], references: [id])
+  lider         Usuario     @relation(fields: [lider_id], references: [id])
 }
 
 // Definição do modelo para a tabela Atividade
 model Atividade {
-  id                 String               @id @default(cuid())
-  nome         String @unique
-  descricao    String
-  ministerio   Ministerio @relation(fields: [ministerio_id], references: [id])
-  ministerio_id String
-  escalas      Escala[]
+  id                 String      @id @default(cuid())
+  nome               String      @unique
+  descricao          String
+  ministerio         Ministerio  @relation(fields: [ministerio_id], references: [id])
+  ministerio_id      String
+  escalas            Escala[]
+  membrosAtividades  MembrosAtividade[]
+}
+
+model MembrosAtividade {
+  @@id([atividade_id, usuario_id])
+  atividade_id String
+  usuario_id   String
+  atividade    Atividade @relation(fields: [atividade_id], references: [id])
+  usuario      Usuario   @relation(fields: [usuario_id], references: [id])
 }
 
 // Definição do modelo para a tabela Usuario
@@ -49,59 +60,60 @@ model Usuario {
   id                 String               @id @default(cuid())
   nome               String
   endereco           String
-  telefone          String
+  telefone           String
   email              String              @unique
   dataNascimento     DateTime
   senha              String
-  tipoUsuario       TipoUsuario           @default(NORMAL)       // Usando ENUM para o campo tipoUsuario
+  tipoUsuario        TipoUsuario         @default(NORMAL)
   membrosMinisterios MembrosMinisterios[]
   participacoes      Participacao[]
-  liderDe          MinisterioLider[]
+  liderDe            MinisterioLider[]
+  membrosAtividades  MembrosAtividade[]
 }
 
 // Definição do modelo para a tabela MembrosMinisterios
 model MembrosMinisterios {
   id                 String               @id @default(cuid())
-  ministerio  Ministerio @relation(fields: [ministerio_id], references: [id])
-  ministerio_id String
-  usuario      Usuario    @relation(fields: [usuario_id], references: [id])
-  usuario_id  String
+  ministerio         Ministerio           @relation(fields: [ministerio_id], references: [id])
+  ministerio_id      String
+  usuario            Usuario              @relation(fields: [usuario_id], references: [id])
+  usuario_id         String
   preferenciasAtividades Json
 }
 
-// Definição do modelo para a tabela HorariosCulto
+// Definição do modelo para a tabela Eventos
 model Eventos {
   id                 String               @id @default(cuid())
-  nome        String
-  data        DateTime
-	tipoEvento  TipoEvento  @default(CULTO)
-  hora_inicio DateTime
-  hora_fim    DateTime
-	descricao   String?
-  isRecorrente Boolean
-  escalas     Escala[]
+  nome               String
+  data               DateTime
+  tipoEvento         TipoEvento           @default(CULTO)
+  hora_inicio        DateTime
+  hora_fim           DateTime
+  descricao          String?
+  isRecorrente       Boolean
+  escalas            Escala[]
 }
 
 // Definição do modelo para a tabela Escala
 model Escala {
   id                 String               @id @default(cuid())
-  data          DateTime
-  eventos       Eventos @relation(fields: [eventos_id], references: [id])
-  eventos_id    String
-  ministerio    Ministerio   @relation(fields: [ministerio_id], references: [id])
-  ministerio_id String
-  atividade     Atividade    @relation(fields: [atividade_id], references: [id])
-  atividade_id  String
-  recorrente    Boolean
-  dia_semana    Int
-  participacoes Participacao[]
+  data               DateTime
+  eventos            Eventos              @relation(fields: [eventos_id], references: [id])
+  eventos_id         String
+  ministerio         Ministerio           @relation(fields: [ministerio_id], references: [id])
+  ministerio_id      String
+  atividade          Atividade            @relation(fields: [atividade_id], references: [id])
+  atividade_id       String
+  recorrente         Boolean
+  dia_semana         Int
+  participacoes      Participacao[]
 }
 
 // Definição do modelo para a tabela Participacao
 model Participacao {
   id                 String               @id @default(cuid())
-  usuario      Usuario  @relation(fields: [usuario_id], references: [id])
-  usuario_id   String
-  escala      Escala   @relation(fields: [escala_id], references: [id])
-  escala_id   String
+  usuario            Usuario              @relation(fields: [usuario_id], references: [id])
+  usuario_id         String
+  escala             Escala               @relation(fields: [escala_id], references: [id])
+  escala_id          String
 }
