@@ -9,6 +9,7 @@ import { catchError } from 'rxjs';
 import { IForm } from 'src/app/i-form';
 import { EventoInterface } from 'src/app/model/evento.interface';
 import { EventoService } from 'src/app/services/evento.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-evento-cadastro', // Seletor do componente no HTML
@@ -19,7 +20,7 @@ import { EventoService } from 'src/app/services/evento.service';
 export class EventoCadastroComponent implements IForm<EventoInterface> {
   // Propriedade que representa os dados do formulário
   registro: EventoInterface = <EventoInterface>{};
-  
+
   // Flag que indica se o formulário foi submetido
   isSubmit: boolean = false;
 
@@ -40,6 +41,7 @@ export class EventoCadastroComponent implements IForm<EventoInterface> {
       // Tratando erros usando o operador catchError do RxJS
       catchError((error) => {
         // Resetando a flag de submissão em caso de erro
+        Swal.fire('Erro', 'Erro ao cadastrar evento', 'error');
         this.isSubmit = false;
         console.log('erro');
         return error; // Retornando o erro para ser tratado externamente
@@ -47,7 +49,7 @@ export class EventoCadastroComponent implements IForm<EventoInterface> {
     ).subscribe({
       // Bloco 'complete' executado quando a solicitação é concluída (com ou sem sucesso)
       complete: () => {
-        console.log('completo');
+        Swal.fire('Sucesso', 'Culto/Evento cadastrado com sucesso', 'success');
         // Navegando para a rota '/lista-evento' após a conclusão da solicitação
         this.router.navigate(['/lista-evento']);
       }

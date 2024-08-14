@@ -6,6 +6,7 @@ import { catchError } from 'rxjs';
 import { IForm } from 'src/app/i-form';
 import { UsuarioInterface } from 'src/app/model/usuario.interface';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -17,27 +18,27 @@ export class CadastroComponent implements IForm<UsuarioInterface> {
 
   registro: UsuarioInterface = <UsuarioInterface>{};
   isSubmit: boolean = false;
-  
+
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
     http: HttpClient
-   
+
     ) {}
-  
-  
+
+
   submit(form: NgForm): void {
     this.isSubmit = true;
     this.usuarioService.criarUsuario(this.registro).pipe(
       catchError((error)=>{
+        Swal.fire('Erro', 'Erro ao cadastrar usuário', 'error');
         this.isSubmit = false
-        console.log('erro');
         return error;
       })
     )
     .subscribe({
       complete:()=>{
-        console.log('completo');
+        Swal.fire('Sucesso', 'Usuário cadastrado com sucesso', 'success');
         this.router.navigate(['/login']);
       }
     })
