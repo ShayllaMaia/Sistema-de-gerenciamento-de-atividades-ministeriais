@@ -7,7 +7,7 @@ const getAtividadeService = async (token) => {
   token = await retornaInfoToken(token);
   return prisma.atividade.findMany({
     include: {
-      ministerio: true, // Inclui as informações completas do ministério
+      ministerio_id: true, // Inclui as informações completas do ministério
     }
   });
 };

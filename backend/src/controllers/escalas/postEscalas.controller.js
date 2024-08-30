@@ -1,8 +1,6 @@
-import { postEscalaService } from "../../services/escalas/postEscalas.service.js";
-
 const postEscalaController = async (req, res) => {
     const data = req.body;
-    const novaEscala = await postEscalaService(data);
+    const novaEscala = await gerarEscalaSemana();
 
     return res.status(201).json(novaEscala);
 };
