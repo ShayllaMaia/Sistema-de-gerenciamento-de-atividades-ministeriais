@@ -15,13 +15,14 @@
               </div>
               <ul class="list-group">
                 <li class="list-group-item" *ngFor="let membro of membros">
-                  <ng-container *ngIf="membro.usuario"> 
+                  <ng-container *ngIf="membro.usuario">
                     <h2 class="mb-3 font-weight-bold display-5">{{ membro.usuario.nome }}</h2>
                     <p>Email: {{ membro.usuario.email }}</p>
                     <p>Telefone: {{ membro.usuario.telefone }}</p>
                     <p>Endereço: {{ membro.usuario.endereco }}</p>
+                    <p>Status De Solicitação de Entrada: {{ membro.statusSolicitacao }}</p>
                   </ng-container>
-                  <ng-container *ngIf="!membro.usuario"> 
+                  <ng-container *ngIf="!membro.usuario">
                     <p>Nenhum usuário encontrado.</p>
                   </ng-container>
                 </li>

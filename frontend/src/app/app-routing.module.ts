@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'membros-ministerio/:ministerioId', component: MembrosMinisterioComponent, canActivate: [AuthGuardService] },
   { path: 'lista-atividade', component: AtividadeListarComponent, canActivate: [AuthGuardService] },
   { path: 'cadastro-atividade', component: AtividadeCadastroComponent, canActivate: [AuthGuardService] },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService], data: {papel: 'ADMIN'}}
+  { path: 'c', component: DashboardComponent, canActivate: [AuthGuardService], data: {papel: 'ADMIN'}}
 ];
 
 @NgModule({

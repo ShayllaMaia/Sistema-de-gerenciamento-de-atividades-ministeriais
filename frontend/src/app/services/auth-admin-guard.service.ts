@@ -10,7 +10,7 @@ export class AdminGuard implements CanActivate {
 
   canActivate(): boolean {
     const role = localStorage.getItem('papel');
-    if (role === 'admin') {
+    if (role === 'ADMIN') {
       return true;
     } else {
       this.router.navigate(['/login']);

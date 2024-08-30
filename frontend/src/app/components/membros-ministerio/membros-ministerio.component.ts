@@ -20,7 +20,8 @@ export class MembrosMinisterioComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.ministerioId = params['ministerioId'];
-      this.carregarMembrosMinisterio(this.ministerioId); 
+      this.carregarMembrosMinisterio(this.ministerioId);
+
     });
   }
 
@@ -28,6 +29,7 @@ export class MembrosMinisterioComponent implements OnInit {
     this.membroMinisterioService.getMembrosMinisterio(ministerioId).subscribe(
       (membros) => {
         this.membros = membros;
+        console.log('Membros do ministério:', membros);
       },
       (error) => {
         console.error('Erro ao carregar membros do ministério:', error);
