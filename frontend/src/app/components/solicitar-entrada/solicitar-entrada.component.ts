@@ -37,6 +37,17 @@ export class SolicitarEntradaComponent implements OnInit {
     );
   }
 
+  onCheckboxChange(event: any, atividadeId: string): void {
+    if (event.target.checked) {
+      this.selectedAtividades.push(atividadeId);
+    } else {
+      const index = this.selectedAtividades.indexOf(atividadeId);
+      if (index > -1) {
+        this.selectedAtividades.splice(index, 1);
+      }
+    }
+  }
+
   enviarSolicitacao(): void {
     const solicitacao = {
       ministerioId: this.ministerioId,

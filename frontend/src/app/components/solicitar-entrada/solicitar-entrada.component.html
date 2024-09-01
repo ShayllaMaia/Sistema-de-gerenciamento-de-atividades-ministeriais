@@ -21,7 +21,7 @@
                         <input
                           type="checkbox"
                           [value]="atividade.id"
-                          [(ngModel)]="selectedAtividades"
+                          (change)="onCheckboxChange($event, atividade.id)"
                           name="atividades"
                           id="atividade-{{atividade.id}}"
                           class="form-check-input"
