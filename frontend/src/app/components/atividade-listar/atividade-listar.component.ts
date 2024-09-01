@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AtividadeInterface } from 'src/app/model/ativade.interface';
+import { AtividadeInterface } from 'src/app/model/atividade.interface';
 import { AtividadeService } from 'src/app/services/atividade.service';
 
 @Component({

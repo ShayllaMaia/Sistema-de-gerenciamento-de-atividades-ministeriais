@@ -2,7 +2,7 @@ import { Router } from "express";
 import { postMinisterioLiderController } from "../controllers/ministerioLider/postMinisterioLider.controller.js";
 import { getMinisterioLiderController } from "../controllers/ministerioLider/getMinisteriolider.controller.js";
 import { retrieveMinisterioLiderController } from "../controllers/ministerioLider/retrieveMinisterioLider.controller.js";
-import { deleteMinisterioLiderController } from "../controllers/ministerioLider/deleteMinisterioLider.controller.js";
+import { deleteMinisterioLiderController } from "../controllers/ministerioLider/deleteministerioLider.controller.js"; // Correção feita aqui
 import { updateMinisterioLiderController } from "../controllers/ministerioLider/updateMinisterioLider.controller.js";
 
 const ministerioLiderRoutes = Router();

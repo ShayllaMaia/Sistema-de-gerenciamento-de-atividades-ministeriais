@@ -44,4 +44,8 @@ export class MinisterioService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<MinisterioInterface[]>(`${this.baseUrl}/ministerioLider`, { headers });
   }
+  getAtividades(ministerioId: string): Observable<any[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.get<any[]>(`${this.baseUrl}/atividades/${ministerioId}`, { headers });
+  }
 }

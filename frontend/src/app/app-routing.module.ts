@@ -14,6 +14,7 @@ import { AtividadeCadastroComponent } from './components/atividade-cadastro/ativ
 import { AtividadeListarComponent } from './components/atividade-listar/atividade-listar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminGuard } from './services/auth-admin-guard.service';
+import { SolicitarEntradaComponent } from './components/solicitar-entrada/solicitar-entrada.component';
 
 const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent },
@@ -28,7 +29,8 @@ const routes: Routes = [
   { path: 'membros-ministerio/:ministerioId', component: MembrosMinisterioComponent, canActivate: [AuthGuardService] },
   { path: 'lista-atividade', component: AtividadeListarComponent, canActivate: [AuthGuardService] },
   { path: 'cadastro-atividade', component: AtividadeCadastroComponent, canActivate: [AuthGuardService] },
-  { path: 'c', component: DashboardComponent, canActivate: [AuthGuardService], data: {papel: 'ADMIN'}}
+  { path: 'c', component: DashboardComponent, canActivate: [AuthGuardService], data: {papel: 'ADMIN'}},
+  { path: 'solicitar-entrada', component: SolicitarEntradaComponent },
 ];
 
 @NgModule({

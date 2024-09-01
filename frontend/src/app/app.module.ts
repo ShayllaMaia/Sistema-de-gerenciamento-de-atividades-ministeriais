@@ -21,6 +21,7 @@ import { AtividadeListarComponent } from './components/atividade-listar/atividad
 import { DashboardComponent } from './dashboard/dashboard.component';
 import Swal from 'sweetalert2';
 import { MinisterioListarComponent } from './components/ministerio-listar/ministerio-listar.component';
+import { SolicitarEntradaComponent } from './components/solicitar-entrada/solicitar-entrada.component';
 
 
 @NgModule({
@@ -39,6 +40,9 @@ import { MinisterioListarComponent } from './components/ministerio-listar/minist
     AtividadeCadastroComponent,
     AtividadeListarComponent,
     DashboardComponent,
+    SolicitarEntradaComponent,
+    
+  
   
   ],
   imports: [
