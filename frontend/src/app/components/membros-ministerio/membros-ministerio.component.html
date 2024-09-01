@@ -21,6 +21,17 @@
                     <p>Telefone: {{ membro.usuario.telefone }}</p>
                     <p>Endereço: {{ membro.usuario.endereco }}</p>
                     <p>Status De Solicitação de Entrada: {{ membro.statusSolicitacao }}</p>
+                    <div *ngIf="membro.preferenciasAtividades && membro.preferenciasAtividades.length > 0">
+                      <h6>Atividades:</h6>
+                      <ul>
+                        <li *ngFor="let atividade of membro.preferenciasAtividades">
+                          {{ atividade.nome }} - {{ atividade.descricao }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div *ngIf="(!membro.preferenciasAtividades || membro.preferenciasAtividades.length === 0)">
+                      <p>Nenhuma atividade preferida encontrada.</p>
+                    </div>
                   </ng-container>
                   <ng-container *ngIf="!membro.usuario">
                     <p>Nenhum usuário encontrado.</p>

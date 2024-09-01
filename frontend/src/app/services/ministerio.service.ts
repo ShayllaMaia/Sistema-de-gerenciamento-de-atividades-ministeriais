@@ -35,9 +35,13 @@ export class MinisterioService {
     return this.http.put(`${this.baseUrl}/ministerio/${ministerioId}`, ministerio, { headers });
   }
 
-
   getMembrosMinisterio(ministerioId: string): Observable<UsuarioInterface[]> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<UsuarioInterface[]>(`${this.baseUrl}/membroMinisterio/${ministerioId}`, { headers });
+  }
+
+  getMinisteriosLiderados(): Observable<MinisterioInterface[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.get<MinisterioInterface[]>(`${this.baseUrl}/ministerioLider`, { headers });
   }
 }

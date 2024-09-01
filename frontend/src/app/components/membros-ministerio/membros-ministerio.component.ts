@@ -21,15 +21,28 @@ export class MembrosMinisterioComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.ministerioId = params['ministerioId'];
       this.carregarMembrosMinisterio(this.ministerioId);
-
     });
   }
 
   carregarMembrosMinisterio(ministerioId: string): void {
     this.membroMinisterioService.getMembrosMinisterio(ministerioId).subscribe(
       (membros) => {
-        this.membros = membros;
-        console.log('Membros do ministério:', membros);
+        console.log('Dados recebidos:', membros);
+        
+        this.membros = membros.map(membro => {
+          console.log('Preferências antes da conversão:', membro.preferenciasAtividades);
+          
+          const preferenciasAtividades = Array.isArray(membro.preferenciasAtividades)
+            ? membro.preferenciasAtividades
+            : JSON.parse(membro.preferenciasAtividades || '[]');
+          
+          console.log('Preferências após a conversão:', preferenciasAtividades);
+          
+          return {
+            ...membro,
+            preferenciasAtividades
+          };
+        });
       },
       (error) => {
         console.error('Erro ao carregar membros do ministério:', error);

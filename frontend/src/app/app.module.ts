@@ -12,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { EventoCadastroComponent } from './components/evento-cadastro/evento-cadastro.component';
 import { EventoListarComponent } from './components/evento-listar/evento-listar.component';
 import { MinisterioCadastroComponent } from './components/ministerio-cadastro/ministerio-cadastro.component';
-import { MinisterioListarComponent } from './components/ministerio-listar/ministerio-listar.component';
 import { MembroListarComponent } from './components/membro-listar/membro-listar.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +20,7 @@ import { AtividadeCadastroComponent } from './components/atividade-cadastro/ativ
 import { AtividadeListarComponent } from './components/atividade-listar/atividade-listar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import Swal from 'sweetalert2';
+import { MinisterioListarComponent } from './components/ministerio-listar/ministerio-listar.component';
 
 
 @NgModule({
@@ -30,10 +30,10 @@ import Swal from 'sweetalert2';
     FooterComponent,
     LoginComponent,
     SidebarComponent,
+    MinisterioListarComponent,
     EventoCadastroComponent,
     EventoListarComponent,
     MinisterioCadastroComponent,
-    MinisterioListarComponent,
     MembroListarComponent,
     MembrosMinisterioComponent,
     AtividadeCadastroComponent,

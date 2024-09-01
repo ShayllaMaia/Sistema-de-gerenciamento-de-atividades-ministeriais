@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'cadastro-evento', component: EventoCadastroComponent, canActivate: [AuthGuardService] },
   { path: 'lista-evento', component: EventoListarComponent, canActivate: [AdminGuard] },
   { path: 'cadastro-ministerio', component: MinisterioCadastroComponent, canActivate: [AdminGuard] },
-  { path: 'lista-ministerio', component: MinisterioListarComponent, canActivate: [AdminGuard] },
+  { path: 'lista-ministerio', component: MinisterioListarComponent, canActivate: [] },
   { path: 'lista-membro', component: MembroListarComponent, canActivate: [AuthGuardService] },
   { path: 'membros-ministerio/:ministerioId', component: MembrosMinisterioComponent, canActivate: [AuthGuardService] },
   { path: 'lista-atividade', component: AtividadeListarComponent, canActivate: [AuthGuardService] },

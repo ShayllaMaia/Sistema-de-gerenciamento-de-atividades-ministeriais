@@ -23,13 +23,16 @@ export class SidebarComponent {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        // Se o usuário confirmar, realiza o logout
-        Swal.fire('Desconectado!', 'Você foi desconectado com sucesso.', 'success');
+        // Realiza o logout
         this.loginService.logout();
-        // Redireciona para a página de login
-        this.router.navigate(['/login']);
+        
+        // Exibe mensagem de sucesso e redireciona após o fechamento do alerta
+        Swal.fire('Desconectado!', 'Você foi desconectado com sucesso.', 'success').then(() => {
+          this.router.navigate(['/login']).then(() => {
+            window.location.reload(); // Força a recarga da página após redirecionar para a tela de login
+          });
+        });
       }
     });
   }
-
 }
