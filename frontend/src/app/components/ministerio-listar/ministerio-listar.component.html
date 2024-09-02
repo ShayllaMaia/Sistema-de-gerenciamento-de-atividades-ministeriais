@@ -18,47 +18,77 @@
             </div>
             <ul class="list-group">
               <li class="list-group-item">
-                <div class="d-flex justify-content-between">
-                  <div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="flex-grow-1">
                     <h6 class="font-weight-bold">Nome</h6>
                   </div>
-                  <div class="ml-auto px-80">
+                  <div class="ml-auto col-md-5">
                     <h6 class="font-weight-bold">Descrição</h6>
                   </div>
-                  <div>
-                    <h6 class="font-weight-bold px-20">Ações</h6>
+                  <div class="ml-auto col-md-2">
+                    <h6 class="font-weight-bold">Ações</h6>
                   </div>
                 </div>
               </li>
               <li class="list-group-item" *ngFor="let ministerio of ministerios">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
+                <div class="row">
+                  <div class="col-md-4">
                     <h2 class="mb-3 font-weight-bold display-5">{{ ministerio.nome }}</h2>
-                    <button type="button" class="btn btn-warning pr-2" (click)="verMembrosMinisterio(ministerio.id)">
-                      Ver membros do ministério
+                  </div>
+                  <div class="col-md-4">
+                    <p class="mb-0">{{ ministerio.descricao }}</p>
+                  </div>
+                  <div class="col-md-4 text-center">
+                    <!-- Botão "Ver Informações" que abre o modal -->
+                    <button type="button" class="btn mb-2 mr-3 btn-info" (click)="abrirModal('detalhesModal' + ministerio.id)">
+                      Visualizar <i class="fa-regular fa-eye"></i>
+                    </button>
+                    <!-- Botão "Visualizar Membros" fixo abaixo da coluna "Ações" -->
+                     <!-- Botão "Visualizar Membros" fora do modal -->
+                     <button *ngIf="isAdminOrLider()" type="button" class="btn btn-membros pr-2 mb-2" (click)="verMembrosMinisterio(ministerio.id)">
+                      Ver Membros
                     </button>
                   </div>
-                  <div class="ml-auto">
-                    <p>{{ ministerio.descricao }}</p>
-                  </div>
-                  <div class="ml-auto">
-                    <!-- Exibe os botões apenas se o papel for ADMIN ou LIDER -->
-                    <button *ngIf="isAdminOrLider()" type="button" (click)="abrirModal('editarModal' + ministerio.id)" class="btn btn-warning pr-2">Editar</button>
-                    <span class="px-2"></span>
-                    <button *ngIf="isAdminOrLider()" (click)="confirmarExcluirMinisterio(ministerio.id)" class="btn btn-warning pr-2">Excluir</button>
-                    <span class="px-2"></span>
-                    <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-atividade pr-2">Atividades</button>
-                    <span class="px-2"></span>
-                    <!-- Novo botão "Solicitar Entrada" -->
-                    <button [routerLink]="['/solicitar-entrada']" [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-primary pr-2">Solicitar Entrada</button>
+                </div>
+
+                <!-- Modal para visualizar e gerenciar o ministério -->
+                <div class="modal fade" id="detalhesModal{{ ministerio.id }}" tabindex="-1" role="dialog" aria-labelledby="detalhesModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="detalhesModalLabel">Detalhes do Ministério</h5>
+                        <button type="button" class="close" (click)="fecharModal('detalhesModal' + ministerio.id)" aria-label="Fechar">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="nomeMinisterio">Nome:</label>
+                          <input type="text" class="form-control" id="nomeMinisterio" [(ngModel)]="ministerio.nome" name="nomeMinisterio" readonly>
+                        </div>
+                        <div class="form-group">
+                          <label for="descricaoMinisterio">Descrição:</label>
+                          <textarea class="form-control" id="descricaoMinisterio" [(ngModel)]="ministerio.descricao" name="descricaoMinisterio" readonly></textarea>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button *ngIf="isAdminOrLider()" type="button" (click)="abrirModal('editarModal' + ministerio.id)" class="btn btn-warning pr-2">Editar</button>
+                        <button *ngIf="isAdminOrLider()" type="button" (click)="confirmarExcluirMinisterio(ministerio.id)" class="btn btn-danger pr-2">Excluir</button>
+                        <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-atividade pr-2">Atividades</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                <!-- Modal para editar o ministério -->
                 <div class="modal fade" id="editarModal{{ ministerio.id }}" tabindex="-1" role="dialog" aria-labelledby="editarModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="editarModalLabel">Editar Ministério</h5>
-                        <button type="button" class="btn-close" (click)="fecharModal('editarModal' + ministerio.id)" aria-label="Fechar"></button>
+                        <button type="button" class="close" (click)="fecharModal('editarModal' + ministerio.id)" aria-label="Fechar">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
                       </div>
                       <div class="modal-body">
                         <div class="form-group">
@@ -72,11 +102,12 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" (click)="salvarEdicaoMinisterio(ministerio)" class="btn btn-warning pr-2">Salvar mudanças</button>
-                        <button type="button" class="btn btn-warning pr-2" (click)="fecharModal('editarModal' + ministerio.id)">Fechar</button>
+                        <button type="button" class="btn btn-secondary pr-2" (click)="fecharModal('editarModal' + ministerio.id)">Fechar</button>
                       </div>
                     </div>
                   </div>
                 </div>
+
               </li>
             </ul>
           </div>
