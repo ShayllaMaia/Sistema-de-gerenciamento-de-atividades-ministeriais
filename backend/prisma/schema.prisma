@@ -69,6 +69,7 @@ model Usuario {
   membrosMinisterios MembrosMinisterios[]
   liderDe            MinisterioLider[]
   participacoes      Participacao[]
+  preferenciasHorarios PreferenciasHorarios[]
 }
 
 model Eventos {
@@ -82,15 +83,8 @@ model Eventos {
   isRecorrente  Boolean            @default(false)
   ministerios   EventoMinisterio[]
   participacoes Participacao[]
-  diaSemana     DiaSemana[]
 }
 
-model DiaSemana {
-  id            String  @id @default(cuid())
-  evento_id     String
-  evento        Eventos @relation(fields: [evento_id], references: [id])
-  dia_semana    Dias
-}
 model Participacao {
   id            String     @id @default(cuid())
   evento_id     String
@@ -131,4 +125,14 @@ model MembrosMinisterios {
   ministerio             Ministerio        @relation(fields: [ministerio_id], references: [id])
   usuario                Usuario           @relation(fields: [usuario_id], references: [id])
   statusSolicitacao      StatusSolicitacao @default(PENDENTE)
+  }
+
+model PreferenciasHorarios {
+  id            String  @id @default(cuid())
+  usuario_id     String
+  usuario                Usuario           @relation(fields: [usuario_id], references: [id])
+  atividade_id  String
+  dia_semana    Dias
+  hora_inicio   DateTime
+  hora_fim      DateTime
 }

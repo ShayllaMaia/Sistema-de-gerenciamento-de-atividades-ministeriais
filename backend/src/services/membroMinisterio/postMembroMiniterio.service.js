@@ -6,8 +6,8 @@ import { retornaTipoUsuario } from "../../../middlewares/retornaTipoUsuario.midd
 const prisma = new PrismaClient();
 
 const postMembroMinisterioService = async (data,token) => {
-
-  let{ usuario_id, ministerio_id, preferenciasAtividades } = data;
+  console.log(data);
+  let{ usuario_id, ministerio_id, preferenciasAtividades, diasSemana } = data;
   token = await retornaInfoToken(token);
   const tipoUsuario = await retornaTipoUsuario(token);
   
@@ -38,6 +38,7 @@ for (let i = 0; i < preferenciasAtividades.length; i++) {
   });
   preferenciasAtividades[i] = atividade;
 }
+
 
 const novoMembroMinisterio = await prisma.membrosMinisterios.create({
   data: {

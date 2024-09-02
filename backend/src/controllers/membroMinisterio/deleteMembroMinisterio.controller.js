@@ -1,7 +1,9 @@
+import { deleteMembroMinisterioService } from "../../services/membroMinisterio/deleteMembroMinisterio.service.js";
+
 const deleteMembroMinisterioController = async (req, res) => {
-    const { id } = req.params;
+    const data = req.body;
     const authHeader = req.headers["authorization"];
-    await deleteMembroMinisterioService(id, authHeader);
-    return res.status(204);
+    await deleteMembroMinisterioService(data, authHeader);
+    return res.status(201).json('Membro Removido com sucesso');
 };
 export { deleteMembroMinisterioController };
