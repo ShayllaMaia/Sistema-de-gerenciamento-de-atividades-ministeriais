@@ -12,8 +12,8 @@ export class SolicitarEntradaService {
 
   constructor(private http: HttpClient) {}
 
-  enviarSolicitacao(solicitacao: { ministerioId: string; atividades: string[] }): Observable<any> {
+  enviarSolicitacao(solicitacao: { usuario_id: string, ministerio_id: string; preferenciasAtividades : string[] }): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
-    return this.http.post(`${this.baseUrl}/solicitar-entrada`, solicitacao, { headers });
+    return this.http.post(`${this.baseUrl}/membroministerio`, solicitacao, { headers });
   }
 }

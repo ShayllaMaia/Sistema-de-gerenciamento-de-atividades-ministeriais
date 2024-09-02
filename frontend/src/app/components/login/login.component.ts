@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
 import {decodeJwt} from 'jose';
-import * as jwt from 'jsonwebtoken';
 interface JwtPayload {
   usuario_id: string;
   usuario_papel: string; // Ajuste conforme o payload do seu token
@@ -29,8 +28,6 @@ export class LoginComponent {
     private toastr: ToastrService,
     private http: HttpClient
   ) {
-    const userData = sessionStorage.getItem('usuario') || '{}';
-    console.log(userData)
   }
 
   fazerLogin(): void {
