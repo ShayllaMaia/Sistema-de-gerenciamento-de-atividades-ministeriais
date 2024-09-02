@@ -48,8 +48,15 @@
                      <button *ngIf="isAdminOrLider()" type="button" class="btn btn-membros pr-2 mb-2" (click)="verMembrosMinisterio(ministerio.id)">
                       Ver Membros
                     </button>
-                    <!-- Novo botão "Solicitar Entrada" -->
-                    <button [routerLink]="['/solicitar-entrada']" [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-primary pr-2 ">Solicitar Entrada</button>
+
+                    
+                    <!-- Botão "Solicitar Entrada" visível apenas para usuários com o papel "NORMAL" -->
+                      <button *ngIf="isNormal()"
+                      [routerLink]="['/solicitar-entrada']"
+                      [queryParams]="{ idMinisterio: ministerio.id }"
+                      class="btn btn-primary pr-2">
+                        Solicitar Entrada
+                      </button>
                   </div>
                 </div>
 
