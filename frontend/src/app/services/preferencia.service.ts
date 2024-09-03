@@ -46,7 +46,7 @@ export class PreferenciaService {
   }
 
   getPreferenciasPorUsuarioId(usuarioId: string): Observable<PreferenciaInterface[]> {
-    const headers = this.getHeaders(); // Obtém os headers com o token de autenticação
+    const headers = this.getHeaders();
     return this.http.get<PreferenciaInterface[]>(`${this.baseUrl}/preferencias/usuario/${usuarioId}`, { headers });
   }
 }
