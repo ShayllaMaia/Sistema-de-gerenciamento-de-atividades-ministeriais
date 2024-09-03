@@ -48,4 +48,9 @@ export class MinisterioService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<any[]>(`${this.baseUrl}/atividades/${ministerioId}`, { headers });
   }
+
+  deleteMembroMinisterio(data: { idMembro: string, idMinisterio: string }): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.post(`${this.baseUrl}/membroMinisterio/deletar`, data, { headers });
+  }
 }
