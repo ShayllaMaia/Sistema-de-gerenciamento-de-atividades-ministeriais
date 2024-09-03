@@ -4,20 +4,15 @@ import { retornaInfoToken } from "../../../middlewares/retornaInfoToen.middliwar
 const prisma = new PrismaClient();
 const getMinisterioLiderService = async (token) => {
   try {
-    const liderId = await retornaInfoToken(token);
-    console.log("Lider ID:", liderId); // Verifique o ID do líder
-
+    token = await retornaInfoToken(token);
     const ministeriosLiderados = await prisma.ministerioLider.findMany({
-      where: {
-        lider_id: liderId,
-      },
       include: {
         ministerio: true,
         lider: {
           select: {
             nome: true,
-          }
-        } // Inclui as informações do ministério
+          },
+        }, // Inclui as informações do ministério
       },
     });
 
@@ -28,11 +23,7 @@ const getMinisterioLiderService = async (token) => {
       throw new Error("Ministério não encontrado!");
     }
 
-    return ministeriosLiderados.map((ml) => ({
-      ministerio_id: ml.ministerio.id,
-      lider_id: ml.lider_id,
-      ministerio: ml.ministerio,
-    }));
+    return ministeriosLiderados;
   } catch (error) {
     console.error("Erro no serviço:", error.message);
     throw error;
