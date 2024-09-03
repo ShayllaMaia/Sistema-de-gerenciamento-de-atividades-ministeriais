@@ -22,6 +22,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import Swal from 'sweetalert2';
 import { MinisterioListarComponent } from './components/ministerio-listar/ministerio-listar.component';
 import { SolicitarEntradaComponent } from './components/solicitar-entrada/solicitar-entrada.component';
+import { PreferenciaCadastrarComponent } from './components/preferencia-cadastrar/preferencia-cadastrar.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { SolicitarEntradaComponent } from './components/solicitar-entrada/solici
     AtividadeListarComponent,
     DashboardComponent,
     SolicitarEntradaComponent,
-    
+    PreferenciaCadastrarComponent,
+
   
   
   ],
