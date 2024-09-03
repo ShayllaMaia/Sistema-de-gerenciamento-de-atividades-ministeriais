@@ -51,6 +51,10 @@ export class MinisterioListarComponent implements OnInit {
     return this.papel === 'ADMIN' || this.papel === 'LIDER';
   }
 
+  isNormal(): boolean {
+    return this.papel === 'NORMAL';
+  }
+
   editarMinisterio(ministerio: any): void {
     this.ministerioService.editarMinisterio(ministerio.id, ministerio).subscribe(
       (response) => {
