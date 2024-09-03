@@ -13,6 +13,9 @@ import { ministerioLiderRoutes } from './src/routes/ministerioLider.routes.js';
 import { validaToken } from './middlewares/validaToken.middlewares.js';
 import expressListEndpoints from 'express-list-endpoints';
 import { preferenciaHorariosRoutes } from './src/routes/preferenciaHorarios.routes.js';
+import { preferenciaMembroRoutes } from './src/routes/preferenciaMembro.routes.js';
+
+
 
 
 //configuração para uso do express
@@ -32,6 +35,8 @@ app.use("/atividade", validaToken,atividadeRoutes);
 app.use("/membroMinisterio",membroMinisterioRoutes);
 app.use("/ministerioLider",ministerioLiderRoutes);
 app.use("/preferenciahorarios",preferenciaHorariosRoutes)
+app.use("/preferencia",preferenciaMembroRoutes);
+
 
 
 //iniciando o servidor
