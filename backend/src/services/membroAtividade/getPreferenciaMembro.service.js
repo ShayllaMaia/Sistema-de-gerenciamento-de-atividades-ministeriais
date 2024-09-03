@@ -15,21 +15,7 @@ const preferenciaMembroService = async (data, token) => {
         }
     });
 
-    // let atividades = [];
-    // for (let i = 0; i < preferenciaMembroMinisterioAtividade.length; i++) {
-    //     const preferenciasAtividadesArray = JSON.parse(preferenciaMembroMinisterioAtividade[i].preferenciasAtividades);
-
-    //     const atividades = await prisma.atividade.findMany({
-    //         where: {
-    //             id: {
-    //                 in: preferenciasAtividadesArray
-    //             }
-    //         }
-    //     });
-
-    //     preferenciaMembroMinisterioAtividade[i].atividades = atividades;
-    // }
-
+    
     return preferenciaMembroMinisterioAtividade;
 };
 
