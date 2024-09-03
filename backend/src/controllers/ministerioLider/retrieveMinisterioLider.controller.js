@@ -2,8 +2,9 @@ import { retrieveMinisterioLiderService } from "../../services/ministerioLider/r
 
 const retrieveMinisterioLiderController = async (req, res) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const ministeriosLiderados = await getMinisterioLiderService(token);
+        const authHeader = req.headers["authorization"];
+        const { id } = req.params;
+        const ministeriosLiderados = await retrieveMinisterioLiderService(id, authHeader);
         res.json(ministeriosLiderados);
     } catch (error) {
         console.error('Erro ao obter ministérios liderados:', error.message);

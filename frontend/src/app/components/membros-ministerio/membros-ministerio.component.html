@@ -9,7 +9,7 @@
       <div class="col-lg-9 mt-5">
         <div class="container">
           <div class="row">
-            <div class="col-lg-12 mt-4">
+            <div class="col-lg-12 mt-4 position-relative">
               <div class="text-center mb-4">
                 <h6>Lista de Membros</h6>
               </div>
@@ -29,15 +29,24 @@
                         </li>
                       </ul>
                     </div>
-                    <div *ngIf="(!membro.preferenciasAtividades || membro.preferenciasAtividades.length === 0)">
+                    <div *ngIf="!membro.preferenciasAtividades || membro.preferenciasAtividades.length === 0">
                       <p>Nenhuma atividade preferida encontrada.</p>
                     </div>
+              
+                    <!-- Botão de Remover -->
+                    <button (click)="confirmarRemocao(membro.usuario.id)" class="btn btn-danger">Remover Membro</button>
                   </ng-container>
                   <ng-container *ngIf="!membro.usuario">
                     <p>Nenhum usuário encontrado.</p>
                   </ng-container>
                 </li>
               </ul>
+              
+              <!-- Botão de Ver Solicitações Pendentes -->
+              <div class="fixed-button">
+                <button class="btn btn-orange" (click)="verSolicitacoes()">Solicitações Pendentes</button>
+              </div>
+              
             </div>
           </div>
         </div>
@@ -45,3 +54,4 @@
     </div>
   </div>
 </section>
+
