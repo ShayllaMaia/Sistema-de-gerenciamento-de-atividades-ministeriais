@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class MinisterioListarComponent implements OnInit {
   ministerios: any[] = [];
   papel: string = '';
+  lider: any = {};
 
   constructor(
     private ministerioService: MinisterioService,
@@ -20,13 +21,13 @@ export class MinisterioListarComponent implements OnInit {
     this.papel = localStorage.getItem('papel') || '';
     this.carregarMinisterios();
   }
-  
+
   carregarMinisterios(): void {
     if (this.papel === 'LIDER') {
       this.ministerioService.getMinisteriosLiderados().subscribe(
         (response: any[]) => {
           console.log('Dados recebidos do serviço (Lider):', response);
-          this.ministerios = response.map(item => item.ministerio); 
+          this.ministerios = response.map(item => item.ministerio);
           console.log('Ministérios liderados carregados:', this.ministerios);
         },
         (error: any) => {
@@ -45,10 +46,14 @@ export class MinisterioListarComponent implements OnInit {
       );
     }
   }
-  
+
 
   isAdminOrLider(): boolean {
     return this.papel === 'ADMIN' || this.papel === 'LIDER';
+  }
+
+  isNormal(): boolean {
+    return this.papel === 'NORMAL';
   }
 
   editarMinisterio(ministerio: any): void {
@@ -112,4 +117,34 @@ export class MinisterioListarComponent implements OnInit {
   verMembrosMinisterio(ministerioId: string): void {
     this.router.navigate(['/membros-ministerio', ministerioId]);
   }
+
+  verLiderMinisterio(ministerioId: string): void {
+    this.lider = {};
+
+    this.ministerioService.getLiderMinisterio(ministerioId).subscribe(
+        (response) => {
+            if (response && response.length > 0 && response[0].lider) {
+                console.log('Líder do ministério:', response[0].lider);
+                this.lider = response[0].lider;
+                this.abrirModal('detalhesModal' + ministerioId);
+            } else {
+                console.error('Nenhum líder encontrado para o ministério:', ministerioId);
+                this.abrirModal('detalhesModal' + ministerioId);
+            }
+        },
+        (error) => {
+            console.error('Erro ao carregar líder do ministério:', error);
+        }
+    );
 }
+atribuirLideranca(ministerioId: string): void {
+  // Lógica para abrir modal ou redirecionar para uma página de atribuição de liderança
+  console.log('Atribuir liderança ao ministério:', ministerioId);
+  // Aqui você pode implementar a lógica para abrir um modal ou redirecionar o usuário.
+  // Exemplo: this.router.navigate(['/atribuir-lideranca', ministerioId]);
+}
+
+
+}
+
+

@@ -131,7 +131,7 @@ model PreferenciasHorarios {
   id            String  @id @default(cuid())
   usuario_id     String
   usuario                Usuario           @relation(fields: [usuario_id], references: [id])
-  dia_semana    Dias
+  dia_semana    String[]
   hora_inicio   DateTime
   hora_fim      DateTime
 }

@@ -4,17 +4,27 @@ import { AppError } from "../../errors/appError.js";
 const prisma = new PrismaClient();
 
 const postPreferenciasHorarios = async (data) => {
-  let { usuario_id,dia_semana, hora_inicio, hora_fim } = data;
+  try {
+    console.log(data)
+    const promessas = data.map(preferencia => 
+      prisma.preferenciasHorarios.create({
+        data: {
+          usuario_id: preferencia.usuario_id,
+          dia_semana: preferencia.dia_semana,
+          hora_inicio: new Date(preferencia.hora_inicio),
+          hora_fim: new Date(preferencia.hora_fim),
+        }
+      })
+    );
+    
+    // Aguarda todas as promessas serem resolvidas
+    const novasPreferencias = await Promise.all(promessas);
 
-  const novaPreferencia = await prisma.preferenciasHorarios.create({
-    data: {
-      usuario_id: usuario_id,
-      dia_semana: dia_semana,
-      hora_inicio: hora_inicio,
-      hora_fim: hora_fim,
-    },
-  });
-  return novaPreferencia;
+    return novasPreferencias;
+  } catch (error) {
+    console.error(error)
+    throw new AppError('Erro ao criar preferências de horários', error);
+  }
 };
 
 export { postPreferenciasHorarios };

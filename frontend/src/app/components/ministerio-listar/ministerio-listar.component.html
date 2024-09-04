@@ -14,7 +14,8 @@
             </div>
             <div class="text-right mb-4">
               <!-- Exibe o botão apenas se o papel for ADMIN -->
-              <button *ngIf="papel === 'ADMIN'" routerLink="/cadastro-ministerio" class="btn btn-warning pr-2">Cadastrar Ministério</button>
+              <button *ngIf="papel === 'ADMIN'" routerLink="/cadastro-ministerio" class="btn btn-warning pr-2">Cadastrar
+                Ministério</button>
             </div>
             <ul class="list-group">
               <li class="list-group-item">
@@ -40,71 +41,113 @@
                   </div>
                   <div class="col-md-4 text-center">
                     <!-- Botão "Ver Informações" que abre o modal -->
-                    <button type="button" class="btn mb-2 mr-3 btn-info" (click)="abrirModal('detalhesModal' + ministerio.id)">
+                    <button type="button" class="btn mb-2 mr-3 btn-info" (click)="verLiderMinisterio(ministerio.id)">
                       Visualizar <i class="fa-regular fa-eye"></i>
                     </button>
+
+
                     <!-- Botão "Visualizar Membros" fixo abaixo da coluna "Ações" -->
-                     <!-- Botão "Visualizar Membros" fora do modal -->
-                     <button *ngIf="isAdminOrLider()" type="button" class="btn btn-membros pr-2 mb-2" (click)="verMembrosMinisterio(ministerio.id)">
+                    <!-- Botão "Visualizar Membros" fora do modal -->
+                    <button *ngIf="isAdminOrLider()" type="button" class="btn btn-membros pr-2 mb-2"
+                      (click)="verMembrosMinisterio(ministerio.id)">
                       Ver Membros
                     </button>
-                    <!-- Novo botão "Solicitar Entrada" -->
-                    <button [routerLink]="['/solicitar-entrada']" [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-primary pr-2 ">Solicitar Entrada</button>
+
+
+                    <!-- Botão "Solicitar Entrada" visível apenas para usuários com o papel "NORMAL" -->
+                    <button *ngIf="isNormal()" [routerLink]="['/solicitar-entrada']"
+                      [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-primary pr-2">
+                      Solicitar Entrada
+                    </button>
                   </div>
                 </div>
 
                 <!-- Modal para visualizar e gerenciar o ministério -->
-                <div class="modal fade" id="detalhesModal{{ ministerio.id }}" tabindex="-1" role="dialog" aria-labelledby="detalhesModalLabel" aria-hidden="true">
+                <div class="modal fade" id="detalhesModal{{ ministerio.id }}" tabindex="-1" role="dialog"
+                  aria-labelledby="detalhesModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="detalhesModalLabel">Detalhes do Ministério</h5>
-                        <button type="button" class="close" (click)="fecharModal('detalhesModal' + ministerio.id)" aria-label="Fechar">
+                        <button type="button" class="close" (click)="fecharModal('detalhesModal' + ministerio.id)"
+                          aria-label="Fechar">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
                         <div class="form-group">
                           <label for="nomeMinisterio">Nome:</label>
-                          <input type="text" class="form-control" id="nomeMinisterio" [(ngModel)]="ministerio.nome" name="nomeMinisterio" readonly>
+                          <input type="text" class="form-control" id="nomeMinisterio" [(ngModel)]="ministerio.nome"
+                            name="nomeMinisterio" readonly>
                         </div>
                         <div class="form-group">
                           <label for="descricaoMinisterio">Descrição:</label>
-                          <textarea class="form-control" id="descricaoMinisterio" [(ngModel)]="ministerio.descricao" name="descricaoMinisterio" readonly></textarea>
+                          <textarea class="form-control" id="descricaoMinisterio" [(ngModel)]="ministerio.descricao"
+                            name="descricaoMinisterio" readonly></textarea>
                         </div>
+
+                        <!-- Verifica se há um líder atribuído -->
+                        <div *ngIf="lider && lider.nome; else noLider">
+                          <div class="form-group">
+                            <label for="liderMinisterio">Líder:</label>
+                            <input type="text" class="form-control" id="liderMinisterio" [value]="lider.nome" readonly>
+                          </div>
+                        </div>
+
+                        <!-- Caso não tenha um líder -->
+                        <ng-template #noLider>
+                          <div class="text-center">
+                            <p class="text-danger">Nenhum líder atribuído a este ministério.</p>
+                            <button type="button" class="btn btn-primary"
+                              (click)="atribuirLideranca(ministerio.id)">Atribuir Liderança</button>
+                          </div>
+                        </ng-template>
                       </div>
                       <div class="modal-footer">
-                        <button *ngIf="isAdminOrLider()" type="button" (click)="abrirModal('editarModal' + ministerio.id)" class="btn btn-warning pr-2">Editar</button>
-                        <button *ngIf="isAdminOrLider()" type="button" (click)="confirmarExcluirMinisterio(ministerio.id)" class="btn btn-danger pr-2">Excluir</button>
-                        <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-atividade pr-2">Atividades</button>
+                        <button *ngIf="isAdminOrLider()" type="button"
+                          (click)="abrirModal('editarModal' + ministerio.id)"
+                          class="btn btn-warning pr-2">Editar</button>
+                        <button *ngIf="isAdminOrLider()" type="button"
+                          (click)="confirmarExcluirMinisterio(ministerio.id)"
+                          class="btn btn-danger pr-2">Excluir</button>
+                        <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }"
+                          class="btn btn-atividade pr-2">Atividades</button>
                       </div>
                     </div>
                   </div>
                 </div>
 
+
                 <!-- Modal para editar o ministério -->
-                <div class="modal fade" id="editarModal{{ ministerio.id }}" tabindex="-1" role="dialog" aria-labelledby="editarModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editarModal{{ ministerio.id }}" tabindex="-1" role="dialog"
+                  aria-labelledby="editarModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="editarModalLabel">Editar Ministério</h5>
-                        <button type="button" class="close" (click)="fecharModal('editarModal' + ministerio.id)" aria-label="Fechar">
+                        <button type="button" class="close" (click)="fecharModal('editarModal' + ministerio.id)"
+                          aria-label="Fechar">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
                         <div class="form-group">
                           <label for="nomeMinisterio">Nome:</label>
-                          <input type="text" class="form-control" id="nomeMinisterio" [(ngModel)]="ministerio.nome" name="nomeMinisterio">
+                          <input type="text" class="form-control" id="nomeMinisterio" [(ngModel)]="ministerio.nome"
+                            name="nomeMinisterio">
                         </div>
                         <div class="form-group">
                           <label for="descricaoMinisterio">Descrição:</label>
-                          <textarea class="form-control" id="descricaoMinisterio" [(ngModel)]="ministerio.descricao" name="descricaoMinisterio"></textarea>
+                          <textarea class="form-control" id="descricaoMinisterio" [(ngModel)]="ministerio.descricao"
+                            name="descricaoMinisterio"></textarea>
                         </div>
+
                       </div>
                       <div class="modal-footer">
-                        <button type="button" (click)="salvarEdicaoMinisterio(ministerio)" class="btn btn-warning pr-2">Salvar mudanças</button>
-                        <button type="button" class="btn btn-secondary pr-2" (click)="fecharModal('editarModal' + ministerio.id)">Fechar</button>
+                        <button type="button" (click)="salvarEdicaoMinisterio(ministerio)"
+                          class="btn btn-warning pr-2">Salvar mudanças</button>
+                        <button type="button" class="btn btn-secondary pr-2"
+                          (click)="fecharModal('editarModal' + ministerio.id)">Fechar</button>
                       </div>
                     </div>
                   </div>

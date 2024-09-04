@@ -59,15 +59,6 @@ CREATE TABLE "Eventos" (
 );
 
 -- CreateTable
-CREATE TABLE "DiaSemana" (
-    "id" TEXT NOT NULL,
-    "evento_id" TEXT NOT NULL,
-    "dia_semana" "Dias" NOT NULL,
-
-    CONSTRAINT "DiaSemana_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Participacao" (
     "id" TEXT NOT NULL,
     "evento_id" TEXT NOT NULL,
@@ -109,6 +100,17 @@ CREATE TABLE "MembrosMinisterios" (
     CONSTRAINT "MembrosMinisterios_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "PreferenciasHorarios" (
+    "id" TEXT NOT NULL,
+    "usuario_id" TEXT NOT NULL,
+    "dia_semana" TEXT[],
+    "hora_inicio" TIMESTAMP(3) NOT NULL,
+    "hora_fim" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "PreferenciasHorarios_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Ministerio_nome_key" ON "Ministerio"("nome");
 
@@ -120,9 +122,6 @@ CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
 
 -- AddForeignKey
 ALTER TABLE "Atividade" ADD CONSTRAINT "Atividade_ministerio_id_fkey" FOREIGN KEY ("ministerio_id") REFERENCES "Ministerio"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "DiaSemana" ADD CONSTRAINT "DiaSemana_evento_id_fkey" FOREIGN KEY ("evento_id") REFERENCES "Eventos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Participacao" ADD CONSTRAINT "Participacao_evento_id_fkey" FOREIGN KEY ("evento_id") REFERENCES "Eventos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -150,3 +149,6 @@ ALTER TABLE "MembrosMinisterios" ADD CONSTRAINT "MembrosMinisterios_ministerio_i
 
 -- AddForeignKey
 ALTER TABLE "MembrosMinisterios" ADD CONSTRAINT "MembrosMinisterios_usuario_id_fkey" FOREIGN KEY ("usuario_id") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PreferenciasHorarios" ADD CONSTRAINT "PreferenciasHorarios_usuario_id_fkey" FOREIGN KEY ("usuario_id") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
