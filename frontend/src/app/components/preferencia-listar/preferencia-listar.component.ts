@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { PreferenciaService } from 'src/app/services/preferencia.service';
 import { PreferenciaInterface } from 'src/app/model/preferencia.interface';
 import Swal from 'sweetalert2';
+import * as dayjs from 'dayjs';
+import * as utc from 'dayjs/plugin/utc'
 import { jwtDecode } from 'jwt-decode';
 interface JwtPayLoad {
   usuario_id: string;
   usuario_papel: string;
   iat: number;
 }
+dayjs.extend(utc);
 @Component({
   selector: 'app-preferencia-listar',
   templateUrl: './preferencia-listar.component.html',
@@ -17,7 +20,7 @@ export class PreferenciaListarComponent implements OnInit {
   preferencias: PreferenciaInterface[] = [];
   userId: string = '';
 
-  constructor(private preferenciaService: PreferenciaService) {}
+  constructor(private preferenciaService: PreferenciaService) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem('token') || '';
@@ -34,8 +37,13 @@ export class PreferenciaListarComponent implements OnInit {
         .getPreferenciasPorUsuarioId(this.userId)
         .subscribe({
           next: (data) => {
-            console.log(data); // Verifique a saída aqui
+            data.map(data => {
+              console.log(data.hora_fim)
+              data.hora_fim = dayjs.utc(data.hora_fim).format('HH:mm')
+              data.hora_inicio = dayjs.utc(data.hora_inicio).format('HH:mm')
+            }) // Verifique a saída aqui
             this.preferencias = data;
+            console.log(this.preferencias)
           },
           error: (error) => {
             console.error('Erro ao carregar preferências:', error);

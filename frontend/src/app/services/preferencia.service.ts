@@ -47,6 +47,6 @@ export class PreferenciaService {
 
   getPreferenciasPorUsuarioId(usuarioId: string): Observable<PreferenciaInterface[]> {
     const headers = this.getHeaders();
-    return this.http.get<PreferenciaInterface[]>(`${this.baseUrl}/preferencias/${usuarioId}`, { headers });
+    return this.http.get<PreferenciaInterface[]>(`${this.baseUrl}/preferenciahorarios/${usuarioId}`, { headers });
   }
 }

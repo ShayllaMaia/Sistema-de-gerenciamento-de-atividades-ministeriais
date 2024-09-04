@@ -33,10 +33,10 @@ const routes: Routes = [
   { path: 'lista-atividade', component: AtividadeListarComponent, canActivate: [AuthGuardService] },
   { path: 'cadastro-atividade', component: AtividadeCadastroComponent, canActivate: [AuthGuardService] },
   { path: 'c', component: DashboardComponent, canActivate: [AuthGuardService], data: {papel: 'ADMIN'}},
-  { path: 'solicitar-entrada', component: SolicitarEntradaComponent },
+  { path: 'solicitar-entrada', component: SolicitarEntradaComponent,canActivate: [AuthGuardService] },
   { path: 'preferencia-cadastrar', component: PreferenciaCadastrarComponent, canActivate: [AuthGuardService] }, 
-  { path: 'solicitacoes/:ministerioId', component: ListaSolicitacoesComponent },
-  { path: 'preferencia-listar', component: PreferenciaListarComponent },
+  { path: 'solicitacoes/:ministerioId', component: ListaSolicitacoesComponent,canActivate: [AuthGuardService]},
+  { path: 'preferencia-listar', component: PreferenciaListarComponent,canActivate: [AuthGuardService]},
 
 
 ];

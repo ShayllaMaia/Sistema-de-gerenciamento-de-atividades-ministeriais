@@ -2,8 +2,8 @@ import { postPreferenciasHorarios } from "../../services/preferenciashorarios/po
 
 const postPreferenciasHorariosController = async (req, res) => {
   const data = req.body;
-
-  const novaPreferencia = await postPreferenciasHorarios(data);
+  const authHeader = req.headers["authorization"];
+  const novaPreferencia = await postPreferenciasHorarios(data,authHeader);
 
   return res.status(201).json(novaPreferencia);
 };

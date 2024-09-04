@@ -53,12 +53,11 @@ export class PreferenciaCadastrarComponent implements OnInit {
     );
 }
   addPreferencia(): void {
-    // Método para adicionar um novo registro de preferência
     this.registros.push({
       usuario_id: this.userId, // Atribui o ID do usuário ao novo registro
       dia_semana: [], // Inicializa o array de dias como vazio
-      hora_inicio: new Date().toISOString(), // Define a hora de início como a data e hora atuais em formato ISO
-      hora_fim: new Date().toISOString(), // Define a hora de fim como a data e hora atuais em formato ISO
+      hora_inicio: new Date().toLocaleString(), // Define a hora de início como a data e hora atuais em formato ISO
+      hora_fim: new Date().toLocaleString(), // Define a hora de fim como a data e hora atuais em formato ISO
     });
   }
 
@@ -82,10 +81,10 @@ export class PreferenciaCadastrarComponent implements OnInit {
         const today = new Date();
         const [hoursInit, minuteInit] = item.hora_inicio.split(':').map(Number);
         const [hoursFim, minuteFim] = item.hora_fim.split(':').map(Number);
-        today.setHours(hoursInit, minuteInit, 0, 0);
-        item.hora_inicio = today.toISOString();
-        today.setHours(hoursFim, minuteFim);
-        item.hora_fim = today.toISOString();
+        today.setUTCHours(hoursInit, minuteInit, 0, 0);
+        item.hora_inicio = today.toLocaleString('pt-BR', { timeZone: 'America/Rio_Branco' });
+        today.setUTCHours(hoursFim, minuteFim, 0, 0);
+        item.hora_fim = today.toLocaleString('pt-BR', { timeZone: 'America/Rio_Branco' });
       });
       this.registros.forEach((preferencia) => {
         preferencia.usuario_id = this.userId;

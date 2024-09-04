@@ -2,8 +2,8 @@ import { getPreferenciasHorariosByUserIdService } from "../../services/preferenc
 
 const getPreferenciasHorariosByUserIdController = async (req, res) => {
   const { id } = req.params;
-
-  const preferencia = await getPreferenciasHorariosByUserIdService(id);
+  const authHeader = req.headers["authorization"];
+  const preferencia = await getPreferenciasHorariosByUserIdService(id,authHeader);
 
   return res.status(200).json(preferencia);
 };
