@@ -232,11 +232,5 @@ export class MinisterioListarComponent implements OnInit {
   }
 
 }
-atribuirLideranca(ministerioId: string): void {
-  // Lógica para abrir modal ou redirecionar para uma página de atribuição de liderança
-  console.log('Atribuir liderança ao ministério:', ministerioId);
-  // Aqui você pode implementar a lógica para abrir um modal ou redirecionar o usuário.
-  // Exemplo: this.router.navigate(['/atribuir-lideranca', ministerioId]);
-}
 
 
