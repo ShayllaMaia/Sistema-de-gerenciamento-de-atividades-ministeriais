@@ -103,19 +103,19 @@ async function main() {
         {
           ministerio_id: ministerioLouvor.id,
           usuario_id: usuarioPedro.id,
-          preferenciasAtividades: JSON.stringify([atividadeCantar.id, atividadeTocarViolao.id]),
+          preferenciasAtividades: JSON.stringify([atividadeCantar, atividadeTocarViolao]),
           statusSolicitacao: "APROVADO",
         },
         {
           ministerio_id: ministerioLouvor.id,
           usuario_id: usuarioMaria.id,
-          preferenciasAtividades: JSON.stringify([atividadeCantar.id]),
+          preferenciasAtividades: JSON.stringify([atividadeCantar]),
           statusSolicitacao: "APROVADO",
         },
         {
           ministerio_id: ministerioRecepcao.id,
           usuario_id: usuarioPedro.id,
-          preferenciasAtividades: JSON.stringify([atividadeRecepcionar.id]),
+          preferenciasAtividades: JSON.stringify([atividadeRecepcionar]),
           statusSolicitacao: "APROVADO",
         },
       ],

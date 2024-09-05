@@ -64,7 +64,9 @@ export class MinisterioService {
     return this.http.post(`${this.baseUrl}/ministerioLider`, data, { headers });
   }
 
-
-
+  getAllAtividades(): Observable<any[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.get<any[]>(`${this.baseUrl}/atividade/`, { headers });
+  }
 
 }
