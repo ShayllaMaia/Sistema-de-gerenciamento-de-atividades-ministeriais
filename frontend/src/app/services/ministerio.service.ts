@@ -57,4 +57,14 @@ export class MinisterioService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
    return this.http.get<any[]>(`${this.baseUrl}/ministerioLider/${ministerioId}`, { headers });
   }
+
+  atribuirLiderMinisterio(data: { lider_ids: string[], ministerio_id: string }): Observable<any> {
+    console.log('Enviando lider:');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.post(`${this.baseUrl}/ministerioLider`, data, { headers });
+  }
+
+
+
+
 }

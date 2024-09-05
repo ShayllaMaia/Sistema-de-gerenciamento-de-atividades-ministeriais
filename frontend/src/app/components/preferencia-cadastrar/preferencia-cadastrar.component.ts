@@ -5,6 +5,9 @@ import { catchError, throwError } from 'rxjs'; // Importa operadores RxJS para t
 import { PreferenciaService } from 'src/app/services/preferencia.service'; // Importa o serviço de preferências
 import { PreferenciaInterface } from 'src/app/model/preferencia.interface'; // Importa a interface para preferências
 import Swal from 'sweetalert2'; // Importa SweetAlert2 para mostrar alertas
+import { jwtDecode } from 'jwt-decode';
+import { JWTPayload, decodeJwt } from 'jose';
+import { Token } from '@angular/compiler';
 
 @Component({
   selector: 'app-preferencia-cadastrar', // Seletor do componente
@@ -23,6 +26,25 @@ export class PreferenciaCadastrarComponent implements OnInit {
 
   ngOnInit(): void {
     // Método chamado após a construção do componente, ideal para inicializar dados
+    interface JWTPayload {
+      usuario_id?: string;
+      // Outros campos que você espera no payload do JWT
+  }
+
+  const token = localStorage.getItem('token');
+
+  if (token) {
+      try {
+          const decodedToken: JWTPayload = decodeJwt(token);
+          console.log('Token decodificado:', decodedToken);
+          // this.userId = decodedToken.usuario_id;
+      } catch (error) {
+          console.error('Erro ao decodificar o token:', error);
+      }
+  } else {
+      console.error('Token não encontrado no localStorage.');
+  }
+
     this.userId = localStorage.getItem('usuario_id') || ''; // Obtém o ID do usuário do localStorage ou usa uma string vazia se não encontrado
     console.log('User ID:', this.userId); // Exibe o ID do usuário no console para depuração
     this.addPreferencia(); // Inicializa o array de registros com uma preferência padrão
@@ -53,6 +75,7 @@ export class PreferenciaCadastrarComponent implements OnInit {
   submit(form: NgForm): void {
     // Método chamado quando o formulário é enviado
     if (this.userId) {
+      console.log('teteye')
       // Verifica se o ID do usuário está presente
       this.registros.forEach(preferencia => {
         preferencia.usuario_id = this.userId; // Atribui o ID do usuário a cada registro de preferência

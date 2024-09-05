@@ -11,7 +11,7 @@ export class PreferenciaService {
   private baseUrl = environment.API_URL;
   private token = localStorage.getItem('token'); // Armazena o token para uso nos headers
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private getHeaders(): HttpHeaders {
     // Obtém o token do localStorage e configura os headers

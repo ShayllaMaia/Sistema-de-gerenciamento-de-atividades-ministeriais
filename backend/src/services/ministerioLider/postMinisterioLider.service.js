@@ -7,7 +7,7 @@ import { sendEmail } from "../../../middlewares/enviaEmail.middlewares.js";
 const prisma = new PrismaClient();
 
 const postMinisterioLiderService = async (data, token) => {
-    let { ministerio_id, lider_id } = data;
+    let { ministerio_id, lider_ids } = data; // Atribuição direta de 'lider_ids' ao invés de 'lider_idss'
 
     // Verifica e decodifica o token
     token = await retornaInfoToken(token);
@@ -25,12 +25,12 @@ const postMinisterioLiderService = async (data, token) => {
         throw new AppError("Ministério não encontrado!", 404);
     }
 
-    // Garante que lider_id é um array
-    if (!Array.isArray(lider_id)) {
-        lider_id = [lider_id];
+    // Verifica se lider_ids é um array (não necessário, pois já é garantido no seu exemplo)
+    if (!Array.isArray(lider_ids)) {
+        lider_ids = [lider_ids]; // Caso seja enviado um único ID como string
     }
 
-    if (lider_id.length < 1) {
+    if (lider_ids.length < 1) {
         throw new AppError("Um ou mais líderes não foram encontrados!", 404);
     }
     
@@ -40,10 +40,10 @@ const postMinisterioLiderService = async (data, token) => {
         select: { lider_id: true },
     });
 
-    let lideresConectadosIds = lideresConectados.map(entry => entry.lider_id);
+    let lideresConectadosIds = lideresConectados.map(entry => entry.lider_ids);
 
     // Verifica quais líderes não estão conectados
-    let lideresNaoConectadosID = lider_id.filter(liderId => !lideresConectadosIds.includes(liderId));
+    let lideresNaoConectadosID = lider_ids.filter(liderId => !lideresConectadosIds.includes(liderId));
 
     // Se não houver líderes não conectados, lança um erro
     if (lideresNaoConectadosID.length === 0) {
@@ -116,7 +116,7 @@ function emailDeLiderancaAderida(email, nome, ministerio) {
         <p>Atenciosamente,<br>Equipe do SIGAM</p>
         <p style="font-size:10px;">Este é um e-mail automático, por favor, não responda.</p>
         <div class="citação" style="float: right;"> 
-          <p> 1 Pedro 5:2-3 - "Pastoreiem o rebanho de Deus que está aos seus cuidados. Olhem por ele, não por obrigação, mas de livre vontade, como Deus quer. "</p>
+          <p>1 Pedro 5:2-3 - "Pastoreiem o rebanho de Deus que está aos seus cuidados. Olhem por ele, não por obrigação, mas de livre vontade, como Deus quer."</p>
         </div>
         <div style="clear: both;"></div>
       </div>
