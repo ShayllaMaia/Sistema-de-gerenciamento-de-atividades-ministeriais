@@ -9,8 +9,16 @@ import Swal from 'sweetalert2';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+  papel = '';
   constructor(private loginService: LoginService, private router: Router) { }
+  ngOnInit() {
+    this.papel = localStorage.getItem('papel') || '';
+    console.log(this.papel)
+  }
+  isNormal() {
+    return this.papel === "NORMAL"
 
+  }
   logout() {
     // Exibe a mensagem de confirmação
     Swal.fire({
@@ -25,7 +33,7 @@ export class SidebarComponent {
       if (result.isConfirmed) {
         // Realiza o logout
         this.loginService.logout();
-        
+
         // Exibe mensagem de sucesso e redireciona após o fechamento do alerta
         Swal.fire('Desconectado!', 'Você foi desconectado com sucesso.', 'success').then(() => {
           this.router.navigate(['/login']).then(() => {
