@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3">
+            <!-- Componente de Sidebar -->
+            <app-sidebar></app-sidebar>
+        </div>
+
+        <!-- Conteúdo da lista de preferências -->
+        <div class="col-lg-9 mt-5">
+            <div class="container">
+                <h1 class="text-center">Lista de Preferências</h1>
+                
+                <!-- Botão de Cadastro -->
+                <div class="mb-3 text-end">
+                  <a routerLink="/preferencia-cadastrar" class="btn btn-warning p-2">
+                    <i class="fa-solid fa-plus"></i> Cadastrar Restrições
+                  </a>
+                </div>
+              
+                <!-- Verificação de Preferências -->
+                <div *ngIf="preferencias.length === 0" class="alert alert-info">
+                  Nenhuma restrição encontrada.
+                </div>
+              
+                <!-- Listagem de Preferências -->
+                <div *ngFor="let preferencia of preferencias">
+                  <div class="card mb-3">
+                    <div class="card-header">
+                      Restrição para {{ preferencia.dia_semana.join(', ') }}
+                    </div>
+                    <div class="card-body">
+                      <p><strong>Hora de Início:</strong> {{ preferencia.hora_inicio }}</p>
+                      <p><strong>Hora de Fim:</strong> {{ preferencia.hora_fim }}</p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

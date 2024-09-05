@@ -6,12 +6,11 @@ import { retornaTipoUsuario } from "../../../middlewares/retornaTipoUsuario.midd
 const prisma = new PrismaClient();
 
 const postMembroMinisterioService = async (data,token) => {
-
-  let{ usuario_id, ministerio_id, preferenciasAtividades } = data;
+  console.log(data);
+  let{ usuario_id, ministerio_id, preferenciasAtividades, diasSemana } = data;
   token = await retornaInfoToken(token);
   const tipoUsuario = await retornaTipoUsuario(token);
-  if(tipoUsuario.tipoUsuario == "NORMAL") throw new AppError("Acesso não autorizado: Somente admin e lideres pode adicionar um membro a um ministério", 401);
-
+  
   const usuario = await prisma.usuario.findUnique({
     where: {
       id: usuario_id,
@@ -39,6 +38,7 @@ for (let i = 0; i < preferenciasAtividades.length; i++) {
   });
   preferenciasAtividades[i] = atividade;
 }
+
 
 const novoMembroMinisterio = await prisma.membrosMinisterios.create({
   data: {

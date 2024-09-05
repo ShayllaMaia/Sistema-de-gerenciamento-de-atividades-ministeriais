@@ -7,7 +7,7 @@ import { retornaTipoUsuario } from "../../../middlewares/retornaTipoUsuario.midd
 const prisma = new PrismaClient();
 
 const postAtivadadeService = async (data, token) => {
-  const { nome, descricao, ministerio_id } = data;
+  const { nome, descricao, ministerio_id,quantidadeMembros } = data;
   
   token = await retornaInfoToken(token);
   const tipoUsuario = await retornaTipoUsuario(token);
@@ -32,17 +32,14 @@ const postAtivadadeService = async (data, token) => {
 
   if (!ministerio) throw new AppError("atividade deve ser atrelada a um ministerio", 411);
 
-  const novaAtividade = prisma.atividade.create({
+  const novaAtividade = await prisma.atividade.create({
     data: {
       nome: nome,
       descricao: descricao,
-      ministerio: {
-        connect: { id: ministerio.id }
-      },
+      ministerio_id: ministerio.id ,
+      quantidadeMembros: quantidadeMembros,
     },
-    include: {
-      ministerio: true,
-    }
+    
   });
   return novaAtividade;
 };

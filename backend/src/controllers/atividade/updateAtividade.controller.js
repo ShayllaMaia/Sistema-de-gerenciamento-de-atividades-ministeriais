@@ -5,8 +5,9 @@ const updateAtividadeController = async (req, res) => {
     const { id } = req.params;
     const authHeader = req.headers["authorization"];
     
-    const { nome, descricao } = req.body;
-    const atividadeCriada = await updateAtivadadeService(id, nome, descricao,authHeader);
+    const { nome, descricao,quantidadeMembros
+     } = req.body;
+    const atividadeCriada = await updateAtivadadeService(id, nome, descricao,quantidadeMembros,authHeader);
 
     return res.status(200).json(atividadeCriada);
 };

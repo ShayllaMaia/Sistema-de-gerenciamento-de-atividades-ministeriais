@@ -13,6 +13,11 @@ import { MembrosMinisterioComponent } from './components/membros-ministerio/memb
 import { AtividadeCadastroComponent } from './components/atividade-cadastro/atividade-cadastro.component';
 import { AtividadeListarComponent } from './components/atividade-listar/atividade-listar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminGuard } from './services/auth-admin-guard.service';
+import { SolicitarEntradaComponent } from './components/solicitar-entrada/solicitar-entrada.component';
+import { PreferenciaCadastrarComponent } from './components/preferencia-cadastrar/preferencia-cadastrar.component'; 
+import { ListaSolicitacoesComponent } from './components/lista-solicitacoes/lista-solicitacoes.component';
+import { PreferenciaListarComponent } from './components/preferencia-listar/preferencia-listar.component';
 
 const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent },
@@ -20,14 +25,20 @@ const routes: Routes = [
   { path: 'sidebar', component: SidebarComponent, canActivate: [AuthGuardService] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },// Redireciona para '/login' quando a rota for vazia
   { path: 'cadastro-evento', component: EventoCadastroComponent, canActivate: [AuthGuardService] },
-  { path: 'lista-evento', component: EventoListarComponent, canActivate: [AuthGuardService] },
-  { path: 'cadastro-ministerio', component: MinisterioCadastroComponent, canActivate: [AuthGuardService] },
-  { path: 'lista-ministerio', component: MinisterioListarComponent, canActivate: [AuthGuardService] },
+  { path: 'lista-evento', component: EventoListarComponent, canActivate: [AdminGuard] },
+  { path: 'cadastro-ministerio', component: MinisterioCadastroComponent, canActivate: [AdminGuard] },
+  { path: 'lista-ministerio', component: MinisterioListarComponent, canActivate: [] },
   { path: 'lista-membro', component: MembroListarComponent, canActivate: [AuthGuardService] },
   { path: 'membros-ministerio/:ministerioId', component: MembrosMinisterioComponent, canActivate: [AuthGuardService] },
   { path: 'lista-atividade', component: AtividadeListarComponent, canActivate: [AuthGuardService] },
   { path: 'cadastro-atividade', component: AtividadeCadastroComponent, canActivate: [AuthGuardService] },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] }
+  { path: 'c', component: DashboardComponent, canActivate: [AuthGuardService], data: {papel: 'ADMIN'}},
+  { path: 'solicitar-entrada', component: SolicitarEntradaComponent,canActivate: [AuthGuardService] },
+  { path: 'preferencia-cadastrar', component: PreferenciaCadastrarComponent, canActivate: [AuthGuardService] }, 
+  { path: 'solicitacoes/:ministerioId', component: ListaSolicitacoesComponent,canActivate: [AuthGuardService]},
+  { path: 'preferencia-listar', component: PreferenciaListarComponent,canActivate: [AuthGuardService]},
+
+
 ];
 
 @NgModule({

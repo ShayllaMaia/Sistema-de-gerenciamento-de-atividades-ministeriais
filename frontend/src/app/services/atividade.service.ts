@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment.development";
-import { AtividadeInterface } from "src/app/model/ativade.interface";
+import { AtividadeInterface } from "src/app/model/atividade.interface";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -33,4 +33,5 @@ import { Observable } from "rxjs";
         const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
         return this.http.delete(`${this.baseUrl}/atividade/${ativivdadeId}`, { headers });
     }
+    
 }

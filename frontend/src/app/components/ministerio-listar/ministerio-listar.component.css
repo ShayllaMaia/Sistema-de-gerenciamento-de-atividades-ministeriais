@@ -1,4 +1,24 @@
-.btn-atividade {
-    background-color: #ff8453; 
+.btn-info {
+    background-color: #eda547; 
+    color: #fff; 
+    border-color: #f5ac70; 
+}
+
+.btn-membros {
+    background-color: #000000; 
+    color: #fff; 
+}
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+.btn-atividade{
+    background-color: #eda547; 
+    color: #fff; 
+    border-color: #f5ac70; 
+}
+.btn-solicitaentrada{
+    background-color: #000000; 
     color: #fff; 
 }

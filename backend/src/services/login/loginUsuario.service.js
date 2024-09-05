@@ -20,6 +20,7 @@ const loginUsuarioService = async (senha, email) => {
     //gera um token com base numa chave secreta
     const token = jwt.sign({
       usuario_id: usuario.id,
+      usuario_papel: usuario.tipoUsuario
     }, process.env.SECRET);
 
     return token;

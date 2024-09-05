@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs';
 import { IForm } from 'src/app/i-form';
-import { AtividadeInterface } from 'src/app/model/ativade.interface';
+import { AtividadeInterface } from 'src/app/model/atividade.interface';
 import { AtividadeService } from 'src/app/services/atividade.service';
 import Swal from 'sweetalert2';
 

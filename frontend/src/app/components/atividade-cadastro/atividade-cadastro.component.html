@@ -21,7 +21,13 @@
                             <textarea class="form-control form-control-lg" [(ngModel)]="registro.descricao"
                                 name="descricao" required></textarea>
 
-                             <div class="text-center mt-5"> 
+                                <label for="quantidadeMembros" class="quantidadeMembros">Numero de Membros para realizar atividade:</label>
+                                <input type="number" class="form-control " [(ngModel)]="registro.quantidadeMembros"
+                                    name="quantidadeMembros" required />
+
+
+
+                             <div class="text-center mt-5">
                                 <button type="submit" class="btn btn-warning p-2">
                                         Cadastrar
                                 </button>

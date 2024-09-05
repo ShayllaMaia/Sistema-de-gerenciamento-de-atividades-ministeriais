@@ -35,9 +35,36 @@ export class MinisterioService {
     return this.http.put(`${this.baseUrl}/ministerio/${ministerioId}`, ministerio, { headers });
   }
 
-
   getMembrosMinisterio(ministerioId: string): Observable<UsuarioInterface[]> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<UsuarioInterface[]>(`${this.baseUrl}/membroMinisterio/${ministerioId}`, { headers });
   }
+
+  getMinisteriosLiderados(): Observable<MinisterioInterface[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.get<MinisterioInterface[]>(`${this.baseUrl}/ministerioLider`, { headers });
+  }
+  getAtividades(ministerioId: string): Observable<any[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.get<any[]>(`${this.baseUrl}/atividades/${ministerioId}`, { headers });
+  }
+
+  deleteMembroMinisterio(data: { idMembro: string, idMinisterio: string }): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.post(`${this.baseUrl}/membroMinisterio/deletar`, data, { headers });
+  }
+  getLiderMinisterio(ministerioId: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+   return this.http.get<any[]>(`${this.baseUrl}/ministerioLider/${ministerioId}`, { headers });
+  }
+
+  atribuirLiderMinisterio(data: { lider_ids: string[], ministerio_id: string }): Observable<any> {
+    console.log('Enviando lider:');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.post(`${this.baseUrl}/ministerioLider`, data, { headers });
+  }
+
+
+
+
 }
