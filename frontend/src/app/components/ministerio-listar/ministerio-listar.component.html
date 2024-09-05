@@ -56,7 +56,7 @@
 
                     <!-- Botão "Solicitar Entrada" visível apenas para usuários com o papel "NORMAL" -->
                     <button *ngIf="isNormal()" [routerLink]="['/solicitar-entrada']"
-                      [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-solicitaentrada pr-2">
+                      [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-primary pr-2">
                       Solicitar Entrada
                     </button>
                   </div>
@@ -86,20 +86,20 @@
                             name="descricaoMinisterio" readonly></textarea>
                         </div>
 
-                        <!-- Verifica se há um líder atribuído -->
-                        <div *ngIf="lider && lider.nome; else noLider">
-                          <div class="form-group">
+                        <!-- Verifica se há líderes atribuídos -->
+                        <div *ngIf="lideres.length > 0; else noLider">
+                          <div class="form-group" *ngFor="let lider of lideres">
                             <label for="liderMinisterio">Líder:</label>
-                            <input type="text" class="form-control" id="liderMinisterio" [value]="lider.nome" readonly>
+                            <input type="text" class="form-control" [value]="lider.nome" readonly>
                           </div>
                         </div>
 
-                        <!-- Caso não tenha um líder -->
+                        <!-- Caso não tenha líderes -->
                         <ng-template #noLider>
                           <div class="text-center">
                             <p class="text-danger">Nenhum líder atribuído a este ministério.</p>
-                            <button type="button" class="btn btn-primary"
-                              (click)="atribuirLideranca(ministerio.id)">Atribuir Liderança</button>
+                            <button *ngIf="papel === 'ADMIN'" type="button" class="btn btn-primary"
+              (click)="atribuirLideranca(ministerio.id)">Atribuir Liderança</button>
                           </div>
                         </ng-template>
                       </div>
@@ -153,6 +153,38 @@
                   </div>
                 </div>
 
+                <!-- Modal para Atribuir Liderança -->
+                <div class="modal fade" id="atribuirLiderancaModal{{ ministerio.id }}" tabindex="-1" role="dialog"
+                  aria-labelledby="atribuirLiderancaModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="atribuirLiderancaModalLabel">Atribuir Liderança</h5>
+                        <button type="button" class="close"
+                          (click)="fecharModal('atribuirLiderancaModal' + ministerio.id)" aria-label="Fechar">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Lista de Membros do Ministério:
+                        <div *ngFor="let user of possibleLiders">
+                          <label>
+                            <input type="checkbox" [value]="user.id" (change)="onLiderChange($event, user.id)">
+                            {{ user.nome }} ({{ user.email }})
+                          </label>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                          (click)="atribuirLider(ministerio.id)">Atribuir</button>
+                        <button type="button" class="btn btn-secondary"
+                          (click)="fecharModal('atribuirLiderancaModal' + ministerio.id)">Fechar</button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
