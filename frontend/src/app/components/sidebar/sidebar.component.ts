@@ -19,6 +19,10 @@ export class SidebarComponent {
     return this.papel === "NORMAL"
 
   }
+
+  isAdmin(){
+    return this.papel === "ADMIN"
+  }
   logout() {
     // Exibe a mensagem de confirmação
     Swal.fire({

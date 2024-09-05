@@ -21,7 +21,7 @@
                     <a routerLink="/lista-evento" routerLinkActive="active" class="nav_link"> <i class="fa-regular fa-calendar-check" title="cultos"></i>
                         <span class="nav_name">Cultos</span>
                     </a>
-                    <a routerLink="/lista-membro" routerLinkActive="active" class="nav_link"> <i class="fa-solid fa-users" title="membros"></i>
+                    <a routerLink="/lista-membro" routerLinkActive="active" class="nav_link"*ngIf="isAdmin()"> <i class="fa-solid fa-users" title="membros" ></i>
                         <span class="nav_name">Membros</span>
                     </a>
 
