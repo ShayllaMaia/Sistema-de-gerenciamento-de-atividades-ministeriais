@@ -63,6 +63,10 @@ export class MinisterioListarComponent implements OnInit {
     return this.papel === 'ADMIN' || this.papel === 'LIDER';
   }
 
+  isAdmin(): boolean {
+    return this.papel === 'ADMIN';
+  }
+
   isNormal(): boolean {
     return this.papel === 'NORMAL';
   }
@@ -101,12 +105,32 @@ export class MinisterioListarComponent implements OnInit {
     );
   }
 
-  confirmarExcluirMinisterio(ministerioId: string): void {
-    if (confirm('Tem certeza que deseja excluir este ministério?')) {
-      this.excluirMinisterio(ministerioId);
-    }
+  confirmarExclusao(ministerioId: number): void {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: "Você não poderá reverter isso!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ministerioService.excluirMinisterio(ministerioId.toString()).subscribe({
+          next: () => {
+            Swal.fire('Sucesso', 'Ministério excluído com sucesso', 'success').then(() => {
+              location.reload();
+            });
+          },
+          error: (err) => {
+            Swal.fire('Erro', 'Ocorreu um erro ao excluir o ministério', 'error');
+          }
+        });
+      }
+    });
   }
-
+  
   abrirModal(modalId: string): void {
     const modal = document.getElementById(modalId);
     if (modal) {
