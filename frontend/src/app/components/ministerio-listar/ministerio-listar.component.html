@@ -56,7 +56,7 @@
 
                     <!-- Botão "Solicitar Entrada" visível apenas para usuários com o papel "NORMAL" -->
                     <button *ngIf="isNormal()" [routerLink]="['/solicitar-entrada']"
-                      [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-primary pr-2">
+                      [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-solicitaentrada pr-2">
                       Solicitar Entrada
                     </button>
                   </div>

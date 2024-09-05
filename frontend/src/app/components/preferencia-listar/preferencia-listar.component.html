@@ -13,21 +13,21 @@
                 
                 <!-- Botão de Cadastro -->
                 <div class="mb-3 text-end">
-                  <a routerLink="/preferencia-cadastrar" class="btn btn-primary">
-                    <i class="fa-solid fa-plus"></i> Cadastrar Preferência
+                  <a routerLink="/preferencia-cadastrar" class="btn btn-warning p-2">
+                    <i class="fa-solid fa-plus"></i> Cadastrar Restrições
                   </a>
                 </div>
               
                 <!-- Verificação de Preferências -->
                 <div *ngIf="preferencias.length === 0" class="alert alert-info">
-                  Nenhuma preferência encontrada.
+                  Nenhuma restrição encontrada.
                 </div>
               
                 <!-- Listagem de Preferências -->
                 <div *ngFor="let preferencia of preferencias">
                   <div class="card mb-3">
                     <div class="card-header">
-                      Preferência para {{ preferencia.dia_semana.join(', ') }}
+                      Restrição para {{ preferencia.dia_semana.join(', ') }}
                     </div>
                     <div class="card-body">
                       <p><strong>Hora de Início:</strong> {{ preferencia.hora_inicio }}</p>
