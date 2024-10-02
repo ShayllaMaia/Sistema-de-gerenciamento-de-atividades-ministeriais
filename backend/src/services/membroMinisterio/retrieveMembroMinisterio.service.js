@@ -19,6 +19,7 @@ const retrieveMembroMinisterioService = async (ministerio_id, token) => {
     const membrosMinisterios = await prisma.membrosMinisterios.findMany({
         where: {
             ministerio_id: ministerio_id,
+            statusSolicitacao: 'APROVADO'
         },
         include: {
             usuario: true,

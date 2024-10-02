@@ -20,3 +20,7 @@ export interface MinisterioLiderResponse {
   ministerio: MinisterioInterface;
   lider: Lider;
 }
+export interface Solicita{
+  usuario_id: string;
+  statusSolicitacao: string;
+}

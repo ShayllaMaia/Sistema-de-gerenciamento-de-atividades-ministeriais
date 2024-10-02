@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MinisterioInterface } from '../model/ministerio.interface';
+import { MinisterioInterface, Solicita } from '../model/ministerio.interface';
 import { environment } from 'src/environments/environment';
 import { UsuarioInterface } from '../model/usuario.interface';
 
@@ -39,6 +39,15 @@ export class MinisterioService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<UsuarioInterface[]>(`${this.baseUrl}/membroMinisterio/${ministerioId}`, { headers });
   }
+  getMembrosMinisterioSolicita(ministerioId: string): Observable<UsuarioInterface[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.get<UsuarioInterface[]>(`${this.baseUrl}/membroMinisterio/membros/${ministerioId}`, { headers });
+  }
+  aceitaSolicitacao(ministerioId: string, ministerio: Solicita): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.put(`${this.baseUrl}/membroMinisterio/atualizar/${ministerioId}`, ministerio, { headers });
+  }
+
 
   getMinisteriosLiderados(): Observable<MinisterioInterface[]> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
@@ -57,6 +66,7 @@ export class MinisterioService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
    return this.http.get<any[]>(`${this.baseUrl}/ministerioLider/${ministerioId}`, { headers });
   }
+
 
   atribuirLiderMinisterio(data: { lider_ids: string[], ministerio_id: string }): Observable<any> {
     console.log('Enviando lider:');
