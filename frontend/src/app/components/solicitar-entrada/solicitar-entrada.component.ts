@@ -91,12 +91,23 @@ export class SolicitarEntradaComponent implements OnInit {
           },
           error => {
             console.error('Erro ao enviar solicitação:', error);
-            Swal.fire(
-              'Erro!',
-              'Houve um problema ao enviar sua solicitação.',
-              'error'
-            );
+
+            // Verifica se a mensagem de erro contém a indicação de solicitação duplicada
+            if (error.message && error.message.includes('400 Bad Request')) {
+              Swal.fire(
+                'Atenção!',
+                'Este membro já possui uma solicitação de entrada para este ministério.',
+                'warning'
+              );
+            } else {
+              Swal.fire(
+                'Erro!',
+                `Houve um problema ao enviar sua solicitação`,
+                'error'
+              );
+            }
           }
+
         );
       }
     });

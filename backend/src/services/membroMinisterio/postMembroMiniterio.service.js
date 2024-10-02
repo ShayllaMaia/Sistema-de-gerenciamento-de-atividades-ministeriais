@@ -45,7 +45,7 @@ const postMembroMinisterioService = async (data, token) => {
     }
   });
   if (isMembro) {
-    throw new AppError("Usuário já é membro deste ministério", 401);
+    throw new AppError("Usuário já é membro deste ministério", 400);
   }
 
   const novoMembroMinisterio = await prisma.membrosMinisterios.create({
