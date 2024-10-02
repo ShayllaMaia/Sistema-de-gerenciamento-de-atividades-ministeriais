@@ -39,7 +39,7 @@ export class LoginComponent {
           localStorage.setItem('token', response);
           const decodedToken: JwtPayload = decodeJwt(response);
           localStorage.setItem('papel', decodedToken["usuario_papel"])
-          this.router.navigate(['/index']);
+          this.router.navigate(['/lista-ministerio']);
         },
         (error) => {
           console.error('Erro ao fazer login:', error);

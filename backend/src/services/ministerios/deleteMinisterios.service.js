@@ -8,7 +8,10 @@ const prisma = new PrismaClient();
 const deleteMinisterioService = async (id, token) => {
   token = await retornaInfoToken(token);
   const tipoUsuario = await retornaTipoUsuario(token);
-  if (tipoUsuario.tipoUsuario != "NORMAL") throw new AppError("Acesso não autorizado: Somente admin pode deletar um ministério", 401);
+  
+  if (tipoUsuario.tipoUsuario !== "ADMIN") {
+    throw new AppError("Acesso não autorizado: Somente administradores ou líderes podem deletar um ministério", 401);
+}
 
   const ministerio = await prisma.ministerio.delete({
     where: {

@@ -22,7 +22,7 @@
                   <div>
                     <h6 class="font-weight-bold">Nome</h6>
                   </div>
-                  <div class="ml-auto px-80">
+                  <div>
                     <h6 class="font-weight-bold">Descrição</h6>
                   </div>
                   <div>
@@ -80,8 +80,7 @@
 
                       </div>
                       <div class="modal-footer">
-                        <button type="button" (click)="salvarEdicaoAtividade(atividade)" class="btn  btn-warning">Salvar
-                          mudanças</button>
+                        <button type="button" (click)="confirmarEdicaoAtividade(atividade)" class="btn btn-warning">Salvar mudanças</button>
                         <button type="button" class="btn btn-warning pr-2"
                           (click)="fecharModal('editarModal' + atividade.id)">Fechar</button>
 

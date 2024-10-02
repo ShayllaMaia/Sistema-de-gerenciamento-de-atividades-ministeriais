@@ -107,9 +107,10 @@
                         <button *ngIf="isAdminOrLider()" type="button"
                           (click)="abrirModal('editarModal' + ministerio.id)"
                           class="btn btn-warning pr-2">Editar</button>
-                        <button *ngIf="isAdminOrLider()" type="button"
-                          (click)="confirmarExcluirMinisterio(ministerio.id)"
+                          <button *ngIf="isAdmin()" type="button"
+                          (click)="confirmarExclusao(ministerio.id)"
                           class="btn btn-danger pr-2">Excluir</button>
+                  
                         <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }"
                           class="btn btn-atividade pr-2">Atividades</button>
                       </div>

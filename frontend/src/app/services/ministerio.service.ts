@@ -25,10 +25,11 @@ export class MinisterioService {
     return this.http.get<MinisterioInterface[]>(`${this.baseUrl}/ministerio`, { headers });
   }
 
-  excluirMinisterio(ministerioId: string): Observable<any> {
+  excluirMinisterio(ministerioId: string): Observable<void> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
-    return this.http.delete(`${this.baseUrl}/ministerio/${ministerioId}`, { headers });
+    return this.http.delete<void>(`${this.baseUrl}/ministerio/${ministerioId}`, { headers });
   }
+  
 
   editarMinisterio(ministerioId: string, ministerio: MinisterioInterface): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
