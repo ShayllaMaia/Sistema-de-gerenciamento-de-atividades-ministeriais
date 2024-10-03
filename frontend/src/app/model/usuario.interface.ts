@@ -8,6 +8,7 @@ export interface UsuarioInterface {
   dataNascimento: string;
   statusSolicitacao?: string;
   preferenciasAtividades?: Array<{
+    id: string;
     nome: string;
     descricao: string;
   }> | null; // Pode ser null se não estiver definido

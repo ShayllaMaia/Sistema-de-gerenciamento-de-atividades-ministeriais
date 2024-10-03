@@ -78,6 +78,37 @@ export class MembrosMinisterioComponent implements OnInit {
       }
     });
   }
+  removeAtividade(idAtividade: string, idMembro: string): void {
+    // Mensagem de confirmação antes de remover a atividade
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: 'Esta ação removerá a atividade do membro.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, remover!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const data = { usuario_id: idMembro, atividade_id: idAtividade }; // Usa o ID correto do usuário e da atividade
+        this.membroMinisterioService.removeAtividade(this.ministerioId, data).pipe(
+          catchError((error) => {
+            Swal.fire('Erro', 'Erro ao remover atividade', 'error'); // Ajusta a mensagem de erro para "atividade"
+            console.error('Erro:', error);
+            return error;
+          })
+        ).subscribe({
+          complete: () => {
+            Swal.fire('Sucesso', 'Atividade removida com sucesso', 'success'); // Ajusta a mensagem de sucesso para "atividade"
+            this.carregarMembrosMinisterio(this.ministerioId); // Recarrega a lista de membros
+          }
+        });
+      }
+    });
+  }
+
+
 
   verSolicitacoes(): void {
     // Redireciona para a página de solicitações
