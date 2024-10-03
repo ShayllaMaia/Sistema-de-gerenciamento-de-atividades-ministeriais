@@ -7,6 +7,7 @@ const prisma = new PrismaClient();
 
 const postMembroMinisterioService = async (data, token) => {
   let { usuario_id, ministerio_id, preferenciasAtividades, diasSemana } = data;
+  console.log(data);
   token = await retornaInfoToken(token);
   const tipoUsuario = await retornaTipoUsuario(token);
 
