@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent },
   {path:'login', component: LoginComponent},
   { path: 'sidebar', component: SidebarComponent, canActivate: [AuthGuardService] },
-  { path: '', redirectTo: '/index', pathMatch: 'full' },// Redireciona para '/login' quando a rota for vazia
+  { path: '', redirectTo: '/login', pathMatch: 'full' },// Redireciona para '/login' quando a rota for vazia
   { path: 'cadastro-evento', component: EventoCadastroComponent, canActivate: [AuthGuardService] },
   { path: 'lista-evento', component: EventoListarComponent, canActivate: [AdminGuard] },
   { path: 'cadastro-ministerio', component: MinisterioCadastroComponent, canActivate: [AdminGuard] },
