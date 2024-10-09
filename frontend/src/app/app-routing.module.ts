@@ -18,6 +18,8 @@ import { SolicitarEntradaComponent } from './components/solicitar-entrada/solici
 import { PreferenciaCadastrarComponent } from './components/preferencia-cadastrar/preferencia-cadastrar.component';
 import { ListaSolicitacoesComponent } from './components/lista-solicitacoes/lista-solicitacoes.component';
 import { PreferenciaListarComponent } from './components/preferencia-listar/preferencia-listar.component';
+import { MinisteriosComponent } from './components/ministerios/ministerios.component';
+import { TodosMinisteriosComponent } from './components/todos-ministerios/todos-ministerios.component';
 
 const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent },
@@ -27,7 +29,7 @@ const routes: Routes = [
   { path: 'cadastro-evento', component: EventoCadastroComponent, canActivate: [AuthGuardService] },
   { path: 'lista-evento', component: EventoListarComponent, canActivate: [AdminGuard] },
   { path: 'cadastro-ministerio', component: MinisterioCadastroComponent, canActivate: [AdminGuard] },
-  { path: 'lista-ministerio', component: MinisterioListarComponent, canActivate: [] },
+  { path: 'meus-ministerios', component: MinisterioListarComponent, canActivate: [] },
   { path: 'lista-membro', component: MembroListarComponent, canActivate: [AuthGuardService] },
   { path: 'membros-ministerio/:ministerioId', component: MembrosMinisterioComponent, canActivate: [AuthGuardService] },
   { path: 'lista-atividade', component: AtividadeListarComponent, canActivate: [AuthGuardService] },
@@ -38,6 +40,8 @@ const routes: Routes = [
   { path: 'solicitacoes/:ministerioId', component: ListaSolicitacoesComponent,canActivate: [AuthGuardService]},
   { path: 'preferencia-listar', component: PreferenciaListarComponent,canActivate: [AuthGuardService]},
   {path: 'index', component: DashboardComponent,canActivate:[AuthGuardService]},
+  {path: 'ministerios', component: MinisteriosComponent,canActivate:[AuthGuardService]},
+  {path: 'todos-ministerios', component: TodosMinisteriosComponent,canActivate:[AuthGuardService]},
 
 
 ];

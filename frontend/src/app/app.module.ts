@@ -25,6 +25,8 @@ import { SolicitarEntradaComponent } from './components/solicitar-entrada/solici
 import { PreferenciaCadastrarComponent } from './components/preferencia-cadastrar/preferencia-cadastrar.component';
 import { ListaSolicitacoesComponent } from './components/lista-solicitacoes/lista-solicitacoes.component';
 import { PreferenciaListarComponent } from './components/preferencia-listar/preferencia-listar.component';
+import { MinisteriosComponent } from './components/ministerios/ministerios.component';
+import { TodosMinisteriosComponent } from './components/todos-ministerios/todos-ministerios.component';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { PreferenciaListarComponent } from './components/preferencia-listar/pref
     SolicitarEntradaComponent,
     PreferenciaCadastrarComponent,
     ListaSolicitacoesComponent,
-    PreferenciaListarComponent
+    PreferenciaListarComponent,
+    MinisteriosComponent,
+    TodosMinisteriosComponent
     
   
   

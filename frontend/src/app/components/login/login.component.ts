@@ -37,14 +37,20 @@ export class LoginComponent {
       .subscribe(
         (response) => {
           localStorage.setItem('token', response);
+          
+          // Decodificando o token JWT
           const decodedToken: JwtPayload = decodeJwt(response);
-          localStorage.setItem('papel', decodedToken["usuario_papel"])
-          this.router.navigate(['/lista-ministerio']);
+          
+          // Armazenando o papel e ID do usuário no localStorage
+          localStorage.setItem('usuarioId', decodedToken.usuario_id); // Adicione esta linha
+          localStorage.setItem('papel', decodedToken["usuario_papel"]);
+  
+          // Navegando para a página de ministérios
+          this.router.navigate(['/ministerios']);
         },
         (error) => {
           console.error('Erro ao fazer login:', error);
           if (error.status === 401) {
-            // this.erroLogin = 'Usuário ou senha incorretos. Por favor, verifique suas credenciais.';
             Swal.fire(
               'Erro',
               'Usuário ou senha incorretos. Por favor, verifique suas credenciais.',
@@ -62,5 +68,6 @@ export class LoginComponent {
         }
       );
   }
+  
 }
 
