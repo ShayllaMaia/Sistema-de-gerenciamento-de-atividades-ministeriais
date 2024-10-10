@@ -2,6 +2,7 @@ export interface MinisterioInterface {
     id: string;
     nome: string;
     descricao: string;
+    idLider?: string; 
 }
 export interface Lider {
   id: string;
