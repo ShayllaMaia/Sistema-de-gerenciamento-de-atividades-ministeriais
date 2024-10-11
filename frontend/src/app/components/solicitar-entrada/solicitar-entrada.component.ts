@@ -86,7 +86,7 @@ export class SolicitarEntradaComponent implements OnInit {
               'Sua solicitação foi enviada com sucesso.',
               'success'
             ).then(() => {
-              this.router.navigate(['/lista-ministerio']);
+              this.router.navigate(['/todos-ministerios']);
             });
           },
           error => {
