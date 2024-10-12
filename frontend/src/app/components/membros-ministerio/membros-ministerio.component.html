@@ -1,4 +1,4 @@
-<section class="vh-100 custom-background">
+<section class="vh-100 custom-background"> 
   <div class="container">
     <div class="row">
       <!-- Sidebar -->
@@ -14,7 +14,7 @@
                 <h6>Lista de Membros</h6>
               </div>
               <!-- Botão de Ver Solicitações Pendentes -->
-              <div class="py-4">
+              <div class="py-4" *ngIf="isLider || isAdmin">
                 <button class="btn btn-orange" (click)="verSolicitacoes()">Solicitações Pendentes</button>
               </div>
               <!-- Verifica se há membros -->
@@ -28,27 +28,27 @@
                       <p>Endereço: {{ membro.usuario.endereco }}</p>
                       <p>Status De Solicitação de Entrada: {{ membro.statusSolicitacao }}</p>
 
-                      <!-- Verifica se o membro tem atividades preferidas -->
                       <div *ngIf="membro.preferenciasAtividades && membro.preferenciasAtividades.length > 0">
                         <h6>Atividades:</h6>
                         <ul>
                           <li *ngFor="let atividade of membro.preferenciasAtividades">
                             {{ atividade.nome }} - {{ atividade.descricao }}
-                            <!-- Botão de remover atividade -->
-                            <button
-                              class="btn btn-danger btn-sm ml-3"
+                            <button 
+                              *ngIf="isLider || isAdmin" 
+                              class="btn btn-danger btn-sm ml-3" 
                               (click)="removeAtividade(atividade.id, membro.usuario.id)">
                               Remover
                             </button>
                           </li>
                         </ul>
+                        
                       </div>
                       <div *ngIf="!membro.preferenciasAtividades || membro.preferenciasAtividades.length === 0">
                         <p>Nenhuma atividade preferida encontrada.</p>
                       </div>
 
                       <!-- Botão de Remover Membro -->
-                      <button (click)="confirmarRemocao(membro.usuario.id)" class="btn btn-danger">Remover Membro</button>
+                      <button *ngIf="isLider || isAdmin" (click)="confirmarRemocao(membro.usuario.id)" class="btn btn-danger">Remover Membro</button>
                     </ng-container>
                     <ng-container *ngIf="!membro.usuario">
                       <p>Nenhum usuário encontrado.</p>

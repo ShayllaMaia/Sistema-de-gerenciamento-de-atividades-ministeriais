@@ -226,3 +226,42 @@ h6{
         padding-left: calc(var(--nav-width) + 210px)
     }
 }
+
+
+/* Ajustes para telas pequenas */
+@media screen and (max-width: 768px) {
+    .l-navbar {
+        display: none; /* Oculta a barra lateral */
+    }
+
+    .header {
+        flex-direction: row; /* Mantenha a direção horizontal */
+        align-items: center; /* Centraliza verticalmente os itens do cabeçalho */
+        justify-content: space-between; /* Espaçamento entre os itens */
+        padding: 0 1rem; /* Padding para o cabeçalho */
+    }
+
+    .nav {
+        flex-direction: row; /* Alinha os links horizontalmente */
+        overflow-x: auto; /* Permite rolagem horizontal se necessário */
+    }
+
+    .nav_link {
+        padding: 1rem; /* Aumenta o padding para os links */
+        flex: 1; /* Faz com que os links ocupem espaço igual */
+        text-align: center; /* Centraliza o texto */
+    }
+
+    #logout {
+        margin-left: auto; /* Empurra o botão de logout para a direita */
+    }
+}
+
+
+.hidden {
+    display: none; /* Oculta a barra lateral */
+}
+
+.l-navbar {
+    transition: all 0.3s; /* Transição suave ao abrir e fechar */
+}

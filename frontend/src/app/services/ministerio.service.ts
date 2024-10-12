@@ -83,5 +83,6 @@ export class MinisterioService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<any[]>(`${this.baseUrl}/atividade/`, { headers });
   }
+  
 
 }

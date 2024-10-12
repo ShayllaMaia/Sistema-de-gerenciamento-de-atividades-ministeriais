@@ -22,6 +22,7 @@
     "bootstrap": "^4.1.3",
     "dayjs": "^1.11.13",
     "dayjs-plugin-utc": "^0.1.2",
+    "frontend": "file:",
     "jose": "^5.8.0",
     "jquery": "^3.3.1",
     "jwt-decode": "^4.0.0",

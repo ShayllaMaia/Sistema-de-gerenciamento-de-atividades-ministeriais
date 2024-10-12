@@ -4,6 +4,8 @@ import { catchError } from 'rxjs';
 import { UsuarioInterface } from 'src/app/model/usuario.interface';
 import { MinisterioService } from 'src/app/services/ministerio.service';
 import Swal from 'sweetalert2';
+import { decodeJwt } from 'jose';
+import { MinisterioLiderResponse } from 'src/app/model/ministerio.interface';
 
 @Component({
   selector: 'app-membros-ministerio',
@@ -13,14 +15,22 @@ import Swal from 'sweetalert2';
 export class MembrosMinisterioComponent implements OnInit {
   membros: UsuarioInterface[] = [];
   ministerioId: string = '';
+  usuarioId: string | null = null; // ID do usuário atual
+  liderId: string | null = null; // ID do líder do ministério
+  isLider: boolean = false; // Verifica se é líder
+  isAdmin: boolean = false; // Verifica se é admin
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router, // Adicionar o Router para navegação
+    private router: Router,
     private membroMinisterioService: MinisterioService
   ) { }
 
   ngOnInit(): void {
+    this.usuarioId = localStorage.getItem('usuarioId'); // Obtém o ID do usuário do localStorage
+    const papel = localStorage.getItem('papel'); // Obtém o papel do usuário
+    this.isAdmin = papel === 'ADMIN'; // Verifica se é admin
+
     this.route.params.subscribe(params => {
       this.ministerioId = params['ministerioId'];
       this.carregarMembrosMinisterio(this.ministerioId);
@@ -29,7 +39,7 @@ export class MembrosMinisterioComponent implements OnInit {
 
   carregarMembrosMinisterio(ministerioId: string): void {
     this.membroMinisterioService.getMembrosMinisterio(ministerioId).subscribe(
-      (membros) => {
+      (membros: UsuarioInterface[]) => { // Continue esperando UsuarioInterface[]
         this.membros = membros.map(membro => {
           const preferenciasAtividades = Array.isArray(membro.preferenciasAtividades)
             ? membro.preferenciasAtividades
@@ -39,6 +49,9 @@ export class MembrosMinisterioComponent implements OnInit {
             preferenciasAtividades
           };
         });
+
+        // Supondo que o ID do líder deve ser obtido de outro lugar
+        this.obterLiderDoMinisterio(ministerioId); // Chama função para obter o líder
       },
       (error) => {
         console.error('Erro ao carregar membros do ministério:', error);
@@ -46,6 +59,19 @@ export class MembrosMinisterioComponent implements OnInit {
     );
   }
 
+  obterLiderDoMinisterio(ministerioId: string): void {
+    this.membroMinisterioService.getLiderMinisterio(ministerioId).subscribe(
+      (data: any) => { // Aqui você pode definir o tipo de dados que espera
+        if (data.length > 0) {
+          this.liderId = data[0].lider_id; // Assumindo que o líder está na primeira posição
+          this.isLider = this.usuarioId === this.liderId; // Verifica se o usuário atual é o líder
+        }
+      },
+      (error) => {
+        console.error('Erro ao obter líder do ministério:', error);
+      }
+    );
+  }
   confirmarRemocao(idMembro: string): void {
     Swal.fire({
       title: 'Você tem certeza?',
@@ -78,8 +104,8 @@ export class MembrosMinisterioComponent implements OnInit {
       }
     });
   }
+
   removeAtividade(idAtividade: string, idMembro: string): void {
-    // Mensagem de confirmação antes de remover a atividade
     Swal.fire({
       title: 'Você tem certeza?',
       text: 'Esta ação removerá a atividade do membro.',
@@ -94,24 +120,21 @@ export class MembrosMinisterioComponent implements OnInit {
         const data = { usuario_id: idMembro, atividade_id: idAtividade }; // Usa o ID correto do usuário e da atividade
         this.membroMinisterioService.removeAtividade(this.ministerioId, data).pipe(
           catchError((error) => {
-            Swal.fire('Erro', 'Erro ao remover atividade', 'error'); // Ajusta a mensagem de erro para "atividade"
+            Swal.fire('Erro', 'Erro ao remover atividade', 'error');
             console.error('Erro:', error);
             return error;
           })
         ).subscribe({
           complete: () => {
-            Swal.fire('Sucesso', 'Atividade removida com sucesso', 'success'); // Ajusta a mensagem de sucesso para "atividade"
-            this.carregarMembrosMinisterio(this.ministerioId); // Recarrega a lista de membros
+            Swal.fire('Sucesso', 'Atividade removida com sucesso', 'success');
+            this.carregarMembrosMinisterio(this.ministerioId);
           }
         });
       }
     });
   }
 
-
-
   verSolicitacoes(): void {
-    // Redireciona para a página de solicitações
     this.router.navigate(['/solicitacoes', this.ministerioId]);
   }
 }
