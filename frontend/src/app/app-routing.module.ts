@@ -20,6 +20,7 @@ import { ListaSolicitacoesComponent } from './components/lista-solicitacoes/list
 import { PreferenciaListarComponent } from './components/preferencia-listar/preferencia-listar.component';
 import { MinisteriosComponent } from './components/ministerios/ministerios.component';
 import { TodosMinisteriosComponent } from './components/todos-ministerios/todos-ministerios.component';
+import { EscalaComponent } from './escala/escala.component';
 
 const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent },
@@ -42,6 +43,7 @@ const routes: Routes = [
   {path: 'index', component: DashboardComponent,canActivate:[AuthGuardService]},
   {path: 'ministerios', component: MinisteriosComponent,canActivate:[AuthGuardService]},
   {path: 'todos-ministerios', component: TodosMinisteriosComponent,canActivate:[AuthGuardService]},
+  {path: 'escala', component:EscalaComponent,canActivate:[AuthGuardService]},
 
 
 ];

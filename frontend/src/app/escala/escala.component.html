@@ -1,0 +1,80 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-3">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="col-lg-9 mt-5 custom-background" style="max-height: 80vh; overflow-y: auto;">
+      <div class="calendar-container">
+        <!-- Título Principal -->
+        <h2 class="text-center mb-4" style="font-size: 1.5em; color: #2C3E50;">Escala do Mês</h2>
+
+        <!-- Botão para gerar escala -->
+        <button class="btn btn-primary mb-4" (click)="gerarEscala()" style="background-color: #F39C12; border-color: #F39C12; color: white;">
+          Gerar Escala
+        </button>
+
+        <div class="text-center mt-4">
+          <!-- Título do Mês/Ano -->
+          <h3 style="font-size: 1.4em; color: #2C3E50;">{{ currentMonth | titlecase }} {{ currentYear }}</h3>
+        </div>
+
+        <!-- Calendário -->
+        <table class="table table-bordered calendar-table" style="border-color: #BDC3C7;">
+          <thead>
+            <tr style="background-color: #ECF0F1;">
+              <th style="color: #2C3E50; font-size: 0.9em;">Dom</th>
+              <th style="color: #2C3E50; font-size: 0.9em;">Seg</th>
+              <th style="color: #2C3E50; font-size: 0.9em;">Ter</th>
+              <th style="color: #2C3E50; font-size: 0.9em;">Qua</th>
+              <th style="color: #2C3E50; font-size: 0.9em;">Qui</th>
+              <th style="color: #2C3E50; font-size: 0.9em;">Sex</th>
+              <th style="color: #2C3E50; font-size: 0.9em;">Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let week of calendarWeeks">
+              <td *ngFor="let day of week">
+                <div class="calendar-day" [ngClass]="{ 'empty-day': !day }" style="padding: 8px;">
+                  <!-- Apenas o número do dia sem fundo -->
+                  <strong *ngIf="day" style="font-size: 1em; color: #2C3E50;">{{ day.day }}</strong>
+
+                  <!-- Eventos do Dia -->
+                  <div *ngIf="day && eventsByDate[day.dateKey]" class="events mt-2">
+                    <ng-container *ngFor="let evento of eventsByDate[day.dateKey]">
+                      <div class="event mb-2 p-1" style="border-left: 4px solid #F39C12; background-color: #ECF0F1; border-radius: 5px;">
+
+                        <!-- Nome do Evento e Botão de Expansão -->
+                        <span class="badge" style="background-color: #F39C12; color: white; font-size: 0.8em;">{{ evento.tipoEvento }}</span>
+                        <br>
+                        <strong (click)="toggleExpand(evento.evento_id)" style="cursor: pointer; font-size: 1.1em; color: #2C3E50;">
+                          {{ evento.nome }}
+                        </strong><br>
+
+                        <!-- Conteúdo Expandido (Atividades e Membros) -->
+                        <div *ngIf="expandedEvents[evento.evento_id]" style="color: #2C3E50;">
+                          <!-- Horário do Evento -->
+                          <small style="font-size: 0.9em;">{{ evento.hora_chegada | date:'shortTime' }} - {{ evento.hora_saida | date:'shortTime' }}</small><br>
+
+                          <!-- Atividades e Membros -->
+                          <ng-container *ngFor="let atividadeKey of getObjectKeys(evento.atividades)">
+                            <div class="atividade mt-2">
+                              <strong style="font-size: 1em; color: #2C3E50;">Atividade: {{ evento.atividades[atividadeKey].nome }}</strong><br>
+                              <small style="color: #34495E; font-size: 0.85em;">Membros:</small>
+                              <ul class="pl-3" style="list-style-type: none; font-size: 0.85em;">
+                                <li *ngFor="let membro of evento.atividades[atividadeKey].membros" style="color: #2C3E50;">- {{ membro }}</li>
+                              </ul>
+                            </div>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,65 +1,116 @@
 <div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-lg-3">
-            <app-sidebar></app-sidebar>
-        </div>
-        <!-- Conteúdo do formulário de cadastro de evento -->
-        <div class="col-lg-9 mt-5 vh-100 custom-background">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 mt-4">
-                        <div class="text-center mb-4 font-weight-bold">
-                            <h1>CADASTRO DE EVENTO</h1>
-                        </div>
-                        <form (ngSubmit)="submit(form)" #form="ngForm">
-                            <label for="nome" class="nome">Nome:</label>
-                            <input type="text" class="form-control form-control-lg" [(ngModel)]="registro.nome" name="nome" required />
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label" for="data">Data:</label>
-                                    <input type="date" class="form-control form-control-lg" [(ngModel)]="registro.data" name="data" required />
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label" for="tipoEvento">Tipo de Evento:</label>
-                                    <select class="form-control form-control-lg" [(ngModel)]="registro.tipoEvento" name="tipoEvento" required>
-                                        <option value="CULTO">Culto</option>
-                                        <option value="EVENTO">Externo</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label" for="hora_inicio">Hora de Início:</label>
-                                    <input type="time" class="form-control form-control-lg" [(ngModel)]="registro.hora_inicio" name="hora_inicio" required />
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <label class="form-label" for="hora_fim">Hora de Fim:</label>
-                                    <input type="time" class="form-control form-control-lg" [(ngModel)]="registro.hora_fim" name="hora_fim" required />
-                                </div>
-                            </div>
-
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="descricao">Descrição:</label>
-                                <textarea class="form-control form-control-lg" [(ngModel)]="registro.descricao" name="descricao" required></textarea>
-                            </div>
-
-                            <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" id="isRecorrente" [(ngModel)]="registro.isRecorrente" name="isRecorrente" />
-                                <label class="form-check-label" for="isRecorrente">Evento Recorrente</label>
-                            </div>
-                            
-
-                            <div class="text-center mt-5"> 
-                                <button type="submit" class="btn btn-warning p-2">
-                                        Cadastrar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3">
+      <app-sidebar></app-sidebar>
     </div>
+    <!-- Conteúdo do formulário de cadastro de evento -->
+    <div class="col-lg-9 mt-5 vh-100 custom-background">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 mt-4">
+            <div class="text-center mb-4 font-weight-bold">
+              <h1>CADASTRO DE EVENTO</h1>
+            </div>
+            <form (ngSubmit)="submit(form)" #form="ngForm">
+              <label for="nome" class="nome">Nome:</label>
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                [(ngModel)]="registro.nome"
+                name="nome"
+                required
+              />
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <label class="form-label" for="data">Data:</label>
+                  <input
+                    type="date"
+                    class="form-control form-control-lg"
+                    [(ngModel)]="registro.data"
+                    name="data"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-4">
+                  <label class="form-label" for="tipoEvento">Tipo de Evento:</label>
+                  <select
+                    class="form-control form-control-lg"
+                    [(ngModel)]="registro.tipoEvento"
+                    name="tipoEvento"
+                    required
+                  >
+                    <option value="CULTO">Culto</option>
+                    <option value="EVENTO">Externo</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <label class="form-label" for="hora_inicio">Hora de Início:</label>
+                  <input
+                    type="time"
+                    class="form-control form-control-lg"
+                    [(ngModel)]="registro.hora_inicio"
+                    name="hora_inicio"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-4">
+                  <label class="form-label" for="hora_fim">Hora de Fim:</label>
+                  <input
+                    type="time"
+                    class="form-control form-control-lg"
+                    [(ngModel)]="registro.hora_fim"
+                    name="hora_fim"
+                    required
+                  />
+                </div>
+              </div>
+
+              <label for="">Selecione os ministérios que participarão do evento:</label>
+              <div *ngFor="let ministerio of ministerios" class="pl-4">
+                <input
+                  type="checkbox"
+                  [value]="ministerio.id"
+                  (change)="onMinisterioChange($event, ministerio.id)"
+                  [checked]="selectedMinisterios.includes(ministerio.id)"
+                  id="ministerio-{{ministerio.id}}"
+                />
+                <label for="ministerio-{{ministerio.id}}" class="pl-2">{{ ministerio.nome }}</label>
+              </div>
+
+              <div class="form-outline mb-4">
+                <label class="form-label" for="descricao">Descrição:</label>
+                <textarea
+                  class="form-control form-control-lg"
+                  [(ngModel)]="registro.descricao"
+                  name="descricao"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="form-check mb-4">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="isRecorrente"
+                  [(ngModel)]="registro.isRecorrente"
+                  name="isRecorrente"
+                />
+                <label class="form-check-label" for="isRecorrente">Evento Recorrente</label>
+              </div>
+
+              <div class="text-center mt-5">
+                <button type="submit" class="btn btn-warning p-2">
+                  Cadastrar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -8,4 +8,5 @@ export interface EventoInterface {
     hora_fim: string;
     descricao: string;
     isRecorrente: false;
+    ministerios: any[];
   }

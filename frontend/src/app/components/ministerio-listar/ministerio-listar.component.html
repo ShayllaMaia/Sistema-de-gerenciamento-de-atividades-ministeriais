@@ -110,7 +110,7 @@
                           <button *ngIf="isAdmin()" type="button"
                           (click)="confirmarExclusao(ministerio.id)"
                           class="btn btn-danger pr-2">Excluir</button>
-                  
+
                         <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }"
                           class="btn btn-atividade pr-2">Atividades</button>
                       </div>

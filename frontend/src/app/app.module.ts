@@ -27,6 +27,7 @@ import { ListaSolicitacoesComponent } from './components/lista-solicitacoes/list
 import { PreferenciaListarComponent } from './components/preferencia-listar/preferencia-listar.component';
 import { MinisteriosComponent } from './components/ministerios/ministerios.component';
 import { TodosMinisteriosComponent } from './components/todos-ministerios/todos-ministerios.component';
+import { EscalaComponent } from './escala/escala.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { TodosMinisteriosComponent } from './components/todos-ministerios/todos-
     ListaSolicitacoesComponent,
     PreferenciaListarComponent,
     MinisteriosComponent,
-    TodosMinisteriosComponent
+    TodosMinisteriosComponent,
+    EscalaComponent
     
   
   

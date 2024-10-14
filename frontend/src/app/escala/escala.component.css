@@ -1,0 +1,39 @@
+.calendar-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.calendar-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.calendar-table th,
+.calendar-table td {
+  text-align: center;
+  vertical-align: top;
+  height: 100px;
+}
+
+.calendar-day {
+  padding: 5px;
+  position: relative;
+}
+
+.empty-day {
+  background-color: #f0f0f0;
+}
+
+.events {
+  margin-top: 5px;
+}
+
+.event {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
