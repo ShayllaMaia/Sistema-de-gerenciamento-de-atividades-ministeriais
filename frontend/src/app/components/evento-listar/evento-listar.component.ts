@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class EventoListarComponent implements OnInit {
   registro: EventoInterface[] = [];
   erroLogin: string = '';
+  isAdmin: boolean = false;
 
   constructor(
     private eventoService: EventoService,
@@ -24,6 +25,8 @@ export class EventoListarComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregarEventos();
+    const papelUsuario = localStorage.getItem('papel');
+    this.isAdmin = papelUsuario === 'ADMIN';
   }
 
   carregarEventos(): void {

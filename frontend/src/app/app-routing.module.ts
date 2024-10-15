@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'sidebar', component: SidebarComponent, canActivate: [AuthGuardService] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },// Redireciona para '/login' quando a rota for vazia
   { path: 'cadastro-evento', component: EventoCadastroComponent, canActivate: [AuthGuardService] },
-  { path: 'lista-evento', component: EventoListarComponent, canActivate: [AdminGuard] },
+  { path: 'lista-evento', component: EventoListarComponent, canActivate: [AuthGuardService] },
   { path: 'cadastro-ministerio', component: MinisterioCadastroComponent, canActivate: [AdminGuard] },
   { path: 'meus-ministerios', component: MinisterioListarComponent, canActivate: [] },
   { path: 'lista-membro', component: MembroListarComponent, canActivate: [AuthGuardService] },
