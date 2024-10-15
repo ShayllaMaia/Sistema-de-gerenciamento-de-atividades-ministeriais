@@ -17,6 +17,7 @@ export class MinisterioListarComponent implements OnInit {
   lideres: any[] = []; // Alterado de `lider` para `lideres`
   selectedLider: string = '';
   possibleLiders: any[] = [];
+  usuarioId: string | null = null; // ID do usuário atual
 
 
   constructor(
@@ -28,24 +29,14 @@ export class MinisterioListarComponent implements OnInit {
 
   ngOnInit(): void {
     this.papel = localStorage.getItem('papel') || '';
+    this.usuarioId = localStorage.getItem('usuarioId'); // Obtém o ID do usuário do localStorage
     this.carregarMinisterios();
     this.membros();
   }
 
 
   carregarMinisterios(): void {
-    if (this.papel === 'LIDER') {
-      this.ministerioService.getMinisteriosLiderados().subscribe(
-        (response: any[]) => {
-          console.log('Dados recebidos do serviço (Lider):', response);
-          this.ministerios = response.map(item => item.ministerio);
-          console.log('Ministérios liderados carregados:', this.ministerios);
-        },
-        (error: any) => {
-          console.error('Erro ao carregar ministérios liderados:', error);
-        }
-      );
-    } else {
+    if (this.papel === 'ADMIN') {
       this.ministerioService.getMinisterios().subscribe(
         (ministerios) => {
           console.log('Todos os ministérios carregados:', ministerios);
@@ -55,10 +46,39 @@ export class MinisterioListarComponent implements OnInit {
           console.error('Erro ao carregar ministérios:', error);
         }
       );
+    } else if (this.papel === 'LIDER') {
+      this.ministerioService.getMinisteriosLiderados().subscribe(
+        (response: any[]) => {
+          console.log('Dados recebidos do serviço (Líder):', response);
+          this.ministerios = response.map(item => item.ministerio);
+          console.log('Ministérios liderados carregados:', this.ministerios);
+        },
+        (error: any) => {
+          console.error('Erro ao carregar ministérios liderados:', error);
+        }
+      );
+    } else if (this.papel === 'NORMAL') {
+      if (this.usuarioId) {
+        this.ministerioService.getMinisteriosPorUsuario(this.usuarioId).subscribe(
+          (response: any) => {
+            console.log('Ministérios do membro comum carregados:', response);
+            this.ministerios = response.ministerios; 
+          },
+          (error) => {
+            console.error('Erro ao carregar ministérios do membro comum:', error);
+          }
+        );
+      } else {
+        console.error('usuarioId é null, não é possível carregar ministérios.');
+      }
     }
   }
-
-
+  
+  isMembroMinisterio(ministerioId: string): boolean {
+    // Verifica se o usuário atual é membro do ministério
+    return this.ministerios.some(ministerio => ministerio.id === ministerioId);
+  }
+  
   isAdminOrLider(): boolean {
     return this.papel === 'ADMIN' || this.papel === 'LIDER';
   }

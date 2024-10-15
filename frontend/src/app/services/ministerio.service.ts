@@ -89,6 +89,8 @@ export class MinisterioService {
     const url = `${this.baseUrl}/membroMinisterio/adiciona/${ministerioId}`;  // Monta a URL com o ID do ministério
     return this.http.post(url, data, { headers });
   }
-
+  getMinisteriosPorUsuario(usuarioId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/membroMinisterio/ministerios/${usuarioId}`);
+  }
 
 }

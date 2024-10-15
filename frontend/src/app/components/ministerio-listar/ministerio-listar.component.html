@@ -55,10 +55,12 @@
 
 
                     <!-- Botão "Solicitar Entrada" visível apenas para usuários com o papel "NORMAL" -->
-                    <button *ngIf="isNormal()" [routerLink]="['/solicitar-entrada']"
-                      [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-primary pr-2">
+                    <button *ngIf="isNormal() && !isMembroMinisterio(ministerio.id)"
+                      [routerLink]="['/solicitar-entrada']" [queryParams]="{ idMinisterio: ministerio.id }"
+                      class="btn btn-primary pr-2">
                       Solicitar Entrada
                     </button>
+
                   </div>
                 </div>
 
@@ -107,8 +109,7 @@
                         <button *ngIf="isAdminOrLider()" type="button"
                           (click)="abrirModal('editarModal' + ministerio.id)"
                           class="btn btn-warning pr-2">Editar</button>
-                          <button *ngIf="isAdmin()" type="button"
-                          (click)="confirmarExclusao(ministerio.id)"
+                        <button *ngIf="isAdmin()" type="button" (click)="confirmarExclusao(ministerio.id)"
                           class="btn btn-danger pr-2">Excluir</button>
 
                         <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }"
