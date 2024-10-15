@@ -7,6 +7,7 @@ import { retornaSolicitacaoPendenteMembroMinisterio } from "../controllers/membr
 import { updatemembroMinisterioController } from "../controllers/membroMinisterio/updateMembroMinisterio.controller.js";
 import { removePreferenciaAtividadeController } from "../controllers/membroMinisterio/removerPreferenciaAtividade.controller.js";
 import { addAtividadeController } from "../controllers/membroMinisterio/addAtividadeMembro.controller.js";
+import { meusMinisteriosController } from "../controllers/membroMinisterio/meusMembros.controller.js";
 
 const membroMinisterioRoutes = Router();
 
@@ -19,5 +20,6 @@ membroMinisterioRoutes.get("/membros/:id",retornaSolicitacaoPendenteMembroMinist
 membroMinisterioRoutes.put("/atualizar/:id",updatemembroMinisterioController);
 membroMinisterioRoutes.post("/remove/:id",removePreferenciaAtividadeController);
 membroMinisterioRoutes.post("/adiciona/:id",addAtividadeController);
+membroMinisterioRoutes.get("/ministerios/:id",meusMinisteriosController);
 
 export { membroMinisterioRoutes };
