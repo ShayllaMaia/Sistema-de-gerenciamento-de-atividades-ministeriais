@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
   export class AtividadeService {
     private baseUrl = environment.API_URL;
     private token = localStorage.getItem('token');
-  
+
     constructor(private http: HttpClient) {}
 
     criarAtividade(atividade: any): Observable<any> {
@@ -33,5 +33,10 @@ import { Observable } from "rxjs";
         const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
         return this.http.delete(`${this.baseUrl}/atividade/${ativivdadeId}`, { headers });
     }
-    
+    membroAtividade(atividadeId: string): Observable<any> {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+      return this.http.get(`${this.baseUrl}/atividade/${atividadeId}`, { headers });
+    }
+
+
 }

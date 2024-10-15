@@ -40,6 +40,7 @@ export class MinisterioService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<UsuarioInterface[]>(`${this.baseUrl}/membroMinisterio/${ministerioId}`, { headers });
   }
+  
   getMembrosMinisterioSolicita(ministerioId: string): Observable<UsuarioInterface[]> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<UsuarioInterface[]>(`${this.baseUrl}/membroMinisterio/membros/${ministerioId}`, { headers });
@@ -83,6 +84,11 @@ export class MinisterioService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<any[]>(`${this.baseUrl}/atividade/`, { headers });
   }
-  
+  adicionaAtividadeAoMembro(ministerioId: string, data: { usuario_id: string, atividade_id: string }): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);  // Define o token no header
+    const url = `${this.baseUrl}/membroMinisterio/adiciona/${ministerioId}`;  // Monta a URL com o ID do ministério
+    return this.http.post(url, data, { headers });
+  }
+
 
 }

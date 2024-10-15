@@ -22,6 +22,7 @@ import { MinisteriosComponent } from './components/ministerios/ministerios.compo
 import { TodosMinisteriosComponent } from './components/todos-ministerios/todos-ministerios.component';
 import { EscalaComponent } from './escala/escala.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { MembroAtividadeComponent } from './membro-atividade/membro-atividade.component';
 
 const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent },
@@ -46,6 +47,7 @@ const routes: Routes = [
   {path: 'todos-ministerios', component: TodosMinisteriosComponent,canActivate:[AuthGuardService]},
   {path: 'escala', component:EscalaComponent,canActivate:[AuthGuardService]},
   {path: 'perfil', component: PerfilComponent, canActivate: [AuthGuardService]},
+  {path: 'atividade-membro/:id', component: MembroAtividadeComponent, canActivate: [AuthGuardService]}
 
 
 ];

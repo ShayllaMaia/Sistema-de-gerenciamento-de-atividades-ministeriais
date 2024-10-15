@@ -1,0 +1,85 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3">
+      <app-sidebar></app-sidebar>
+    </div>
+    <!-- Lista de Ministérios -->
+    <div class="col-lg-9 mt-5 custom-background" style="max-height: 80vh; overflow-y: auto;">
+      <div class="container">
+        <div class="row">
+          <div class="container mt-5">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <h2>{{ atividade?.nome }}</h2>
+                <p>{{ atividade?.descricao }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <h3 class="mb-4">Membros Participantes</h3>
+
+                <!-- Alinhamento do botão à direita -->
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-primary mb-4" (click)="abrirModal()">Adicionar Membro</button>
+                </div>
+
+                <ul class="list-group">
+                  <li class="list-group-item" *ngFor="let membro of membros">
+                    <h5>{{ membro.usuario.nome }}</h5>
+                    <p><strong>Email:</strong> {{ membro.usuario.email }}</p>
+                    <p><strong>Telefone:</strong> {{ membro.usuario.telefone }}</p>
+
+                    <!-- Lista de Preferências de Atividades -->
+                    <p><strong>Preferências de Atividades:</strong></p>
+                    <ul>
+                      <li *ngFor="let preferencia of membro.preferenciasAtividades">
+                        {{ preferencia.nome }} - {{ preferencia.descricao }}
+                        <!-- Botão para remover atividade -->
+                        <button class="btn btn-danger btn-sm ml-3"
+                          (click)="removerAtividade(preferencia.id, membro.usuario.id)">
+                          Remover da Atividade
+                        </button>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para adicionar membro -->
+<div class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'show': modalAberto}" [ngStyle]="{'display': modalAberto ? 'block' : 'none'}" aria-labelledby="adicionarMembroModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Adicionar Membro</h5>
+        <button type="button" class="close" (click)="fecharModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="membroSelect">Selecione um Membro</label>
+          <select class="form-control" id="membroSelect" [(ngModel)]="membroSelecionado">
+            <option value="" disabled selected>SELECIONE</option>
+            <option *ngFor="let membroDisponivel of membrosDisponiveis" [value]="membroDisponivel.usuario.id">
+              {{ membroDisponivel.usuario.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="fecharModal()">Fechar</button>
+        <button type="button" class="btn btn-primary" (click)="adicionarMembro()">Adicionar Membro</button>
+      </div>
+    </div>
+  </div>
+</div>
