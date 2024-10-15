@@ -9,7 +9,7 @@
         <h2 class="text-center mb-4" style="font-size: 1.5em; color: #2C3E50;">Escala do Mês</h2>
 
         <!-- Botão para gerar escala -->
-        <button class="btn btn-primary mb-4" (click)="gerarEscala()" style="background-color: #F39C12; border-color: #F39C12; color: white;">
+        <button *ngIf="isAdminOrLider()" class="btn btn-primary mb-4" (click)="gerarEscala()" style="background-color: #F39C12; border-color: #F39C12; color: white;">
           Gerar Escala
         </button>
 

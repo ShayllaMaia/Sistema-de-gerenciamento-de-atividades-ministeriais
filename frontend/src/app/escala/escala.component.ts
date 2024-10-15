@@ -17,14 +17,21 @@ export class EscalaComponent implements OnInit {
   currentYear: number = 0;
   calendarWeeks: any[][] = [];
   expandedEvents: { [key: string]: boolean } = {}; // Controle de eventos expandidos
+  papel: string = '';
+
 
   constructor(private escalaService: EscalaService, private router: Router) { }
 
   ngOnInit(): void {
     this.generateCalendar();
     this.carregarParticipacoes();
+    this.papel = localStorage.getItem('papel') || '';
   }
 
+  isAdminOrLider(): boolean {
+    return this.papel === 'ADMIN' || this.papel === 'LIDER';
+  }
+  
   generateCalendar(): void {
     const now = moment.tz('America/Rio_Branco');
     this.currentMonth = now.format('MMMM');
