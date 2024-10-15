@@ -5,12 +5,15 @@ import Swal from 'sweetalert2';
 import * as dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc'
 import { jwtDecode } from 'jwt-decode';
+
 interface JwtPayLoad {
   usuario_id: string;
   usuario_papel: string;
   iat: number;
 }
+
 dayjs.extend(utc);
+
 @Component({
   selector: 'app-preferencia-listar',
   templateUrl: './preferencia-listar.component.html',
@@ -24,10 +27,8 @@ export class PreferenciaListarComponent implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem('token') || '';
-    console.log(token);
     const decodedToken = jwtDecode<JwtPayLoad>(token);
     this.userId = decodedToken.usuario_id;
-    console.log(this.userId)
     this.getPreferencias();
   }
 
@@ -38,12 +39,10 @@ export class PreferenciaListarComponent implements OnInit {
         .subscribe({
           next: (data) => {
             data.map(data => {
-              console.log(data.hora_fim)
-              data.hora_fim = dayjs.utc(data.hora_fim).format('HH:mm')
-              data.hora_inicio = dayjs.utc(data.hora_inicio).format('HH:mm')
-            }) // Verifique a saída aqui
+              data.hora_fim = dayjs.utc(data.hora_fim).format('HH:mm');
+              data.hora_inicio = dayjs.utc(data.hora_inicio).format('HH:mm');
+            });
             this.preferencias = data;
-            console.log(this.preferencias)
           },
           error: (error) => {
             console.error('Erro ao carregar preferências:', error);
@@ -58,4 +57,40 @@ export class PreferenciaListarComponent implements OnInit {
       Swal.fire('Erro', 'Usuário não autenticado', 'error');
     }
   }
+
+  confirmarRemoverPreferencia(preferenciaId?: string): void {
+    if (!preferenciaId) {
+      Swal.fire('Erro', 'ID da preferência não encontrado.', 'error');
+      return;
+    }
+
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: "Você não poderá reverter isso!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sim, remover!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.removerPreferencia(preferenciaId);
+      }
+    });
+  }
+
+  removerPreferencia(preferenciaId: string): void {
+    this.preferenciaService.excluirPreferencia(preferenciaId).subscribe({
+      complete: () => {
+        Swal.fire('Removido!', 'Sua preferência foi removida.', 'success');
+        // Atualiza a lista de preferências localmente após a exclusão
+        this.preferencias = this.preferencias.filter(p => p.id !== preferenciaId);
+      },
+      error: (error) => {
+        Swal.fire('Erro', 'Erro ao remover preferência', 'error');
+      }
+    });
+  }
+
 }

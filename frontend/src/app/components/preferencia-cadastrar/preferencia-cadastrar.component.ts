@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core'; // Importa o decorator Component e o hook OnInit
-import { NgForm } from '@angular/forms'; // Importa NgForm para gerenciar formulários
-import { Router } from '@angular/router'; // Importa Router para navegação
-import { catchError, throwError } from 'rxjs'; // Importa operadores RxJS para tratamento de erros
-import { PreferenciaService } from 'src/app/services/preferencia.service'; // Importa o serviço de preferências
-import { PreferenciaInterface } from 'src/app/model/preferencia.interface'; // Importa a interface para preferências
-import Swal from 'sweetalert2'; // Importa SweetAlert2 para mostrar alertas
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
+import { PreferenciaService } from 'src/app/services/preferencia.service';
+import { PreferenciaInterface } from 'src/app/model/preferencia.interface';
+import Swal from 'sweetalert2';
 import { jwtDecode } from 'jwt-decode';
+
 interface JwtPayLoad {
   usuario_id: string;
   usuario_papel: string;
@@ -13,14 +14,13 @@ interface JwtPayLoad {
 }
 
 @Component({
-  selector: 'app-preferencia-cadastrar', // Seletor do componente
-  templateUrl: './preferencia-cadastrar.component.html', // Caminho para o template HTML
-  styleUrls: ['./preferencia-cadastrar.component.css'], // Caminho para o arquivo de estilos
+  selector: 'app-preferencia-cadastrar',
+  templateUrl: './preferencia-cadastrar.component.html',
+  styleUrls: ['./preferencia-cadastrar.component.css'],
 })
-
 export class PreferenciaCadastrarComponent implements OnInit {
-  registros: PreferenciaInterface[] = []; // Array para armazenar registros de preferências
-  userId: string = ''; // ID do usuário, inicializado como string vazia
+  registros: PreferenciaInterface[] = [];
+  userId: string = '';
   diasDaSemana: string[] = [
     'SEGUNDA',
     'TERÇA',
@@ -29,20 +29,21 @@ export class PreferenciaCadastrarComponent implements OnInit {
     'SEXTA',
     'SÁBADO',
     'DOMINGO',
-  ]; // Lista de dias da semana
-  
+  ];
+
   constructor(
-    private preferenciaService: PreferenciaService, // Injeta o serviço de preferências
-    private router: Router // Injeta o serviço de roteamento
-  ) {}
+    private preferenciaService: PreferenciaService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem('token') || '';
     const decodedToken = jwtDecode<JwtPayLoad>(token);
     this.userId = decodedToken.usuario_id;
-    this.addPreferencia(); // Inicializa o array de registros com uma pref;// Exibe o ID do usuário no console para depuraçãoerência padrão
+    this.addPreferencia();
   }
-  SepararDias(registros: PreferenciaInterface[]): PreferenciaInterface[]{
+
+  SepararDias(registros: PreferenciaInterface[]): PreferenciaInterface[] {
     return registros.flatMap(registro =>
       registro.dia_semana.map(dia => ({
         usuario_id: registro.usuario_id,
@@ -51,30 +52,28 @@ export class PreferenciaCadastrarComponent implements OnInit {
         hora_fim: registro.hora_fim
       }))
     );
-}
+  }
+
   addPreferencia(): void {
     this.registros.push({
-      usuario_id: this.userId, // Atribui o ID do usuário ao novo registro
-      dia_semana: [], // Inicializa o array de dias como vazio
-      hora_inicio: new Date().toLocaleString(), // Define a hora de início como a data e hora atuais em formato ISO
-      hora_fim: new Date().toLocaleString(), // Define a hora de fim como a data e hora atuais em formato ISO
+      usuario_id: this.userId,
+      dia_semana: [],
+      hora_inicio: new Date().toLocaleString(),
+      hora_fim: new Date().toLocaleString(),
     });
   }
 
   onDiaChange(event: any, index: number): void {
-    // Método chamado quando um checkbox é alterado
-    const dia = event.target.value; // Obtém o valor do dia do checkbox
+    const dia = event.target.value;
     if (event.target.checked) {
-      // Se o checkbox estiver marcado
-      this.registros[index].dia_semana.push(dia); // Adiciona o dia ao array de dias do registro correspondente
+      this.registros[index].dia_semana.push(dia);
     } else {
-      // Se o checkbox estiver desmarcado
       this.registros[index].dia_semana = this.registros[index].dia_semana.filter(
         (d) => d !== dia
-      ); // Remove o dia do array de dias do registro correspondente
+      );
     }
   }
-  
+
   submit(form: NgForm): void {
     if (this.userId) {
       this.registros.map((item) => {
@@ -86,34 +85,36 @@ export class PreferenciaCadastrarComponent implements OnInit {
         today.setUTCHours(hoursFim, minuteFim, 0, 0);
         item.hora_fim = today.toLocaleString('pt-BR', { timeZone: 'America/Rio_Branco' });
       });
+
       this.registros.forEach((preferencia) => {
         preferencia.usuario_id = this.userId;
       });
-      this.registros = this.SepararDias(this.registros)
-      console.log(this.registros) // Exibe os registros a serem enviados no console para depuração
+
+      this.registros = this.SepararDias(this.registros);
+
       this.preferenciaService
         .criarPreferencias(this.registros)
         .pipe(
-          // Chama o método do serviço para criar as preferências e usa pipe para adicionar tratamento de erros
           catchError((error) => {
-            console.error('Erro ao cadastrar preferências:', error); // Exibe o erro no console para depuração
-            Swal.fire('Erro', 'Erro ao cadastrar preferências', 'error'); // Mostra um alerta de erro
-            return throwError(error); // Lança o erro novamente para ser tratado pelo subscribe
+            console.error('Erro ao cadastrar preferências:', error);
+            Swal.fire('Erro', 'Erro ao cadastrar preferências', 'error');
+            return throwError(error);
           })
         )
         .subscribe({
           complete: () => {
-            // Método chamado quando a solicitação é concluída com sucesso
+            // Redireciona para a rota de listar preferências após o sucesso
             Swal.fire(
               'Sucesso',
               'Preferências cadastradas com sucesso',
               'success'
-            ); // Mostra um alerta de sucesso
-            this.router.navigate(['/home']); // Navega para a página inicial
+            ).then(() => {
+              this.router.navigate(['/preferencia-listar']); // Altere aqui para redirecionar após o cadastro
+            });
           },
         });
     } else {
-      Swal.fire('Erro', 'Usuário não autenticado', 'error'); // Mostra um alerta de erro se o usuário não estiver autenticado
+      Swal.fire('Erro', 'Usuário não autenticado', 'error');
     }
   }
 }

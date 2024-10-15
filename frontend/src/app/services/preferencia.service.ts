@@ -25,10 +25,10 @@ export class PreferenciaService {
   }
 
     criarPreferencias(preferencias: PreferenciaInterface[]): Observable<any> {
-    const headers = this.getHeaders(); 
+    const headers = this.getHeaders();
     console.log(preferencias);// Obtém os headers com o token de autenticação
     return this.http.post(`http://localhost:3200/preferenciahorarios`, preferencias, { headers });
-  } 
+  }
 
   getPreferencias(): Observable<PreferenciaInterface[]> {
     const headers = this.getHeaders(); // Obtém os headers com o token de autenticação
@@ -42,7 +42,7 @@ export class PreferenciaService {
 
   excluirPreferencia(preferenciaId: string): Observable<any> {
     const headers = this.getHeaders(); // Obtém os headers com o token de autenticação
-    return this.http.delete(`${this.baseUrl}/preferencias/${preferenciaId}`, { headers });
+    return this.http.delete(`${this.baseUrl}/preferenciahorarios/${preferenciaId}`, { headers });
   }
 
   getPreferenciasPorUsuarioId(usuarioId: string): Observable<PreferenciaInterface[]> {
