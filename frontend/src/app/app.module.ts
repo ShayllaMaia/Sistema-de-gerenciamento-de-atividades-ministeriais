@@ -28,6 +28,7 @@ import { PreferenciaListarComponent } from './components/preferencia-listar/pref
 import { MinisteriosComponent } from './components/ministerios/ministerios.component';
 import { TodosMinisteriosComponent } from './components/todos-ministerios/todos-ministerios.component';
 import { EscalaComponent } from './escala/escala.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { EscalaComponent } from './escala/escala.component';
     PreferenciaListarComponent,
     MinisteriosComponent,
     TodosMinisteriosComponent,
-    EscalaComponent
+    EscalaComponent,
+    PerfilComponent
     
   
   

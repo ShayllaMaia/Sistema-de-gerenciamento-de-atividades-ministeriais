@@ -31,4 +31,12 @@ export class UsuarioService {
     const headers = this.getHeaders();
     return this.http.post(`${this.baseUrl}/solicitacao`, solicitacao, { headers });
   }
+  getUsuarioById(id: string): Observable<UsuarioInterface> {
+    const headers = this.getHeaders();
+    return this.http.get<UsuarioInterface>(`${this.baseUrl}/usuario/${id}`, { headers });
+  }
+  updateUsuario(usuario: UsuarioInterface): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.put(`${this.baseUrl}/usuario/${usuario.id}`, usuario, { headers });
+  }
 }

@@ -21,6 +21,7 @@ import { PreferenciaListarComponent } from './components/preferencia-listar/pref
 import { MinisteriosComponent } from './components/ministerios/ministerios.component';
 import { TodosMinisteriosComponent } from './components/todos-ministerios/todos-ministerios.component';
 import { EscalaComponent } from './escala/escala.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 const routes: Routes = [
   { path: 'cadastro', component: CadastroComponent },
@@ -44,6 +45,7 @@ const routes: Routes = [
   {path: 'ministerios', component: MinisteriosComponent,canActivate:[AuthGuardService]},
   {path: 'todos-ministerios', component: TodosMinisteriosComponent,canActivate:[AuthGuardService]},
   {path: 'escala', component:EscalaComponent,canActivate:[AuthGuardService]},
+  {path: 'perfil', component: PerfilComponent, canActivate: [AuthGuardService]},
 
 
 ];

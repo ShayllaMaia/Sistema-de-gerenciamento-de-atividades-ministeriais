@@ -1,0 +1,66 @@
+<div class="container mt-5">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3">
+      <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Perfil do Usuário -->
+    <div class="col-lg-9 pt-10">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <!-- Avatar com a primeira letra do nome -->
+          <div class="avatar" style="background-color: #6c757d; width: 150px; height: 150px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 50px; color: white; margin: 0 auto;">
+            {{ perfilForm.get('nome')?.value.charAt(0) }} <!-- Primeira letra do nome -->
+          </div>
+          <h4 class="mt-3">{{ perfilForm.get('nome')?.value }}</h4>
+          <p>{{ perfilForm.get('email')?.value }}</p>
+        </div>
+
+        <div class="col-md-8">
+          <form [formGroup]="perfilForm" (ngSubmit)="onSave()">
+            <div class="form-group">
+              <label for="nome">Nome Completo:</label>
+              <input id="nome" formControlName="nome" type="text" class="form-control">
+              <div *ngIf="perfilForm.get('nome')?.invalid && perfilForm.get('nome')?.touched" class="text-danger">
+                O nome é obrigatório.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input id="email" formControlName="email" type="email" class="form-control">
+              <div *ngIf="perfilForm.get('email')?.invalid && perfilForm.get('email')?.touched" class="text-danger">
+                Insira um email válido.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="telefone">Telefone:</label>
+              <input id="telefone" formControlName="telefone" type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="endereco">Endereço:</label>
+              <input id="endereco" formControlName="endereco" type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="dataNascimento">Data de Nascimento:</label>
+              <input id="dataNascimento" formControlName="dataNascimento" type="date" class="form-control">
+            </div>
+
+            <!-- Campo para alterar a senha -->
+            <div class="form-group">
+              <label for="senha">Nova Senha (deixe em branco para não alterar):</label>
+              <input id="senha" formControlName="senha" type="password" class="form-control" placeholder="Nova Senha">
+            </div>
+
+            <!-- Botão para salvar -->
+            <button type="submit" class="btn btn-success mt-3">Salvar Alterações</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

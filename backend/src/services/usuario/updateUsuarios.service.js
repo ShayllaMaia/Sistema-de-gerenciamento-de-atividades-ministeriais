@@ -5,8 +5,7 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 const updateUsuarioService = async (id, data) => {
-    const usuarioId = parseInt(id);
-    
+    const usuarioId = id;
     const usuario = await prisma.usuario.findUnique({
         where: {
             id:usuarioId,
