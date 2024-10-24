@@ -5,7 +5,6 @@ import { retornaInfoToken } from "../../../middlewares/retornaInfoToen.middliwar
 const prisma = new PrismaClient();
 
 const retrieveMembroMinisterioService = async (ministerio_id, token) => {
-
     token = await retornaInfoToken(token);
     const ministerio = await prisma.ministerio.findUnique({
         where: {
@@ -20,6 +19,7 @@ const retrieveMembroMinisterioService = async (ministerio_id, token) => {
     const membrosMinisterios = await prisma.membrosMinisterios.findMany({
         where: {
             ministerio_id: ministerio_id,
+            statusSolicitacao: 'APROVADO'
         },
         include: {
             usuario: true,
@@ -27,7 +27,15 @@ const retrieveMembroMinisterioService = async (ministerio_id, token) => {
         },
     });
 
-    return membrosMinisterios;
+    // Converter preferenciasAtividades para array
+    const membrosComPreferencias = membrosMinisterios.map(membro => ({
+        ...membro,
+        preferenciasAtividades: Array.isArray(membro.preferenciasAtividades)
+            ? membro.preferenciasAtividades
+            : JSON.parse(membro.preferenciasAtividades || '[]') // Converta para array
+    }));
+
+    return membrosComPreferencias;
 };
 
 export { retrieveMembroMinisterioService };

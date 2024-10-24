@@ -9,7 +9,9 @@ const updateMinisterioService = async (id, data, token) => {
   const ministerioId = id;
   token = await retornaInfoToken(token);
   const tipoUsuario = await retornaTipoUsuario(token);
-  if (tipoUsuario.tipoUsuario != "ADMIN") throw new AppError("Acesso não autorizado: Somente admin pode modificar um ministério", 401);
+  if (tipoUsuario.tipoUsuario !== "ADMIN" && tipoUsuario.tipoUsuario !== "LIDER") {
+    throw new AppError("Acesso não autorizado: Somente admin ou líder pode modificar um ministério", 401);
+  }
 
   const ministerio = await prisma.ministerio.findUnique({
     where: {

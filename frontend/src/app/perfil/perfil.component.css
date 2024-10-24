@@ -1,0 +1,20 @@
+.avatar {
+  font-size: 50px;
+  background-color: #6c757d;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin: 0 auto;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.text-center {
+  text-align: center;
+}

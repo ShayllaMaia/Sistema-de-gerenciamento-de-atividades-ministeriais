@@ -7,7 +7,7 @@ import { retrieveEscalaController } from "../controllers/escalas/retrieveEscalas
 
 const escalaRoutes = Router();
 
-escalaRoutes.get("/:id", retrieveEscalaController);
+escalaRoutes.get("/participacao", retrieveEscalaController);
 escalaRoutes.get("/", getEscalasController);
 escalaRoutes.post("/", postEscalaController);
 escalaRoutes.delete("/:id", deleteEscalaController);

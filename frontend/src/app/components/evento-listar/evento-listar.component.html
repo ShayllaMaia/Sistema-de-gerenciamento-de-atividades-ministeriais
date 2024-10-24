@@ -1,128 +1,119 @@
 <div class="container-fluid">
   <div class="row">
-      <!-- Sidebar -->
-      <div class="col-lg-3">
-          <app-sidebar></app-sidebar>
-      </div>
-      <!-- Lista de Eventos -->
-      <div class="col-lg-9 mt-5 custom-background" style="max-height: 80vh; overflow-y: auto;">
-          <div class="container">
-              <div class="row">
-                  <div class="col-lg-12 mt-4">
-                      <div class="text-center mb-4 font-weight-bold">
-                          <h2>Lista de Eventos</h2>
-                      </div>
-                      <div class="text-right mb-4 mr-2">
-                          <button routerLink="/cadastro-evento" class="btn btn-warning pr-2 mb-4">Cadastrar Evento</button>
-                      </div>
+    <!-- Sidebar -->
+    <div class="col-lg-3">
+      <app-sidebar></app-sidebar>
+    </div>
+    <!-- Lista de Eventos -->
+    <div class="col-lg-9 mt-5 custom-background" style="max-height: 80vh; overflow-y: auto;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 mt-4">
+            <div class="text-center mb-4 font-weight-bold">
+              <h2>Lista de Eventos</h2>
+            </div>
+            <!-- Botão Cadastrar Evento, visível apenas para Admin -->
+            <div class="text-right mb-4 mr-2" *ngIf="isAdmin">
+              <button routerLink="/cadastro-evento" class="btn btn-warning pr-2 mb-4">Cadastrar Evento</button>
+            </div>
 
-                      <ul class="list-group">
-                          <li class="list-group-item">
-                              <div class="d-flex justify-content-between">
-                                  <div>
-                                      <h6 class="font-weight-bold">Nome</h6>
-                                  </div>
-                                  <div class="ml-auto px-80">
-                                      <h6 class="font-weight-bold">Descrição</h6>
-                                  </div>
-                                  <div>
-                                      <h6 class="font-weight-bold px-14">Ações</h6>
-                                  </div>
-                              </div>
-                          </li>
-                          <li class="list-group-item" *ngFor="let evento of registro">
-                              <div class="d-flex justify-content-between align-items-center">
-                                  <div>
-                                      <h2 class="mb-3 font-weight-bold display-5">{{ evento.nome }}</h2>
-                                      <p>Data: {{formatarData(evento.data)}}</p>
-                                      <p>Tipo: {{ evento.tipoEvento }}</p>
-                                      <p>Hora de Início: {{ evento.hora_inicio }}</p>
-                                      <p>Hora de Fim: {{evento.hora_fim }}</p>
-                                  </div>
-                                  <div class="ml-auto">
-                                      <p>{{ evento.descricao }}</p>
-                                  </div>
-                                  <div class="ml-auto">
-                                      <div class="mb-3">
-                                          <button type="button" (click)="abrirModalEvento('editarModalEvento' + evento.id)"
-                                              class="btn btn-warning pr-2">
-                                              Editar
-                                          </button>
-
-                                          <span class="px-2"></span>
-
-                                          <button (click)="confirmarExcluirEvento(evento.id)" class="btn btn-warning pr-2">
-                                              Excluir
-                                          </button>
-
-                                          <!-- Modal de edição do evento -->
-                                          <div class="modal fade" [id]="'editarModalEvento' + evento.id" tabindex="-1" role="dialog"
-                                              aria-labelledby="editarModalEventoLabel" aria-hidden="true">
-                                              <div class="modal-dialog modal-dialog-centered" role="document">
-                                                  <div class="modal-content">
-                                                      <div class="modal-header">
-                                                          <h5 class="modal-title" id="editarModalEventoLabel">Editar Evento</h5>
-                                                          <button type="button" class="btn-close"
-                                                              (click)="fecharModalEvento('editarModalEvento' + evento.id)" aria-label="Fechar"></button>
-                                                      </div>
-                                                      <div class="modal-body">
-                                                          <!-- Campos de edição do evento -->
-                                                          <div class="form-group">
-                                                              <label for="nomeEvento">Nome:</label>
-                                                              <input type="text" class="form-control" id="nomeEvento" [(ngModel)]="evento.nome">
-                                                          </div>
-                                                          <div class="form-group">
-                                                              <label for="dataEvento">Data:</label>
-                                                              <input type="date" class="form-control" id="dataEvento" [(ngModel)]="evento.data">
-                                                          </div>
-                                                          <div class="form-group">
-                                                              <label for="tipoEvento">Tipo de Evento:</label>
-                                                              <input type="text" class="form-control" id="tipoEvento" [(ngModel)]="evento.tipoEvento">
-                                                          </div>
-                                                          <div class="form-group row">
-                                                              <div class="col-md-6">
-                                                                  <label for="horaInicio" class="col-form-label">Hora de Início:</label>
-                                                                  <input type="time" class="form-control" id="horaInicio" [(ngModel)]="evento.hora_inicio">
-                                                              </div>
-                                                              <div class="col-md-6">
-                                                                  <label for="horaFim" class="col-form-label">Hora de Fim:</label>
-                                                                  <input type="time" class="form-control" id="horaFim" [(ngModel)]="evento.hora_fim">
-                                                              </div>
-                                                          </div>
-                                                          <div class="form-group">
-                                                              <label for="descricaoEvento">Descrição:</label>
-                                                              <textarea class="form-control" id="descricaoEvento"
-                                                                  [(ngModel)]="evento.descricao"></textarea>
-                                                          </div>
-                                                      </div>
-                                                      <div class="modal-footer">
-                                                          <button type="button" (click)="salvarEdicaoEvento(evento)" class="btn btn-warning pr-2">Salvar
-                                                              mudanças</button>
-                                                          <button type="button" class="btn btn-warning pr-2"
-                                                              (click)="fecharModalEvento('editarModalEvento' + evento.id)">
-                                                              Fechar
-                                                          </button>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-
-                                  </div>
-
-                              </div>
-
-
-                          </li>
-                      </ul>
-
-
-
-
+            <ul class="list-group">
+              <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <h6 class="font-weight-bold">Nome</h6>
                   </div>
-              </div>
-          </div>
+                  <div class="ml-auto px-80">
+                    <h6 class="font-weight-bold">Descrição</h6>
+                  </div>
+                  <div *ngIf="isAdmin">
+                    <h6 class="font-weight-bold px-14">Ações</h6>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item" *ngFor="let evento of registro">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h2 class="mb-3 font-weight-bold display-5">{{ evento.nome }}</h2>
+                    <p>Data: {{ formatarData(evento.data) }}</p>
+                    <p>Tipo: {{ evento.tipoEvento }}</p>
+                    <p>Hora de Início: {{ evento.hora_inicio }}</p>
+                    <p>Hora de Fim: {{ evento.hora_fim }}</p>
+                  </div>
+                  <div class="ml-auto">
+                    <p>{{ evento.descricao }}</p>
+                  </div>
+                  <!-- Botões de Ação (Editar/Excluir) visíveis apenas para Admin -->
+                  <div class="ml-auto" *ngIf="isAdmin">
+                    <div class="mb-3">
+                      <button type="button" (click)="abrirModalEvento('editarModalEvento' + evento.id)"
+                        class="btn btn-warning pr-2">
+                        Editar
+                      </button>
+                      <span class="px-2"></span>
+                      <button (click)="confirmarExcluirEvento(evento.id)" class="btn btn-warning pr-2">
+                        Excluir
+                      </button>
 
+                      <!-- Modal de edição do evento -->
+                      <div class="modal fade" [id]="'editarModalEvento' + evento.id" tabindex="-1" role="dialog"
+                        aria-labelledby="editarModalEventoLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="editarModalEventoLabel">Editar Evento</h5>
+                              <button type="button" class="btn-close"
+                                (click)="fecharModalEvento('editarModalEvento' + evento.id)" aria-label="Fechar"></button>
+                            </div>
+                            <div class="modal-body">
+                              <!-- Campos de edição do evento -->
+                              <div class="form-group">
+                                <label for="nomeEvento">Nome:</label>
+                                <input type="text" class="form-control" id="nomeEvento" [(ngModel)]="evento.nome">
+                              </div>
+                              <div class="form-group">
+                                <label for="dataEvento">Data:</label>
+                                <input type="date" class="form-control" id="dataEvento" [(ngModel)]="evento.data">
+                              </div>
+                              <div class="form-group">
+                                <label for="tipoEvento">Tipo de Evento:</label>
+                                <input type="text" class="form-control" id="tipoEvento" [(ngModel)]="evento.tipoEvento">
+                              </div>
+                              <div class="form-group row">
+                                <div class="col-md-6">
+                                  <label for="horaInicio" class="col-form-label">Hora de Início:</label>
+                                  <input type="time" class="form-control" id="horaInicio" [(ngModel)]="evento.hora_inicio">
+                                </div>
+                                <div class="col-md-6">
+                                  <label for="horaFim" class="col-form-label">Hora de Fim:</label>
+                                  <input type="time" class="form-control" id="horaFim" [(ngModel)]="evento.hora_fim">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="descricaoEvento">Descrição:</label>
+                                <textarea class="form-control" id="descricaoEvento"
+                                  [(ngModel)]="evento.descricao"></textarea>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" (click)="salvarEdicaoEvento(evento)" class="btn btn-warning pr-2">Salvar
+                                mudanças</button>
+                              <button type="button" class="btn btn-warning pr-2"
+                                (click)="fecharModalEvento('editarModalEvento' + evento.id)">
+                                Fechar
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
 </div>

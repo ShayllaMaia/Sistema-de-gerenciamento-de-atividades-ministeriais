@@ -4,10 +4,21 @@ import { retornaInfoToken } from "../../../middlewares/retornaInfoToen.middliwar
 const prisma = new PrismaClient();
 
 const getEventosService = async (token) => {
-    token = await retornaInfoToken(token);
+  // Obter as informações do token
+  token = await retornaInfoToken(token);
 
-    const eventos = prisma.eventos.findMany();
-    return eventos;
-}
+  // Buscar eventos e incluir ministérios associados através do modelo EventoMinisterio
+  const eventos = await prisma.eventos.findMany({
+    include: {
+      ministerios: {  // Relacionamento definido como 'ministerios' no modelo Eventos
+        include: {
+          ministerio: true // Inclui as informações completas do ministério associado
+        }
+      }
+    }
+  });
+  console.log("Eventos encontrados:", eventos);
+  return eventos;
+};
 
 export { getEventosService };

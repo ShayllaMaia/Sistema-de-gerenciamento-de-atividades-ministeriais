@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment.development";
-import { AtividadeInterface } from "src/app/model/ativade.interface";
+import { AtividadeInterface } from "src/app/model/atividade.interface";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
   export class AtividadeService {
     private baseUrl = environment.API_URL;
     private token = localStorage.getItem('token');
-  
+
     constructor(private http: HttpClient) {}
 
     criarAtividade(atividade: any): Observable<any> {
@@ -33,4 +33,10 @@ import { Observable } from "rxjs";
         const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
         return this.http.delete(`${this.baseUrl}/atividade/${ativivdadeId}`, { headers });
     }
+    membroAtividade(atividadeId: string): Observable<any> {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+      return this.http.get(`${this.baseUrl}/atividade/${atividadeId}`, { headers });
+    }
+
+
 }

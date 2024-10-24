@@ -11,6 +11,9 @@ import { atividadeRoutes } from './src/routes/atividade.routes.js';
 import { membroMinisterioRoutes } from './src/routes/membroMinisterio.routes.js';
 import { ministerioLiderRoutes } from './src/routes/ministerioLider.routes.js';
 import { validaToken } from './middlewares/validaToken.middlewares.js';
+import expressListEndpoints from 'express-list-endpoints';
+import { preferenciaHorariosRoutes } from './src/routes/preferenciaHorarios.routes.js';
+import { preferenciaMembroRoutes } from './src/routes/preferenciaMembro.routes.js';
 
 
 
@@ -31,6 +34,8 @@ app.use("/ministerio",ministerioRoutes);
 app.use("/atividade", validaToken,atividadeRoutes);
 app.use("/membroMinisterio",membroMinisterioRoutes);
 app.use("/ministerioLider",ministerioLiderRoutes);
+app.use("/preferenciahorarios",preferenciaHorariosRoutes)
+app.use("/preferencia",preferenciaMembroRoutes);
 
 
 
@@ -38,3 +43,7 @@ app.use("/ministerioLider",ministerioLiderRoutes);
 app.listen(port, () => {
     console.log(`O servidor está rodando em http://localhost:${port}`);
 });
+
+
+const endpoints = expressListEndpoints(app);
+console.log(endpoints);

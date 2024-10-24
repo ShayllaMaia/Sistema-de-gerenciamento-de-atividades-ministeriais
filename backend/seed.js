@@ -4,255 +4,165 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Inserir ministérios
-  const ministerio1 = await prisma.ministerio.create({
-    data: {
-      nome: 'Ministério de Louvor e Adoração',
-      descricao: 'Conduz os louvores nos cultos e eventos da igreja.',
-    },
-  });
-
-  const ministerio2 = await prisma.ministerio.create({
-    data: {
-      nome: 'Ministério de Evangelismo',
-      descricao: 'Compartilha o Evangelho com a comunidade.',
-    },
-  });
-
-  const ministerio3 = await prisma.ministerio.create({
-    data: {
-      nome: 'Ministério Infantil',
-      descricao: 'Ensino bíblico e cuidado das crianças.',
-    },
-  });
-
-  // Inserir atividades
-  const atividade1 = await prisma.atividade.create({
-    data: {
-      nome: 'Cantor',
-      descricao: 'Liderar o canto congregacional nos cultos e eventos.',
-      ministerio: {
-        connect: { id: ministerio1.id }
-      }
-    },
-  });
-
-  const atividade2 = await prisma.atividade.create({
-    data: {
-      nome: 'Pregador',
-      descricao: 'Compartilhar mensagens bíblicas nos cultos e eventos.',
-      ministerio: {
-        connect: { id: ministerio2.id }
-      }
-    },
-  });
-
-  const atividade3 = await prisma.atividade.create({
-    data: {
-      nome: 'Professor(a)',
-      descricao: 'Ministrar aulas bíblicas para crianças de determinada faixa etária.',
-      ministerio: {
-        connect: { id: ministerio2.id }
-      }
-    },
-  });
-
-  // Inserir usuários
-  const hashedPassword1 = await bcrypt.hash('senha123', 10); // 10 é o número de rounds de hashing, pode ser ajustado conforme necessário
-  const hashedPassword2 = await bcrypt.hash('senha456', 10);
-  const hashedPassword3 = await bcrypt.hash('senha789', 10);
-  const hashedPassword4 = await bcrypt.hash('senha123', 10);
-
-  const usuario1 = await prisma.usuario.create({
-    data: {
-      nome: 'João Silva',
-      endereco: 'Rua das Flores, 123',
-      telefone: '(11) 98765-4321',
-      email: 'joaosilva@example.com',
-      dataNascimento: new Date('1990-01-01'),
-      senha: hashedPassword1,
-      tipoUsuario: 'NORMAL',
-    },
-  });
-
-  const usuario2 = await prisma.usuario.create({
-    data: {
-      nome: 'Maria Oliveira',
-      endereco: 'Rua da Paz, 456',
-      telefone: '(11) 12345-6789',
-      email: 'mariaoliveira@example.com',
-      dataNascimento: new Date('1995-01-01'),
-      senha: hashedPassword2,
-      tipoUsuario: 'LIDER',
-    },
-  });
-
-  const usuario3 = await prisma.usuario.create({
-    data: {
-      nome: 'Ana Souza',
-      endereco: 'Avenida Central, 789',
-      telefone: '(11) 91234-5678',
-      email: 'anasouza@example.com',
-      dataNascimento: new Date('1980-07-22'),
-      senha: hashedPassword3,
-      tipoUsuario: 'NORMAL',
-    },
-  });
-
-  const usuario4 = await prisma.usuario.create({
-    data: {
-      nome: 'Maria Oliveira',
-      endereco: 'Rua da Paz, 456',
-      telefone: '(11) 12345-6789',
-      email: 'emillyvitoria1821@gmail.com',
-      dataNascimento: new Date('1995-01-01'),
-      senha: hashedPassword4,
-      tipoUsuario: 'ADMIN',
-    },
-  });
-
-  const usuario5 = await prisma.usuario.create({
-    data: {
-      nome: 'Ana Clara',
-      endereco: 'Rua das Rosas, 204', // Sample address
-      telefone: '(11) 94723-8596', // Sample phone number
-      email: 'anaclara@example.com',
-      dataNascimento: new Date('1998-05-12'), // Sample birthdate
-      senha: await bcrypt.hash('lider123', 10), // Hashed password
-      tipoUsuario: 'LIDER',
-    },
-  });
-
-  const usuario6 = await prisma.usuario.create({
-    data: {
-      nome: 'João Pedro',
-      endereco: 'Avenida Central, 1010', // Sample address
-      telefone: '(21) 98541-3029', // Sample phone number
-      email: 'joaop@example.com',
-      dataNascimento: new Date('1992-11-21'), // Sample birthdate
-      senha: await bcrypt.hash('lider456', 10), // Hashed password
-      tipoUsuario: 'LIDER',
-    },
-  });
-
-  // Inserir eventos
-  const evento1 = await prisma.eventos.create({
-    data: {
-      nome: 'Culto de Domingo',
-      data: new Date('2024-03-10'),
-      tipoEvento: 'CULTO',
-      hora_inicio: new Date('2024-03-10T09:00:00'),
-      hora_fim: new Date('2024-03-10T11:00:00'),
-      descricao: 'Culto dominical de adoração e ensino da Palavra de Deus.',
-      isRecorrente: true,
-    },
-  });
-
-  const evento2 = await prisma.eventos.create({
-    data: {
-      nome: 'Ensaio do Coral',
-      data: new Date('2024-03-08'),
-      tipoEvento: 'CULTO', // Alterado para CULTO
-      hora_inicio: new Date('2024-03-08T19:00:00'),
-      hora_fim: new Date('2024-03-08T21:00:00'),
-      descricao: 'Ensaio do Coral da igreja para o Culto de Domingo.',
-      isRecorrente: false,
-    },
-  });
-
-  const evento3 = await prisma.eventos.create({
-    data: {
-      nome: 'Reunião de Líderes',
-      data: new Date('2024-03-05'),
-      tipoEvento: 'CULTO',
-      hora_inicio: new Date('2024-03-05T19:30:00'),
-      hora_fim: new Date('2024-03-05T21:00:00'),
-      descricao: 'Reunião mensal para líderes de ministérios.',
-      isRecorrente: true,
-    },
-  });
-
-  // Líder do Ministério de Louvor e Adoração
-  await prisma.ministerioLider.create({
-    data: {
-      ministerio_id: ministerio1.id,
-      lider_id: usuario2.id,
-    },
-  });
-
-  // Líder do Ministério de Evangelismo
-  await prisma.ministerioLider.create({
-    data: {
-      ministerio_id: ministerio2.id,
-      lider_id: usuario5.id,
-    },
-  });
-
-  // Líder do Ministério Infantil
-  await prisma.ministerioLider.create({
-    data: {
-      ministerio_id: ministerio3.id,
-      lider_id: usuario6.id,
-    },
-  });
-
-  // Relacionar membros aos ministérios
-  await prisma.membrosMinisterios.create({
-    data: {
-      usuario: {
-        connect: { id: usuario1.id }
+  try {
+    // 3. Criando Usuários/Membros
+    const senha =  String( await bcrypt.hash('senha123', 8));
+    const usuarioPedro = await prisma.usuario.create({
+      data: {
+        nome: "Pedro",
+        endereco: "Rua A, 123",
+        telefone: "123456789",
+        email: "pedro@example.com",
+        dataNascimento: new Date("1990-01-01"),
+        senha: senha,
+        tipoUsuario: "NORMAL",
       },
-      ministerio: {
-        connect: { id: ministerio1.id }
+    });
+    const emilly = await prisma.usuario.create({
+      data: {
+        nome: "emilly",
+        endereco: "Rua A, 123",
+        telefone: "123456789",
+        email: "emilly@example.com",
+        dataNascimento: new Date("1990-01-01"),
+        senha: senha,
+        tipoUsuario: "LIDER",
       },
-      preferenciasAtividades: [atividade1]
-    },
-    include: {
-      usuario: true,
-      ministerio: true,
-    }
-  });
+    });
+    const admin = await prisma.usuario.create({
+      data: {
+        nome: "admin",
+        endereco: "Rua A, 123",
+        telefone: "123456789",
+        email: "admin@example.com",
+        dataNascimento: new Date("1990-01-01"),
+        senha: senha,
+        tipoUsuario: "ADMIN",
+      },
+    });
 
-  await prisma.membrosMinisterios.create({
-    data: {
-      usuario: {
-        connect: { id: usuario2.id }
+    const usuarioMaria = await prisma.usuario.create({
+      data: {
+        nome: "Maria",
+        endereco: "Rua B, 456",
+        telefone: "987654321",
+        email: "maria@example.com",
+        dataNascimento: new Date("1985-05-10"),
+        senha: senha,
+        tipoUsuario: "NORMAL",
       },
-      ministerio: {
-        connect: { id: ministerio2.id }
-      },
-      preferenciasAtividades: [atividade2]
-    },
-    include: {
-      usuario: true,
-      ministerio: true,
-    }
-  });
+    });
 
-  await prisma.membrosMinisterios.create({
-    data: {
-      usuario: {
-        connect: { id: usuario3.id }
+    // 1. Criando Ministérios
+    const ministerioLouvor = await prisma.ministerio.create({
+      data: {
+        nome: "Louvor",
+        descricao: "Ministério responsável pela música e adoração.",
       },
-      ministerio: {
-        connect: { id: ministerio3.id }
-      },
-      preferenciasAtividades: [atividade3],
-    },
-    include: {
-      usuario: true,
-      ministerio: true,
-    }
-  });
+    });
 
-  console.log('Dados inseridos com sucesso!');
+    const ministerioRecepcao = await prisma.ministerio.create({
+      data: {
+        nome: "Recepção",
+        descricao: "Ministério responsável por receber os visitantes.",
+      },
+    });
+
+    // 2. Criando Atividades para cada Ministério
+    const atividadeCantar = await prisma.atividade.create({
+      data: {
+        nome: "Cantar",
+        descricao: "Atividade de cantar durante o evento.",
+        ministerio_id: ministerioLouvor.id,
+        quantidadeMembros: 3,
+      },
+    });
+
+    const atividadeTocarViolao = await prisma.atividade.create({
+      data: {
+        nome: "Tocar Violão",
+        descricao: "Atividade de tocar violão durante o evento.",
+        ministerio_id: ministerioLouvor.id,
+        quantidadeMembros: 2,
+      },
+    });
+
+    const atividadeRecepcionar = await prisma.atividade.create({
+      data: {
+        nome: "Recepcionar Visitantes",
+        descricao: "Atividade de recepcionar visitantes na entrada.",
+        ministerio_id: ministerioRecepcao.id,
+        quantidadeMembros: 4,
+      },
+    });
+
+    
+    // 4. Associando Membros aos Ministérios com Preferências de Atividades
+    await prisma.membrosMinisterios.createMany({
+      data: [
+        {
+          ministerio_id: ministerioLouvor.id,
+          usuario_id: usuarioPedro.id,
+          preferenciasAtividades: JSON.stringify([atividadeCantar, atividadeTocarViolao]),
+          statusSolicitacao: "APROVADO",
+        },
+        {
+          ministerio_id: ministerioLouvor.id,
+          usuario_id: usuarioMaria.id,
+          preferenciasAtividades: JSON.stringify([atividadeCantar]),
+          statusSolicitacao: "APROVADO",
+        },
+        {
+          ministerio_id: ministerioRecepcao.id,
+          usuario_id: usuarioPedro.id,
+          preferenciasAtividades: JSON.stringify([atividadeRecepcionar]),
+          statusSolicitacao: "APROVADO",
+        },
+      ],
+    });
+
+    // 5. Criando Eventos com Ministérios
+    const eventoCultoDomingo = await prisma.eventos.create({
+      data: {
+        nome: "Culto de Domingo",
+        data: new Date(), // Evento para o dia atual
+        tipoEvento: "CULTO",
+        hora_inicio: new Date(Date.now() + 3600000), // 1 hora a partir de agora
+        hora_fim: new Date(Date.now() + 7200000), // 2 horas a partir de agora
+        descricao: "Culto regular de domingo.",
+        isRecorrente: false,
+      },
+    });
+
+    const eventoEnsaioLouvor = await prisma.eventos.create({
+      data: {
+        nome: "Ensaio do Louvor",
+        data: new Date(Date.now() + 86400000), // Evento para amanhã
+        tipoEvento: "EVENTO",
+        hora_inicio: new Date(Date.now() + 90000000), // 25 horas a partir de agora
+        hora_fim: new Date(Date.now() + 99000000), // 27 horas a partir de agora
+        descricao: "Ensaio do ministério de louvor.",
+        isRecorrente: false,
+        
+      },
+    });
+      prisma.eventoMinisterio.create({
+        evento_id: eventoCultoDomingo.id,
+        ministerio_id: ministerioLouvor.id,
+      });
+      
+      prisma.eventoMinisterio.create({
+        evento_id:eventoEnsaioLouvor.id,
+        ministerio_id:ministerioLouvor.id
+      
+      });
+
+    console.log("Seeder executado com sucesso!");
+  } catch (error) {
+    console.error("Erro ao executar seeder:", error);
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+main();

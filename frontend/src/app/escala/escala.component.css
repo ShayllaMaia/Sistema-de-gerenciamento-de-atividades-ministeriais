@@ -1,0 +1,40 @@
+.calendar-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 5px; /* Diminuir o padding para reduzir o tamanho */
+}
+
+.calendar-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 0.8em; /* Diminuir o tamanho da fonte */
+}
+
+.calendar-table th,
+.calendar-table td {
+  text-align: center;
+  vertical-align: top;
+  height: 80px; /* Diminuir a altura das células */
+}
+
+.calendar-day {
+  padding: 3px; /* Diminuir o padding interno */
+  position: relative;
+}
+
+.empty-day {
+  background-color: #f0f0f0;
+}
+
+.events {
+  margin-top: 3px; /* Diminuir a margem superior */
+}
+
+.event {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 3px; /* Diminuir o padding interno */
+  border-radius: 5px;
+  margin-bottom: 3px; /* Diminuir a margem inferior */
+}

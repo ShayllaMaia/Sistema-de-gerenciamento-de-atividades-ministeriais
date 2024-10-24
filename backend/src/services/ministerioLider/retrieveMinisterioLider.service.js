@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 
 const retrieveMinisterioLiderService = async (ministerioId, token) => {
     // Verifica se o ministério existe
+
     token = await retornaInfoToken(token);
     const ministerio = await prisma.ministerio.findUnique({
         where: {

@@ -4,7 +4,7 @@ import { retornaInfoToken } from "../../../middlewares/retornaInfoToen.middliwar
 import { retornaTipoUsuario } from "../../../middlewares/retornaTipoUsuario.middliweres.js";
 const prisma = new PrismaClient();
 
-const updateAtivadadeService = async (id, nome, descricao, token) => {
+const updateAtivadadeService = async (id, nome, descricao,quantidadeMembros, token) => {
   token = await retornaInfoToken(token);
   if (!token) throw new AppError("Autenticação necessaria", 401);
   const tipoUsuario = await retornaTipoUsuario(token);
@@ -13,6 +13,7 @@ const updateAtivadadeService = async (id, nome, descricao, token) => {
   const atividade = await prisma.atividade.findUnique({
     where: { id },
   });
+  quantidadeMembros = parseInt(quantidadeMembros);
 
   if (!atividade) throw new AppError("Atividade não encontrada", 404);
 
@@ -21,6 +22,7 @@ const updateAtivadadeService = async (id, nome, descricao, token) => {
     data: {
       nome,
       descricao,
+      quantidadeMembros,
     },
   });
 };

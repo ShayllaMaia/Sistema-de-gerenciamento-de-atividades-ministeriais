@@ -1,0 +1,22 @@
+.custom-background {
+    background-color: #f8f9fa; /* Cor de fundo semelhante ao da tela de ministérios */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Arredondar os cantos */
+  }
+  
+  .form-container {
+    background-color: #ffffff; /* Fundo branco para o formulário */
+    border: 1px solid #dee2e6; /* Borda sutil ao redor do formulário */
+    border-radius: 8px; /* Arredondar os cantos do formulário */
+    padding: 20px; /* Espaçamento interno do formulário */
+  }
+  
+  .btn-primary {
+    background-color: #007bff; /* Cor de fundo do botão */
+    border-color: #007bff; /* Cor da borda do botão */
+  }
+  
+  .form-check-input:checked ~ .form-check-label {
+    color: #007bff; /* Cor do texto do label quando o checkbox está selecionado */
+  }
+  

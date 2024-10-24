@@ -1,4 +1,4 @@
-<section class="vh-100 custom-background">
+<section class="vh-100 custom-background"> 
   <div class="container">
     <div class="row">
       <!-- Sidebar -->
@@ -9,23 +9,59 @@
       <div class="col-lg-9 mt-5">
         <div class="container">
           <div class="row">
-            <div class="col-lg-12 mt-4">
+            <div class="col-lg-12 mt-4 position-relative">
               <div class="text-center mb-4">
                 <h6>Lista de Membros</h6>
               </div>
-              <ul class="list-group">
-                <li class="list-group-item" *ngFor="let membro of membros">
-                  <ng-container *ngIf="membro.usuario"> 
-                    <h2 class="mb-3 font-weight-bold display-5">{{ membro.usuario.nome }}</h2>
-                    <p>Email: {{ membro.usuario.email }}</p>
-                    <p>Telefone: {{ membro.usuario.telefone }}</p>
-                    <p>Endereço: {{ membro.usuario.endereco }}</p>
-                  </ng-container>
-                  <ng-container *ngIf="!membro.usuario"> 
-                    <p>Nenhum usuário encontrado.</p>
-                  </ng-container>
-                </li>
-              </ul>
+              <!-- Botão de Ver Solicitações Pendentes -->
+              <div class="py-4" *ngIf="isLider || isAdmin">
+                <button class="btn btn-orange" (click)="verSolicitacoes()">Solicitações Pendentes</button>
+              </div>
+              <!-- Verifica se há membros -->
+              <div *ngIf="membros && membros.length > 0; else noMembros">
+                <ul class="list-group">
+                  <li class="list-group-item" *ngFor="let membro of membros">
+                    <ng-container *ngIf="membro.usuario">
+                      <h2 class="mb-3 font-weight-bold display-5">{{ membro.usuario.nome }}</h2>
+                      <p>Email: {{ membro.usuario.email }}</p>
+                      <p>Telefone: {{ membro.usuario.telefone }}</p>
+                      <p>Endereço: {{ membro.usuario.endereco }}</p>
+                      <p>Status De Solicitação de Entrada: {{ membro.statusSolicitacao }}</p>
+
+                      <div *ngIf="membro.preferenciasAtividades && membro.preferenciasAtividades.length > 0">
+                        <h6>Atividades:</h6>
+                        <ul>
+                          <li *ngFor="let atividade of membro.preferenciasAtividades">
+                            {{ atividade.nome }} - {{ atividade.descricao }}
+                            <button 
+                              *ngIf="isLider || isAdmin" 
+                              class="btn btn-danger btn-sm ml-3" 
+                              (click)="removeAtividade(atividade.id, membro.usuario.id)">
+                              Remover
+                            </button>
+                          </li>
+                        </ul>
+                        
+                      </div>
+                      <div *ngIf="!membro.preferenciasAtividades || membro.preferenciasAtividades.length === 0">
+                        <p>Nenhuma atividade preferida encontrada.</p>
+                      </div>
+
+                      <!-- Botão de Remover Membro -->
+                      <button *ngIf="isLider || isAdmin" (click)="confirmarRemocao(membro.usuario.id)" class="btn btn-danger">Remover Membro</button>
+                    </ng-container>
+                    <ng-container *ngIf="!membro.usuario">
+                      <p>Nenhum usuário encontrado.</p>
+                    </ng-container>
+                  </li>
+                </ul>
+              </div>
+              <!-- Mensagem caso não existam membros -->
+              <ng-template #noMembros>
+                <div class="text-center mt-5">
+                  <h5 class="text-muted">Nenhum membro encontrado.</h5>
+                </div>
+              </ng-template>
             </div>
           </div>
         </div>

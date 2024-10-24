@@ -1,99 +1,197 @@
 <div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-lg-3">
-            <app-sidebar></app-sidebar>
-        </div>
-        <!-- Lista de Ministérios -->
-        <div class="col-lg-9 mt-5 custom-background" style="max-height: 80vh; overflow-y: auto;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 mt-4">
-                        <div class="text-center mb-4 font-weight-bold">
-                            <h2>Ministérios Cadastrados</h2>
-                        </div>
-                        <div class="text-right mb-4">
-                            <button routerLink="/cadastro-ministerio" class="btn btn-warning pr-2">Cadastrar
-                                Ministério</button>
-                        </div>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <div class="d-flex justify-content-between ">
-                                    <div>
-                                        <h6 class="font-weight-bold">Nome</h6>
-                                    </div>
-                                    <div class="ml-auto px-80">
-                                        <h6 class="font-weight-bold">Descrição</h6>
-                                    </div>
-                                    <div>
-                                        <h6 class="font-weight-bold px-20">Ações</h6>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item" *ngFor="let ministerio of ministerios">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h2 class="mb-3 font-weight-bold display-5">{{ ministerio.nome }}</h2>
-                                        <button type="button" class="btn btn-warning pr-2"
-                                            (click)="verMembrosMinisterio(ministerio.id)">
-                                            Ver membros do ministério
-                                        </button>
-                                    </div>
-
-                                    <div class="ml-auto">
-                                        <p>{{ ministerio.descricao }}</p>
-                                    </div>
-
-                                    <div class="ml-auto">
-                                        <button type="button" (click)="abrirModal('editarModal' + ministerio.id)"
-                                            class="btn btn-warning pr-2">Editar</button>
-                                        <span class="px-2"></span>
-                                        <button (click)="confirmarExcluirMinisterio(ministerio.id.toString())"
-                                            class="btn btn-warning pr-2">Excluir</button>
-                                        <span class="px-2"></span>
-                                        <button [routerLink]="['/lista-atividade']"
-                                            [queryParams]="{ idMinisterio: ministerio.id.toString() }"
-                                            class="btn btn-atividade pr-2">Atividades</button>
-                                        <span class="px-2"></span>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="editarModal{{ ministerio.id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="editarModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editarModalLabel">Editar Ministério</h5>
-                                                <button type="button" class="btn-close"
-                                                    (click)="fecharModal('editarModal' + ministerio.id)"
-                                                    aria-label="Fechar"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label for="nomeMinisterio">Nome:</label>
-                                                    <input type="text" class="form-control" id="nomeMinisterio"
-                                                        [(ngModel)]="ministerio.nome" name="nomeMinisterio">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="descricaoMinisterio">Descrição:</label>
-                                                    <textarea class="form-control" id="descricaoMinisterio"
-                                                        [(ngModel)]="ministerio.descricao"
-                                                        name="descricaoMinisterio"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" (click)="salvarEdicaoMinisterio(ministerio)"
-                                                    class="btn btn-warning pr-2">Salvar mudanças</button>
-                                                <button type="button" class="btn btn-warning pr-2"
-                                                    (click)="fecharModal('editarModal' + ministerio.id)">Fechar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3">
+      <app-sidebar></app-sidebar>
     </div>
+    <!-- Lista de Ministérios -->
+    <div class="col-lg-9 mt-5 custom-background" style="max-height: 80vh; overflow-y: auto;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 mt-4">
+            <div class="text-center mb-4 font-weight-bold">
+              <h2>{{ papel === 'LIDER' ? 'MINISTÉRIOS' : 'Ministérios' }}</h2>
+            </div>
+            <div class="text-right mb-4">
+              <!-- Exibe o botão apenas se o papel for ADMIN -->
+              <button *ngIf="papel === 'ADMIN'" routerLink="/cadastro-ministerio" class="btn btn-warning pr-2">Cadastrar
+                Ministério</button>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="flex-grow-1">
+                    <h6 class="font-weight-bold">Nome</h6>
+                  </div>
+                  <div class="ml-auto col-md-5">
+                    <h6 class="font-weight-bold">Descrição</h6>
+                  </div>
+                  <div class="ml-auto col-md-2">
+                    <h6 class="font-weight-bold">Ações</h6>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item" *ngFor="let ministerio of ministerios">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h2 class="mb-3 font-weight-bold display-5">{{ ministerio.nome }}</h2>
+                  </div>
+                  <div class="col-md-4">
+                    <p class="mb-0">{{ ministerio.descricao }}</p>
+                  </div>
+                  <div class="col-md-4 text-center">
+                    <!-- Botão "Ver Informações" que abre o modal -->
+                    <button type="button" class="btn mb-2 mr-3 btn-info" (click)="verLiderMinisterio(ministerio.id)">
+                      Visualizar <i class="fa-regular fa-eye"></i>
+                    </button>
+
+
+                    <!-- Botão "Visualizar Membros" fixo abaixo da coluna "Ações" -->
+                    <!-- Botão "Visualizar Membros" fora do modal -->
+                    <button *ngIf="isAdminOrLider()" type="button" class="btn btn-membros pr-2 mb-2"
+                      (click)="verMembrosMinisterio(ministerio.id)">
+                      Ver Membros
+                    </button>
+
+
+                    <!-- Botão "Solicitar Entrada" visível apenas para usuários com o papel "NORMAL" -->
+                    <button *ngIf="isNormal() && !isMembroMinisterio(ministerio.id)"
+                      [routerLink]="['/solicitar-entrada']" [queryParams]="{ idMinisterio: ministerio.id }"
+                      class="btn btn-primary pr-2">
+                      Solicitar Entrada
+                    </button>
+
+                  </div>
+                </div>
+
+                <!-- Modal para visualizar e gerenciar o ministério -->
+                <div class="modal fade" id="detalhesModal{{ ministerio.id }}" tabindex="-1" role="dialog"
+                  aria-labelledby="detalhesModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="detalhesModalLabel">Detalhes do Ministério</h5>
+                        <button type="button" class="close" (click)="fecharModal('detalhesModal' + ministerio.id)"
+                          aria-label="Fechar">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="nomeMinisterio">Nome:</label>
+                          <input type="text" class="form-control" id="nomeMinisterio" [(ngModel)]="ministerio.nome"
+                            name="nomeMinisterio" readonly>
+                        </div>
+                        <div class="form-group">
+                          <label for="descricaoMinisterio">Descrição:</label>
+                          <textarea class="form-control" id="descricaoMinisterio" [(ngModel)]="ministerio.descricao"
+                            name="descricaoMinisterio" readonly></textarea>
+                        </div>
+
+                        <!-- Verifica se há líderes atribuídos -->
+                        <div *ngIf="lideres.length > 0; else noLider">
+                          <div class="form-group" *ngFor="let lider of lideres">
+                            <label for="liderMinisterio">Líder:</label>
+                            <input type="text" class="form-control" [value]="lider.nome" readonly>
+                          </div>
+                        </div>
+
+                        <!-- Caso não tenha líderes -->
+                        <ng-template #noLider>
+                          <div class="text-center">
+                            <p class="text-danger">Nenhum líder atribuído a este ministério.</p>
+                            <button *ngIf="papel === 'ADMIN'" type="button" class="btn btn-primary"
+                              (click)="atribuirLideranca(ministerio.id)">Atribuir Liderança</button>
+                          </div>
+                        </ng-template>
+                      </div>
+                      <div class="modal-footer">
+                        <button *ngIf="isAdminOrLider()" type="button"
+                          (click)="abrirModal('editarModal' + ministerio.id)"
+                          class="btn btn-warning pr-2">Editar</button>
+                        <button *ngIf="isAdmin()" type="button" (click)="confirmarExclusao(ministerio.id)"
+                          class="btn btn-danger pr-2">Excluir</button>
+
+                        <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }"
+                          class="btn btn-atividade pr-2">Atividades</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <!-- Modal para editar o ministério -->
+                <div class="modal fade" id="editarModal{{ ministerio.id }}" tabindex="-1" role="dialog"
+                  aria-labelledby="editarModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="editarModalLabel">Editar Ministério</h5>
+                        <button type="button" class="close" (click)="fecharModal('editarModal' + ministerio.id)"
+                          aria-label="Fechar">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="nomeMinisterio">Nome:</label>
+                          <input type="text" class="form-control" id="nomeMinisterio" [(ngModel)]="ministerio.nome"
+                            name="nomeMinisterio">
+                        </div>
+                        <div class="form-group">
+                          <label for="descricaoMinisterio">Descrição:</label>
+                          <textarea class="form-control" id="descricaoMinisterio" [(ngModel)]="ministerio.descricao"
+                            name="descricaoMinisterio"></textarea>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" (click)="salvarEdicaoMinisterio(ministerio)"
+                          class="btn btn-warning pr-2">Salvar mudanças</button>
+                        <button type="button" class="btn btn-secondary pr-2"
+                          (click)="fecharModal('editarModal' + ministerio.id)">Fechar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Modal para Atribuir Liderança -->
+                <div class="modal fade" id="atribuirLiderancaModal{{ ministerio.id }}" tabindex="-1" role="dialog"
+                  aria-labelledby="atribuirLiderancaModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="atribuirLiderancaModalLabel">Atribuir Liderança</h5>
+                        <button type="button" class="close"
+                          (click)="fecharModal('atribuirLiderancaModal' + ministerio.id)" aria-label="Fechar">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Lista de Membros do Ministério:
+                        <div *ngFor="let user of possibleLiders">
+                          <label>
+                            <input type="checkbox" [value]="user.id" (change)="onLiderChange($event, user.id)">
+                            {{ user.nome }} ({{ user.email }})
+                          </label>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                          (click)="atribuirLider(ministerio.id)">Atribuir</button>
+                        <button type="button" class="btn btn-secondary"
+                          (click)="fecharModal('atribuirLiderancaModal' + ministerio.id)">Fechar</button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
