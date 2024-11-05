@@ -20,3 +20,13 @@
     color: #007bff; /* Cor do texto do label quando o checkbox está selecionado */
   }
   
+  .btn-orange {
+    background-color: orange;
+    border-color: orange;
+    color: white;
+  }
+
+  .btn-orange:hover {
+    background-color: #e69500;
+    border-color: #e69500;
+  }

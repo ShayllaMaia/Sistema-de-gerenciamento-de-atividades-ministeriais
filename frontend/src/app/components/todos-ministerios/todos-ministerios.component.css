@@ -22,3 +22,20 @@
     background-color: #000000; 
     color: #fff; 
 }
+
+.btn-orange {
+    background-color: orange;
+    border-color: orange;
+    color: white;
+  }
+
+  .btn-orange:hover {
+    background-color: #e69500;
+    border-color: #e69500;
+  }
+
+  .btn-custom {
+    padding: 5px 10px; 
+    font-size: 13px;  
+  }
+  

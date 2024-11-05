@@ -21,11 +21,15 @@
                             <textarea class="form-control form-control-lg" [(ngModel)]="registro.descricao"
                                 name="descricao" required></textarea>
 
-                             <div class="text-center mt-5"> 
-                                <button type="submit" class="btn btn-warning p-2">
+                                <div class="text-center mt-5">
+                                    <button class="btn btn-danger p-2"  routerLink="/meus-ministerios" style="margin-right: 80px;">
+                                        Cancelar
+                                    </button>
+                                    
+                                    <button type="submit" class="btn btn-warning p-2">
                                         Cadastrar
-                                </button>
-                            </div>
+                                    </button>
+                                </div>
                         </form>
                     </div>
                 </div>
