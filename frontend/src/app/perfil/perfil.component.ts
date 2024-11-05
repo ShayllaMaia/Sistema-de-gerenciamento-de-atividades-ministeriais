@@ -14,17 +14,14 @@ interface JwtPayLoad {
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.css']
+  styleUrls: ['./perfil.component.css'],
 })
 export class PerfilComponent implements OnInit {
   perfilForm: FormGroup;
   userId: string = '';
   usuario: UsuarioInterface = <UsuarioInterface>{};
 
-  constructor(
-    private fb: FormBuilder,
-    private usuarioService: UsuarioService
-  ) {
+  constructor(private fb: FormBuilder, private usuarioService: UsuarioService) {
     this.perfilForm = this.fb.group({
       id: [{ value: '', disabled: true }],
       nome: ['', [Validators.required]],
@@ -32,7 +29,7 @@ export class PerfilComponent implements OnInit {
       telefone: ['', [Validators.required]],
       endereco: ['', [Validators.required]],
       dataNascimento: ['', [Validators.required]],
-      senha: [''],  // Campo para a nova senha (opcional)
+      senha: [''], // Campo para a nova senha (opcional)
     });
   }
 
@@ -58,7 +55,9 @@ export class PerfilComponent implements OnInit {
   }
 
   initForm(): void {
-    const formattedDate = this.usuario.dataNascimento ? new Date(this.usuario.dataNascimento).toISOString().split('T')[0] : '';
+    const formattedDate = this.usuario.dataNascimento
+      ? new Date(this.usuario.dataNascimento).toISOString().split('T')[0]
+      : '';
     this.perfilForm.patchValue({
       id: this.usuario.id,
       nome: this.usuario.nome,
@@ -74,12 +73,12 @@ export class PerfilComponent implements OnInit {
       // Exibe a caixa de diálogo de confirmação
       Swal.fire({
         title: 'Você tem certeza?',
-        text: "Deseja salvar as alterações no perfil?",
+        text: 'Deseja salvar as alterações no perfil?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim, salvar!'
+        confirmButtonText: 'Sim, salvar!',
       }).then((result) => {
         if (result.isConfirmed) {
           // Obtenha os dados do formulário (incluindo campos desabilitados)
@@ -87,9 +86,11 @@ export class PerfilComponent implements OnInit {
 
           // Crie o objeto que será enviado
           const updatedUsuario: UsuarioInterface = {
-            ...this.usuario,  // Mantém os valores anteriores
-            ...formValue,     // Substitui pelos novos valores do formulário
-            dataNascimento: new Date(this.perfilForm.get('dataNascimento')?.value).toISOString(),  // Formata data
+            ...this.usuario, // Mantém os valores anteriores
+            ...formValue, // Substitui pelos novos valores do formulário
+            dataNascimento: new Date(
+              this.perfilForm.get('dataNascimento')?.value
+            ).toISOString(), // Formata data
           };
 
           // Se a senha estiver preenchida, incluí-la no objeto
@@ -118,6 +119,36 @@ export class PerfilComponent implements OnInit {
         }
       });
     }
+  }
+
+  confirmarDelecaoUsuario(): void {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Você não poderá reverter isso',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.usuarioService.deleteUsuario(this.userId).subscribe({
+          next: () => {
+            Swal.fire(
+              'Sucesso,',
+              'Usuário excluído com sucesso',
+              'success'
+            ).then(() => {
+              location.reload();
+            });
+          },
+          error: (err) => {
+            Swal.fire('Erro', 'Ocorreu um erro ao excluir o usuário', 'error');
+          },
+        });
+      }
+    });
   }
 
   alterarSenha(): void {

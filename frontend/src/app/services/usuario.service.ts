@@ -9,7 +9,7 @@ import { UsuarioInterface } from '../model/usuario.interface';
 })
 export class UsuarioService {
   private baseUrl = environment.API_URL;
-
+  private token = localStorage.getItem('token');
   constructor(private http: HttpClient) {}
 
   private getHeaders(): HttpHeaders {
@@ -38,5 +38,10 @@ export class UsuarioService {
   updateUsuario(usuario: UsuarioInterface): Observable<any> {
     const headers = this.getHeaders();
     return this.http.put(`${this.baseUrl}/usuario/${usuario.id}`, usuario, { headers });
+  }
+
+  deleteUsuario(id:string): Observable<void> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.delete<void>(`${this.baseUrl}/usuario/${id}`,{headers});
   }
 }
