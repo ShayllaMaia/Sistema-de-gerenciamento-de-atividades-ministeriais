@@ -45,6 +45,8 @@ export class TodosMinisteriosComponent implements OnInit {
     );
   }
 
+
+  
   isAdminOrLider(): boolean {
     return this.papel === 'ADMIN' || this.papel === 'LIDER';
   }
@@ -55,6 +57,16 @@ export class TodosMinisteriosComponent implements OnInit {
 
   isNormal(): boolean {
     return this.papel === 'NORMAL';
+  }
+
+  isMembroMinisterio(ministerioId: string): boolean {
+    // Verifica se o usuário atual é membro do ministério
+    return this.ministerios.some(ministerio => ministerio.id === ministerioId);
+  }
+
+
+  isLider(): boolean {
+    return this.papel === 'LIDER';
   }
   
   editarMinisterio(ministerio: any): void {

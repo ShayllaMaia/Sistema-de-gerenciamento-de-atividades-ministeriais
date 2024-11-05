@@ -33,3 +33,9 @@
     background-color: #e69500;
     border-color: #e69500;
   }
+
+  .btn-custom {
+    padding: 5px 10px; 
+    font-size: 13px;  
+  }
+  
