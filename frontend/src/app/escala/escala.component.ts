@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { EscalaService } from '../escala.service';
-import * as moment from 'moment-timezone'; // Importando moment-timezone
+import * as moment from 'moment-timezone';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { MinisterioService } from '../services/ministerio.service';
+import { UsuarioInterface } from '../model/usuario.interface';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-escala',
@@ -16,31 +19,44 @@ export class EscalaComponent implements OnInit {
   currentMonth: string = '';
   currentYear: number = 0;
   calendarWeeks: any[][] = [];
-  expandedEvents: { [key: string]: boolean } = {}; // Controle de eventos expandidos
+  expandedEvents: { [key: string]: boolean } = {};
   papel: string = '';
+  ministerios: any[] = [];
+  membros: UsuarioInterface[] = [];
 
+  // Variáveis para os filtros
+  selectedUsuarioId: string | null = null;
+  selectedMinisterioId: string | null = null;
+  selectedMes: string | null = null;
 
-  constructor(private escalaService: EscalaService, private router: Router) { }
+  constructor(
+    private escalaService: EscalaService,
+    private router: Router,
+    private ministerioService: MinisterioService,
+    private usuarioService: UsuarioService
+  ) { }
 
   ngOnInit(): void {
     this.generateCalendar();
     this.carregarParticipacoes();
     this.papel = localStorage.getItem('papel') || '';
+    this.carregarMembros();
+    this.carregarMinisterios();
   }
 
   isAdminOrLider(): boolean {
     return this.papel === 'ADMIN' || this.papel === 'LIDER';
   }
 
-  generateCalendar(): void {
-    const now = moment.tz('America/Rio_Branco');
-    this.currentMonth = now.format('MMMM');
+  generateCalendar(month: number = moment().month(), year: number = moment().year()): void {
+    const now = moment.tz('America/Rio_Branco').month(month).year(year);
+    this.currentMonth = now.format('MMMM'); // Atualiza o `currentMonth` com o novo valor
     this.currentYear = now.year();
 
     const startOfMonth = now.clone().startOf('month');
     const endOfMonth = now.clone().endOf('month');
-    const startDay = startOfMonth.clone().startOf('week'); // Inicia no domingo
-    const endDay = endOfMonth.clone().endOf('week'); // Termina no sábado
+    const startDay = startOfMonth.clone().startOf('week');
+    const endDay = endOfMonth.clone().endOf('week');
 
     const calendarDays = [];
     let day = startDay.clone();
@@ -59,11 +75,12 @@ export class EscalaComponent implements OnInit {
     }
   }
 
+
   carregarParticipacoes(): void {
     this.escalaService.getParticipacoes().subscribe(
       (data: any[]) => {
         this.participacoes = data;
-        this.groupEventsByDate();
+        this.applyFiltersAndGroupEvents();
       },
       error => {
         console.error('Erro ao obter as participações:', error);
@@ -71,32 +88,74 @@ export class EscalaComponent implements OnInit {
     );
   }
 
-  groupEventsByDate(): void {
-    this.participacoes.forEach(evento => {
-      // Usa a data do banco de dados em UTC para evitar ajuste de fuso horário
+  carregarMinisterios(): void {
+
+      this.ministerioService.getMinisterios().subscribe(
+        (ministerios) => {
+          this.ministerios = ministerios;
+        },
+        (error) => {
+          console.error('Erro ao carregar ministérios:', error);
+        }
+      );
+
+  }
+
+  carregarMembros(): void {
+    this.usuarioService.ListaMembros().subscribe(
+      (data: UsuarioInterface[]) => {
+        this.membros = data;
+      },
+      error => {
+        console.error('Erro ao obter a lista de membros:', error);
+      }
+    );
+  }
+
+  applyFiltersAndGroupEvents(): void {
+    let filteredParticipacoes = this.participacoes;
+
+    if (this.selectedUsuarioId) {
+      filteredParticipacoes = filteredParticipacoes.filter(
+        participacao => participacao.usuario_id === this.selectedUsuarioId
+      );
+    }
+    if (this.selectedMinisterioId) {
+      filteredParticipacoes = filteredParticipacoes.filter(
+        participacao => participacao.ministerio_id === this.selectedMinisterioId
+      );
+    }
+    if (this.selectedMes) {
+      filteredParticipacoes = filteredParticipacoes.filter(
+        participacao => participacao.mes === this.selectedMes
+      );
+    }
+
+    // Atualizar `eventsByDate` com os dados filtrados
+    this.eventsByDate = {}; // reset para aplicar novos filtros
+    filteredParticipacoes.forEach(evento => {
       const dataEvento = moment.utc(evento.data).format('YYYY-MM-DD');
 
       if (!this.eventsByDate[dataEvento]) {
         this.eventsByDate[dataEvento] = [];
       }
 
-      // Verificar se o evento já foi adicionado para essa data
       let eventoExistente = this.eventsByDate[dataEvento].find(e => e.evento_id === evento.evento.id);
 
       if (!eventoExistente) {
-        // Se não existe, cria o evento e inicializa as atividades
         eventoExistente = {
           evento_id: evento.evento.id,
           nome: evento.evento.nome,
           tipoEvento: evento.evento.tipoEvento,
           hora_chegada: evento.hora_chegada,
           hora_saida: evento.hora_saida,
+          ministerio: evento.ministerio, // Inclua o ministério aqui
           atividades: {}
         };
+
         this.eventsByDate[dataEvento].push(eventoExistente);
       }
 
-      // Se a atividade não existir no evento, cria
       if (!eventoExistente.atividades[evento.atividade_id]) {
         eventoExistente.atividades[evento.atividade_id] = {
           nome: evento.atividade.nome,
@@ -104,20 +163,16 @@ export class EscalaComponent implements OnInit {
         };
       }
 
-      // Adicionar o membro à atividade, garantindo que não haja duplicatas
       if (!eventoExistente.atividades[evento.atividade_id].membros.includes(evento.usuario.nome)) {
         eventoExistente.atividades[evento.atividade_id].membros.push(evento.usuario.nome);
       }
     });
   }
 
-
-  // Alternar o estado de expansão do evento
   toggleExpand(evento_id: string): void {
     this.expandedEvents[evento_id] = !this.expandedEvents[evento_id];
   }
 
-  // Função para retornar as chaves de um objeto (atividade_id)
   getObjectKeys(obj: any): string[] {
     return Object.keys(obj);
   }
@@ -161,14 +216,33 @@ export class EscalaComponent implements OnInit {
   }
 
   formatarHora(dataISO: string): string {
-    // Divida a string de data e hora no "T"
     const partes = dataISO.split('T');
     const horaCompleta = partes[1];
     const partesHora = horaCompleta.split(':');
-    const hora = partesHora[0];
-    const minuto = partesHora[1];
-    return `${hora}:${minuto}`;
+    return `${partesHora[0]}:${partesHora[1]}`;
+  }
+
+  onFilterChange(): void {
+    if (this.selectedMes) {
+      const [year, month] = this.selectedMes.split('-');
+      this.currentYear = parseInt(year, 10);
+      this.currentMonth = moment.months(parseInt(month, 10) - 1); // Atualiza o mês
+
+      // Gere o calendário para o novo mês e ano selecionados
+      this.generateCalendar(parseInt(month, 10) - 1, this.currentYear);
+    } else {
+      // Restaura para o mês atual caso "Todos" seja selecionado
+      const now = moment();
+      this.currentYear = now.year();
+      this.currentMonth = now.format('MMMM');
+      this.generateCalendar();
+    }
+
+    this.applyFiltersAndGroupEvents();
   }
 
 
+  getUniqueMonths(): string[] {
+    return Array.from(new Set(this.participacoes.map(participacao => participacao.mes)));
+  }
 }
