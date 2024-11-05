@@ -113,7 +113,13 @@
                           class="btn btn-danger pr-2">Excluir</button>
 
                         <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }"
-                          class="btn btn-atividade pr-2">Atividades</button>
+                          class="btn btn-atividade pr-2">
+                          Atividades
+                        </button>
+                        <button [routerLink]="['/membros-ministerio-listar']" [queryParams]="{ idMinisterio: ministerio.id }"
+                          class="btn btn-atividade pr-2">
+                          Ver membros
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -190,6 +196,9 @@
               </li>
             </ul>
           </div>
+        </div>
+        <div class="py-4">
+          <button class="btn btn-orange" routerLink="/ministerios">Voltar</button>
         </div>
       </div>
     </div>

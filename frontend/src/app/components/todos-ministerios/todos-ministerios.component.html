@@ -42,22 +42,25 @@
                   </div>
                   <div class="col-md-4 text-center">
                     <!-- Botão "Ver Informações" que abre o modal -->
-                    <button type="button" class="btn mb-2 mr-3 btn-info" (click)="verLiderMinisterio(ministerio.id)">
+                    <button type="button" class="btn btn-sm mb-2 mr-2 btn-info btn-custom"
+                      (click)="verLiderMinisterio(ministerio.id)">
                       Visualizar <i class="fa-regular fa-eye"></i>
                     </button>
 
 
                     <!-- Botão "Visualizar Membros" fixo abaixo da coluna "Ações" -->
                     <!-- Botão "Visualizar Membros" fora do modal -->
-                    <button *ngIf="isAdminOrLider()" type="button" class="btn btn-membros pr-2 mb-2"
+                    <button *ngIf="isAdminOrLider()" type="button"
+                      class="btn btn-sm btn-membros pr-2 mb-2 mr-2 btn-custom"
                       (click)="verMembrosMinisterio(ministerio.id)">
                       Ver Membros
                     </button>
 
 
                     <!-- Botão "Solicitar Entrada" visível apenas para usuários com o papel "NORMAL" -->
-                    <button *ngIf="isNormal()" [routerLink]="['/solicitar-entrada']"
-                      [queryParams]="{ idMinisterio: ministerio.id }" class="btn btn-primary pr-2">
+                    <button *ngIf="isNormal() || isLider() || !isMembroMinisterio(ministerio.id)"
+                      [routerLink]="['/solicitar-entrada']" [queryParams]="{ idMinisterio: ministerio.id }"
+                      class="btn btn-sm btn-primary pr-2 mb-2 mr-2 btn-custom">
                       Solicitar Entrada
                     </button>
                   </div>
@@ -111,9 +114,12 @@
 
                         <button *ngIf="isAdmin()" type="button" (click)="confirmarExclusao(ministerio.id)"
                           class="btn btn-danger pr-2">Excluir</button>
-
+                        
                         <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }"
                           class="btn btn-atividade pr-2">Atividades</button>
+                      
+                          <button [routerLink]="['/membros-ministerio-listar']" [queryParams]="{ idMinisterio: ministerio.id }"
+                          class="btn btn-atividade pr-2">Ver membros</button>
                       </div>
                     </div>
                   </div>
@@ -143,7 +149,13 @@
                           <textarea class="form-control" id="descricaoMinisterio" [(ngModel)]="ministerio.descricao"
                             name="descricaoMinisterio"></textarea>
                         </div>
-
+                        Lider:
+                        <div *ngFor="let user of possibleLiders">
+                          <label>
+                            <input type="checkbox" [value]="user.id" (change)="onLiderChange($event, user.id)">
+                            {{ user.nome }} ({{ user.email }})
+                          </label>
+                        </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" (click)="salvarEdicaoMinisterio(ministerio)"
@@ -190,6 +202,9 @@
               </li>
             </ul>
           </div>
+        </div>
+        <div class="py-4">
+          <button class="btn btn-orange" routerLink="/ministerios">Voltar</button>
         </div>
       </div>
     </div>

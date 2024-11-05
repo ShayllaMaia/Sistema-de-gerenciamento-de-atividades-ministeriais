@@ -10,7 +10,7 @@ const escalaRoutes = Router();
 escalaRoutes.get("/participacao", retrieveEscalaController);
 escalaRoutes.get("/", getEscalasController);
 escalaRoutes.post("/", postEscalaController);
-escalaRoutes.delete("/:id", deleteEscalaController);
+escalaRoutes.delete("/participacao/:id", deleteEscalaController);
 escalaRoutes.put("/:id", updateEscalaController);
 
 export { escalaRoutes };
