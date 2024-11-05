@@ -2,6 +2,7 @@ import { deleteEscalaService } from "../../services/escalas/deleteEscalas.servic
 
 const deleteEscalaController = async (req, res) => {
     const { id } = req.params;
+    console.log(req.params);
     await deleteEscalaService(id);
 
     return res.status(200).send();

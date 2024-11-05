@@ -12,54 +12,98 @@
             <!-- Nome Completo input -->
             <div class="col-md-6 mb-4">
               <label class="form-label" for="form1Example13">Nome completo:</label>
-              <input type="text" class="form-control form-control-lg" [(ngModel)]="registro.nome" name="nome" />
+              <input type="text" class="form-control form-control-lg" [(ngModel)]="registro.nome" name="nome" required />
+              <div *ngIf="form.controls['nome']?.invalid && form.controls['nome']?.touched" class="text-danger">
+                Nome é obrigatório.
+              </div>
             </div>
+        
             <!-- Email input -->
             <div class="col-md-6 mb-4">
               <label class="form-label" for="formEmail">Email:</label>
-              <input type="email" id="formEmail" class="form-control form-control-lg" [(ngModel)]="registro.email"
-                name="email" />
+              <input
+                type="email"
+                id="formEmail"
+                class="form-control form-control-lg"
+                [(ngModel)]="registro.email"
+                name="email"
+                required
+                email
+              />
+              <div *ngIf="form.controls['email']?.invalid && form.controls['email']?.touched" class="text-danger">
+                E-mail inválido.
+              </div>
             </div>
           </div>
-
+        
           <div class="row">
             <!-- Telefone input -->
             <div class="col-md-6 mb-4">
               <label class="form-label" for="formTelefone">Telefone:</label>
-              <input type="tel" id="formTelefone" class="form-control form-control-lg" [(ngModel)]="registro.telefone"
-                name="telefone" (input)="formatarTelefone($event)" />
+              <input
+              type="tel"
+              id="formTelefone"
+              class="form-control form-control-lg"
+              [(ngModel)]="registro.telefone"
+              name="telefone"
+              (input)="formatarTelefone($event)"
+              pattern="^\(\d{2}\) \d{4,5}-\d{4}$"
+              required
+              />
+              <div *ngIf="form.controls['telefone']?.invalid && form.controls['telefone']?.touched" class="text-danger">
+                Telefone inválido.
+              </div>
             </div>
-            <!-- Endereço input -->
+        
+            <!-- Data de Nascimento input -->
             <div class="col-md-6 mb-4">
               <label class="form-label" for="formdatanascimento">Data de Nascimento:</label>
-              <input type="date" id="formdatanascimento" class="form-control form-control-lg"
-                [(ngModel)]="registro.dataNascimento" name="dataNascimento" />
+              <input
+              type="date"
+              id="formdatanascimento"
+              class="form-control form-control-lg"
+              [(ngModel)]="registro.dataNascimento"
+              name="dataNascimento"
+              [max]="maxDate"
+              required
+              />
+              <div *ngIf="form.controls['dataNascimento']?.invalid && form.controls['dataNascimento']?.touched" class="text-danger">
+                Data de nascimento inválida. 
+              </div>
             </div>
           </div>
-
-          <!-- Data de Nascimento input -->
+        
+          <!-- Endereço input -->
           <div class="form-outline mb-4">
             <label class="form-label" for="formEndereco">Endereço:</label>
-            <input type="text" id="formEndereco" class="form-control form-control-lg" [(ngModel)]="registro.endereco"
-              name="endereco" />
+            <input type="text" id="formEndereco" class="form-control form-control-lg" [(ngModel)]="registro.endereco" name="endereco" />
           </div>
-
+        
           <!-- Senha input -->
           <div class="form-outline mb-4">
             <label class="form-label" for="formSenha">Senha:</label>
-            <input type="password" id="formSenha" class="form-control form-control-lg" [(ngModel)]="registro.senha"
-              name="senha" />
+            <input
+              type="password"
+              id="formSenha"
+              class="form-control form-control-lg"
+              [(ngModel)]="registro.senha"
+              name="senha"
+              required
+              minlength="6"
+              maxlength=""
+            />
+            <div *ngIf="form.controls['senha']?.invalid && form.controls['senha']?.touched" class="text-danger">
+              A senha deve conter pelo menos 6 dígitos.
+            </div>
           </div>
-
+        
           <!-- Submit button -->
-
-          <button type="submit" class="btn btn-warning btn-md btn-block custom-orange-bg" [disabled]="isSubmit">
+          <button type="submit" class="btn btn-warning btn-md btn-block custom-orange-bg" [disabled]="isSubmit || form.invalid">
             <span *ngIf="!isSubmit">Cadastrar</span>
-            <span *ngIf="isSubmit">
-              <i class="fa-regular fa-clipboard"></i>
-            </span>
+            <span *ngIf="isSubmit"><i class="fa-regular fa-clipboard"></i></span>
           </button>
         </form>
+        
       </div>
     </div>
   </div>

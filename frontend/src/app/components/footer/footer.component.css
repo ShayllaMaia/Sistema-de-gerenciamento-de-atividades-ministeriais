@@ -1,14 +1,14 @@
 .site-footer {
     background-color: #FF9F00;
     padding: 45px 0 20px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
   }
 
 @media (max-width: 768px) {
     .site-footer{
-      position: relative;
+      position: fixed;
       margin-top: 10%;
     }
 }

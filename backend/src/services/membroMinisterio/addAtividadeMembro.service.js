@@ -31,8 +31,19 @@ const addAtividadeMembroService = async (data, ministerio_id) => {
     throw new Error("Atividade não encontrada!");
   }
 
-  // Como preferenciasAtividades já é um array, não precisamos usar JSON.parse
-  let preferenciasAtividades = membroMinisterio.preferenciasAtividades || [];
+  // Verificar e converter `preferenciasAtividades` para um array, se necessário
+  let preferenciasAtividades = membroMinisterio.preferenciasAtividades;
+
+  if (typeof preferenciasAtividades === 'string') {
+    try {
+      preferenciasAtividades = JSON.parse(preferenciasAtividades);
+    } catch (error) {
+      console.error("Erro ao fazer o parse de preferenciasAtividades:", error);
+      preferenciasAtividades = []; // Definindo como array vazio se houver erro no parse
+    }
+  }
+
+  preferenciasAtividades = preferenciasAtividades || [];
 
   console.log("Preferências Atuais:", preferenciasAtividades);
 

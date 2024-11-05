@@ -20,4 +20,12 @@ export class EscalaService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.get<any[]>(`${this.baseUrl}/escala/`, { headers });
   }
+
+  deleteParticipacao(participacaoId: string): Observable<void> {
+    console.log("ID enviado para exclusão:", participacaoId); // Adicione este log para verificar o ID
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.delete<void>(`${this.baseUrl}/escala/participacao/${participacaoId}`, { headers });
+  }
+
+
 }

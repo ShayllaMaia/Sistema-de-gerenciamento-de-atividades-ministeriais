@@ -18,7 +18,7 @@ export class MinisterioListarComponent implements OnInit {
   selectedLider: string = '';
   possibleLiders: any[] = [];
   usuarioId: string | null = null; // ID do usuário atual
-
+  
 
   constructor(
     private ministerioService: MinisterioService,

@@ -34,7 +34,7 @@ export class MinisterioCadastroComponent implements IForm<MinisterioInterface>{
     ).subscribe({
       complete: () => {
         Swal.fire('Sucesso', 'Ministério cadastrado com sucesso', 'success');
-        this.router.navigate(['/lista-ministerio']);
+        this.router.navigate(['/todos-ministerios']);
       }
     });
   }

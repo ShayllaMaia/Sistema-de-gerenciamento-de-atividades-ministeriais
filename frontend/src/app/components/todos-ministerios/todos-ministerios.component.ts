@@ -17,8 +17,9 @@ export class TodosMinisteriosComponent implements OnInit {
   lideres: any[] = []; // Alterado de lider para lideres
   selectedLider: string = '';
   possibleLiders: any[] = [];
+  possibleLidersFiltered: any[] = []
   isLiderMinisterio: { [key: string]: boolean } = {};
-
+  membrosMinisterio: any[] = [];
 
   constructor(
     private ministerioService: MinisterioService,
@@ -30,7 +31,7 @@ export class TodosMinisteriosComponent implements OnInit {
   ngOnInit(): void {
     this.papel = localStorage.getItem('papel') || '';
     this.carregarMinisterios(); // Carrega todos os ministérios
-    this.membros(); // Carrega a lista de membros
+    this.membros(); 
   }
 
   carregarMinisterios(): void {
@@ -105,7 +106,8 @@ export class TodosMinisteriosComponent implements OnInit {
       if (result.isConfirmed) {
         this.ministerioService.excluirMinisterio(ministerioId.toString()).subscribe({
           next: () => {
-            Swal.fire('Sucesso', 'Ministério excluído com sucesso', 'success').then(() => {
+            Swal.fire('Sucesso', 'Ministério excluído com sucesso', 'success')
+            .then(() => {
               location.reload();
             });
           },
@@ -143,7 +145,6 @@ export class TodosMinisteriosComponent implements OnInit {
     this.usuarioService.ListaMembros().subscribe(
       (response) => {
         this.possibleLiders = response;
-        // this.abrirModal('membrosModal' + ministerioId);
       },
       (error) => {
         console.error('Erro ao carregar membros:', error);
@@ -154,7 +155,7 @@ export class TodosMinisteriosComponent implements OnInit {
   carregarMembrosMinisterio(ministerioId: string): void {
     this.membroMinisterioService.getMembrosMinisterio(ministerioId).subscribe(
       (membros) => {
-        this.possibleLiders = membros.map(membro => {
+        this.membrosMinisterio = membros.map(membro => {
           const preferenciasAtividades = Array.isArray(membro.preferenciasAtividades)
             ? membro.preferenciasAtividades
             : JSON.parse(membro.preferenciasAtividades || '[]');
@@ -163,6 +164,7 @@ export class TodosMinisteriosComponent implements OnInit {
             preferenciasAtividades
           };
         });
+        console.log(this.membrosMinisterio)
       },
       (error) => {
         console.error('Erro ao carregar membros do ministério:', error);
@@ -214,6 +216,7 @@ export class TodosMinisteriosComponent implements OnInit {
     if (event.target.checked) {
       // Adiciona o líder ao array se for selecionado
       this.selectedLiders.push(liderId);
+      this.possibleLidersFiltered = this.selectedLiders.filter(id => id !== liderId)
     } else {
       // Remove o líder do array se for desmarcado
       this.selectedLiders = this.selectedLiders.filter(id => id !== liderId);
@@ -226,7 +229,7 @@ export class TodosMinisteriosComponent implements OnInit {
       lider_ids: this.selectedLiders,
       ministerio_id: ministerioId
     };
-
+    
     this.ministerioService.atribuirLiderMinisterio(data).subscribe(response => {
       console.log('Liderança atribuída com sucesso:', response);
 

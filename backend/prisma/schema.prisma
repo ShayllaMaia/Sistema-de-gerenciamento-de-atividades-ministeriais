@@ -2,6 +2,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -49,9 +50,9 @@ model Atividade {
   id                String         @id @default(cuid())
   nome              String         @unique
   descricao         String
-  ministerio_id     String // retirar
   quantidadeMembros Int
-  ministerio        Ministerio     @relation(fields: [ministerio_id], references: [id])
+  ministerio_id     String
+  ministerio        Ministerio     @relation(fields: [ministerio_id], references: [id], onDelete: Cascade)
   participacoes     Participacao[]
 }
 
@@ -88,11 +89,11 @@ model Participacao {
   evento_id     String
   usuario_id    String
   ministerio_id String
-  evento        Eventos    @relation(fields: [evento_id], references: [id])
-  usuario       Usuario    @relation(fields: [usuario_id], references: [id])
-  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id])
+  evento        Eventos    @relation(fields: [evento_id], references: [id], onDelete: Cascade)
+  usuario       Usuario    @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
+  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id], onDelete: Cascade)
   atividade_id  String
-  atividade     Atividade  @relation(fields: [atividade_id], references: [id])
+  atividade     Atividade  @relation(fields: [atividade_id], references: [id], onDelete: Cascade)
   hora_chegada  DateTime
   hora_saida    DateTime
   data          DateTime
@@ -103,15 +104,15 @@ model EventoMinisterio {
   id            String     @id @default(cuid())
   evento_id     String
   ministerio_id String
-  evento        Eventos    @relation(fields: [evento_id], references: [id])
-  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id])
+  evento        Eventos    @relation(fields: [evento_id], references: [id], onDelete: Cascade)
+  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id], onDelete: Cascade)
 }
 
 model MinisterioLider {
   ministerio_id String
   lider_id      String
-  lider         Usuario    @relation(fields: [lider_id], references: [id])
-  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id])
+  lider         Usuario    @relation(fields: [lider_id], references: [id], onDelete: Cascade)
+  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id], onDelete: Cascade)
 
   @@id([ministerio_id, lider_id])
 }
@@ -121,16 +122,17 @@ model MembrosMinisterios {
   ministerio_id          String
   usuario_id             String
   preferenciasAtividades Json
-  ministerio             Ministerio        @relation(fields: [ministerio_id], references: [id])
-  usuario                Usuario           @relation(fields: [usuario_id], references: [id])
+  ministerio             Ministerio        @relation(fields: [ministerio_id], references: [id], onDelete: Cascade)
+  usuario                Usuario           @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
   statusSolicitacao      StatusSolicitacao @default(PENDENTE)
 }
 
 model PreferenciasHorarios {
   id          String   @id @default(cuid())
   usuario_id  String
-  usuario     Usuario  @relation(fields: [usuario_id], references: [id])
+  usuario     Usuario  @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
   dia_semana  String[]
   hora_inicio DateTime
   hora_fim    DateTime
 }
+

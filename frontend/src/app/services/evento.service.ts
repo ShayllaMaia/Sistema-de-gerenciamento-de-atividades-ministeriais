@@ -24,9 +24,9 @@ export class EventoService {
     return this.http.get<EventoInterface[]>(`${this.baseUrl}/eventos`, { headers });
   }
 
-  excluirEvento(eventoId: string): Observable<any> {
+  excluirEvento(eventoId: string): Observable<void> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
-    return this.http.delete(`${this.baseUrl}/eventos/${eventoId}`, { headers });
+    return this.http.delete<void>(`${this.baseUrl}/eventos/${eventoId}`, { headers });
   }
 
   editarEvento(eventoId: string, evento: EventoInterface): Observable<any> {

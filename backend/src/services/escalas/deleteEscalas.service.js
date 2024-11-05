@@ -4,9 +4,9 @@ import { AppError } from "../../errors/appError.js";
 const prisma = new PrismaClient();
 
 const deleteEscalaService = async (id) => {
-    const escala = await prisma.escala.delete({
+    const escala = await prisma.participacao.delete({
         where: {
-            id: parseInt(id),
+            id: id,
         },
     });
 

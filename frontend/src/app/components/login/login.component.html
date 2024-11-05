@@ -1,44 +1,55 @@
 <section class="custom-background login">
-    <div class="container-fluid">
-       <img src="../../../assets/img/logoIBB.png" alt="" class="logo-img">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="form col-lg-4 bg-gray-900 bg-opacity-50 p-4 mt-5 ml-auto custom-margin-left">
-                <div class="text-center mb-4">
-                    <h1 class="mb-0">ENTRAR NA CONTA</h1>
-                </div>
-          <div>
-            <div *ngIf="erroLogin" class="alert alert-danger">{{ erroLogin }}</div>
-            <form (ngSubmit)="fazerLogin()" #loginForm="ngForm">
-              <!-- Email input -->
-              <div class="form-outline mb-4">
-                <label class="form-label" for="formemail">Usuário:</label>
-                <input type="email" class="form-control form-control-lg" placeholder="usuario@gmail.com" id="email" name="email" [(ngModel)]="email" required/>
+  <div class="container-fluid">
+    <img src="../../../assets/img/logoIBB.png" alt="" class="logo-img">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="form col-lg-4 bg-gray-900 bg-opacity-50 p-4 mt-5 ml-auto custom-margin-left">
+        <div class="text-center mb-4">
+          <h1 class="mb-0">ENTRAR NA CONTA</h1>
+        </div>
+        <div>
+          <div *ngIf="erroLogin" class="alert alert-danger">{{ erroLogin }}</div>
+          <form (ngSubmit)="fazerLogin()" #loginForm="ngForm">
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <label class="form-label" for="formemail">Usuário:</label>
+              <input type="email" class="form-control form-control-lg" placeholder="usuario@gmail.com" id="email"
+                name="email" [(ngModel)]="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                #emailInput="ngModel" />
+              <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="text-danger">
+                <div *ngIf="emailInput.errors?.['required']">O e-mail é obrigatório.</div>
+                <div *ngIf="emailInput.errors?.['pattern']">O e-mail deve estar em um formato válido.</div>
               </div>
+            </div>
 
-              <!-- Password input -->
-              <div class="form-outline mb-4">
-                <label class="form-label" for="formsenha">Senha:</label>
-                <input type="password" id="formsenha" class="form-control form-control-lg" id="senha" name="senha" [(ngModel)]="senha" required/>
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <label class="form-label" for="formsenha">Senha:</label>
+              <input type="password" id="formsenha" class="form-control form-control-lg" name="senha"
+                [(ngModel)]="senha" required minlength="6" #senhaInput="ngModel" />
+              <div *ngIf="senhaInput.invalid && (senhaInput.dirty || senhaInput.touched)" class="text-danger">
+                <div *ngIf="senhaInput.errors?.['required']">A senha é obrigatória.</div>
+                <div *ngIf="senhaInput.errors?.['minlength']">A senha deve ter pelo menos 6 caracteres.</div>
               </div>
+            </div>
 
+            <div class="d-flex justify-content-end mb-4">
+              <a href="#!">Esqueceu a senha?</a>
+            </div>
 
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-warning btn-md btn-block custom-orange-bg"
+              [disabled]="loginForm.invalid">Entrar</button>
 
-              <div class="d-flex justify-content-end mb-4">
-                <a href="#!">Esqueceu a senha?</a>
-              </div>
+            <div class="divider d-flex align-items-center my-4">
+              <p class="text-center fw-bold mx-3 mb-0 text-muted">OU</p>
+            </div>
 
-              <!-- Submit button -->
-              <button type="submit" class="btn btn-warning btn-md btn-block custom-orange-bg">Entrar</button>
-
-              <div class="divider d-flex align-items-center my-4">
-                <p class="text-center fw-bold mx-3 mb-0 text-muted">OU</p>
-              </div>
-
-              <button routerLink="/cadastro" type="submit" class="btn btn-primary btn-md btn-block">Registrar agora</button>
-            </form>
-          </div>
+            <button routerLink="/cadastro" type="button" class="btn btn-primary btn-md btn-block">Registrar
+              agora</button>
+          </form>
         </div>
       </div>
     </div>
-    <app-footer></app-footer>
-  </section>
+  </div>
+  <app-footer></app-footer>
+</section>
