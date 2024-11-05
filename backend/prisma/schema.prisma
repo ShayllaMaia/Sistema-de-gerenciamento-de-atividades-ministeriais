@@ -7,24 +7,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TipoUsuario {
+  NORMAL
+  LIDER
+  ADMIN
+}
+
+enum TipoEvento {
+  CULTO
+  EVENTO
+}
+
+enum StatusSolicitacao {
+  PENDENTE
+  APROVADO
+  REPROVADO
+}
+
+enum Dias {
+  SEGUNDA
+  TERCA
+  QUARTA
+  QUINTA
+  SEXTA
+  SABADO
+  DOMINGO
+}
+
 model Ministerio {
   id                String               @id @default(cuid())
   nome              String               @unique
   descricao         String
-  atividades        Atividade[]
-  eventosMinisterio EventoMinisterio[]
   membros           MembrosMinisterios[]
   lideres           MinisterioLider[]
+  eventosMinisterio EventoMinisterio[]
   participacoes     Participacao[]
+  atividades        Atividade[]
 }
 
 model Atividade {
-  id                String     @id @default(cuid())
-  nome              String     @unique
+  id                String         @id @default(cuid())
+  nome              String         @unique
   descricao         String
-  ministerio_id     String
   quantidadeMembros Int
-  ministerio        Ministerio @relation(fields: [ministerio_id], references: [id])
+  ministerio_id     String
+  ministerio        Ministerio     @relation(fields: [ministerio_id], references: [id], onDelete: Cascade)
+  participacoes     Participacao[]
 }
 
 model Usuario {
@@ -60,28 +88,30 @@ model Participacao {
   evento_id     String
   usuario_id    String
   ministerio_id String
+  evento        Eventos    @relation(fields: [evento_id], references: [id], onDelete: Cascade)
+  usuario       Usuario    @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
+  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id], onDelete: Cascade)
+  atividade_id  String
+  atividade     Atividade  @relation(fields: [atividade_id], references: [id], onDelete: Cascade)
   hora_chegada  DateTime
   hora_saida    DateTime
   data          DateTime
   mes           String
-  evento        Eventos    @relation(fields: [evento_id], references: [id])
-  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id])
-  usuario       Usuario    @relation(fields: [usuario_id], references: [id])
 }
 
 model EventoMinisterio {
   id            String     @id @default(cuid())
   evento_id     String
   ministerio_id String
-  evento        Eventos    @relation(fields: [evento_id], references: [id])
-  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id])
+  evento        Eventos    @relation(fields: [evento_id], references: [id], onDelete: Cascade)
+  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id], onDelete: Cascade)
 }
 
 model MinisterioLider {
   ministerio_id String
   lider_id      String
-  lider         Usuario    @relation(fields: [lider_id], references: [id])
-  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id])
+  lider         Usuario    @relation(fields: [lider_id], references: [id], onDelete: Cascade)
+  ministerio    Ministerio @relation(fields: [ministerio_id], references: [id], onDelete: Cascade)
 
   @@id([ministerio_id, lider_id])
 }
@@ -91,43 +121,16 @@ model MembrosMinisterios {
   ministerio_id          String
   usuario_id             String
   preferenciasAtividades Json
+  ministerio             Ministerio        @relation(fields: [ministerio_id], references: [id], onDelete: Cascade)
+  usuario                Usuario           @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
   statusSolicitacao      StatusSolicitacao @default(PENDENTE)
-  ministerio             Ministerio        @relation(fields: [ministerio_id], references: [id])
-  usuario                Usuario           @relation(fields: [usuario_id], references: [id])
 }
 
 model PreferenciasHorarios {
   id          String   @id @default(cuid())
   usuario_id  String
+  usuario     Usuario  @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
   dia_semana  String[]
   hora_inicio DateTime
   hora_fim    DateTime
-  usuario     Usuario  @relation(fields: [usuario_id], references: [id])
-}
-
-enum TipoUsuario {
-  NORMAL
-  LIDER
-  ADMIN
-}
-
-enum TipoEvento {
-  CULTO
-  EVENTO
-}
-
-enum StatusSolicitacao {
-  PENDENTE
-  APROVADO
-  REPROVADO
-}
-
-enum Dias {
-  SEGUNDA
-  TERCA
-  QUARTA
-  QUINTA
-  SEXTA
-  SABADO
-  DOMINGO
 }

@@ -31,7 +31,7 @@ export class EscalaComponent implements OnInit {
   isAdminOrLider(): boolean {
     return this.papel === 'ADMIN' || this.papel === 'LIDER';
   }
-  
+
   generateCalendar(): void {
     const now = moment.tz('America/Rio_Branco');
     this.currentMonth = now.format('MMMM');
@@ -73,7 +73,8 @@ export class EscalaComponent implements OnInit {
 
   groupEventsByDate(): void {
     this.participacoes.forEach(evento => {
-      const dataEvento = moment(evento.data).format('YYYY-MM-DD');
+      // Usa a data do banco de dados em UTC para evitar ajuste de fuso horário
+      const dataEvento = moment.utc(evento.data).format('YYYY-MM-DD');
 
       if (!this.eventsByDate[dataEvento]) {
         this.eventsByDate[dataEvento] = [];
@@ -109,6 +110,7 @@ export class EscalaComponent implements OnInit {
       }
     });
   }
+
 
   // Alternar o estado de expansão do evento
   toggleExpand(evento_id: string): void {
@@ -157,4 +159,16 @@ export class EscalaComponent implements OnInit {
       }
     });
   }
+
+  formatarHora(dataISO: string): string {
+    // Divida a string de data e hora no "T"
+    const partes = dataISO.split('T');
+    const horaCompleta = partes[1];
+    const partesHora = horaCompleta.split(':');
+    const hora = partesHora[0];
+    const minuto = partesHora[1];
+    return `${hora}:${minuto}`;
+  }
+
+
 }
