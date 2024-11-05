@@ -34,10 +34,10 @@
                         <ul>
                           <li *ngFor="let atividade of membro.preferenciasAtividades">
                             {{ atividade.nome }} - {{ atividade.descricao }}
-                            <button *ngIf="isLider || isAdmin" class="btn btn-danger btn-sm ml-3"
+                            <!-- <button *ngIf="isLider || isAdmin" class="btn btn-danger btn-sm ml-3"
                               (click)="removeAtividade(atividade.id, membro.usuario.id)">
                               Remover
-                            </button>
+                            </button> -->
                           </li>
                         </ul>
 
