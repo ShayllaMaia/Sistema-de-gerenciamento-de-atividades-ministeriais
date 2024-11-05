@@ -90,14 +90,14 @@ export class EscalaComponent implements OnInit {
 
   carregarMinisterios(): void {
 
-      this.ministerioService.getMinisterios().subscribe(
-        (ministerios) => {
-          this.ministerios = ministerios;
-        },
-        (error) => {
-          console.error('Erro ao carregar ministérios:', error);
-        }
-      );
+    this.ministerioService.getMinisterios().subscribe(
+      (ministerios) => {
+        this.ministerios = ministerios;
+      },
+      (error) => {
+        console.error('Erro ao carregar ministérios:', error);
+      }
+    );
 
   }
 
@@ -131,43 +131,43 @@ export class EscalaComponent implements OnInit {
       );
     }
 
-    // Atualizar `eventsByDate` com os dados filtrados
     this.eventsByDate = {}; // reset para aplicar novos filtros
-    filteredParticipacoes.forEach(evento => {
-      const dataEvento = moment.utc(evento.data).format('YYYY-MM-DD');
+    filteredParticipacoes.forEach(participacao => {
+      const dataEvento = moment.utc(participacao.data).format('YYYY-MM-DD');
 
       if (!this.eventsByDate[dataEvento]) {
         this.eventsByDate[dataEvento] = [];
       }
 
-      let eventoExistente = this.eventsByDate[dataEvento].find(e => e.evento_id === evento.evento.id);
+      let eventoExistente = this.eventsByDate[dataEvento].find(e => e.evento_id === participacao.evento.id);
 
       if (!eventoExistente) {
         eventoExistente = {
-          evento_id: evento.evento.id,
-          nome: evento.evento.nome,
-          tipoEvento: evento.evento.tipoEvento,
-          hora_chegada: evento.hora_chegada,
-          hora_saida: evento.hora_saida,
-          ministerio: evento.ministerio, // Inclua o ministério aqui
+          evento_id: participacao.evento.id,
+          nome: participacao.evento.nome,
+          tipoEvento: participacao.evento.tipoEvento,
+          hora_chegada: participacao.hora_chegada,
+          hora_saida: participacao.hora_saida,
+          ministerio: participacao.ministerio,
           atividades: {}
         };
-
         this.eventsByDate[dataEvento].push(eventoExistente);
       }
 
-      if (!eventoExistente.atividades[evento.atividade_id]) {
-        eventoExistente.atividades[evento.atividade_id] = {
-          nome: evento.atividade.nome,
+      if (!eventoExistente.atividades[participacao.atividade_id]) {
+        eventoExistente.atividades[participacao.atividade_id] = {
+          nome: participacao.atividade.nome,
           membros: []
         };
       }
 
-      if (!eventoExistente.atividades[evento.atividade_id].membros.includes(evento.usuario.nome)) {
-        eventoExistente.atividades[evento.atividade_id].membros.push(evento.usuario.nome);
-      }
+      eventoExistente.atividades[participacao.atividade_id].membros.push({
+        nome: participacao.usuario.nome,
+        id: participacao.id // Aqui, armazenamos o id da participação
+      });
     });
   }
+
 
   toggleExpand(evento_id: string): void {
     this.expandedEvents[evento_id] = !this.expandedEvents[evento_id];
@@ -245,4 +245,45 @@ export class EscalaComponent implements OnInit {
   getUniqueMonths(): string[] {
     return Array.from(new Set(this.participacoes.map(participacao => participacao.mes)));
   }
+
+  deleteParticipacao(participacaoId: string): void {
+    console.log("Chamando o serviço de exclusão com ID:", participacaoId); // Confirme que o ID está correto aqui também
+
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: "Você deseja excluir esta participação?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, excluir!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Agora passando apenas o `participacaoId`
+        this.escalaService.deleteParticipacao(participacaoId).subscribe(
+          () => {
+            Swal.fire({
+              title: 'Sucesso!',
+              text: 'A participação foi excluída com sucesso.',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              this.carregarParticipacoes(); // Atualiza a lista de participações
+            });
+          },
+          error => {
+            console.error('Erro ao excluir a participação:', error);
+            Swal.fire({
+              title: 'Erro!',
+              text: 'Ocorreu um erro ao excluir a participação. Tente novamente mais tarde.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
+        );
+      }
+    });
+  }
+
+
 }

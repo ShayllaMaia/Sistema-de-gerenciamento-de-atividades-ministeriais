@@ -12,62 +12,41 @@
           Gerar Escala
         </button>
 
-       <!-- Filtros -->
-<div class="filters mb-4 p-3 border rounded bg-light">
-  <div class="d-flex align-items-center mb-3">
-    <h5 class="me-2 mb-0">Filtros</h5>
-  </div>
+        <!-- Filtros -->
+        <div class="filters mb-4 p-3 border rounded bg-light">
+          <div class="d-flex align-items-center mb-3">
+            <h5 class="me-2 mb-0">Filtros</h5>
+          </div>
 
-  <div class="row gy-3">
-    <!-- Filtro Nome -->
-    <div class="col-md-4">
-      <label for="usuarioSelect" class="form-label fw-semibold">Nome:</label>
-      <select
-        id="usuarioSelect"
-        class="form-select form-select-lg"
-        aria-label="Select usuário"
-        [(ngModel)]="selectedUsuarioId"
-        (change)="onFilterChange()"
-        style="min-width: 100%; max-width: 100%;"
-      >
-        <option value="" selected>Todos</option>
-        <option *ngFor="let membro of membros" [value]="membro.id">{{ membro.nome }}</option>
-      </select>
-    </div>
+          <div class="row gy-3">
+            <!-- Filtro Nome -->
+            <div class="col-md-4">
+              <label for="usuarioSelect" class="form-label fw-semibold">Nome:</label>
+              <select id="usuarioSelect" class="form-select form-select-lg" aria-label="Select usuário" [(ngModel)]="selectedUsuarioId" (change)="onFilterChange()" style="min-width: 100%; max-width: 100%;">
+                <option value="" selected>Todos</option>
+                <option *ngFor="let membro of membros" [value]="membro.id">{{ membro.nome }}</option>
+              </select>
+            </div>
 
-    <!-- Filtro Ministério -->
-    <div class="col-md-4">
-      <label for="ministerioSelect" class="form-label fw-semibold">Ministério:</label>
-      <select
-        id="ministerioSelect"
-        class="form-select form-select-lg"
-        aria-label="Select ministério"
-        [(ngModel)]="selectedMinisterioId"
-        (change)="onFilterChange()"
-        style="min-width: 100%; max-width: 100%;"
-      >
-        <option value="" selected>Todos</option>
-        <option *ngFor="let ministerio of ministerios" [value]="ministerio.id">{{ ministerio.nome }}</option>
-      </select>
-    </div>
+            <!-- Filtro Ministério -->
+            <div class="col-md-4">
+              <label for="ministerioSelect" class="form-label fw-semibold">Ministério:</label>
+              <select id="ministerioSelect" class="form-select form-select-lg" aria-label="Select ministério" [(ngModel)]="selectedMinisterioId" (change)="onFilterChange()" style="min-width: 100%; max-width: 100%;">
+                <option value="" selected>Todos</option>
+                <option *ngFor="let ministerio of ministerios" [value]="ministerio.id">{{ ministerio.nome }}</option>
+              </select>
+            </div>
 
-    <!-- Filtro Mês -->
-    <div class="col-md-4">
-      <label for="mesSelect" class="form-label fw-semibold">Mês:</label>
-      <select
-        id="mesSelect"
-        class="form-select form-select-lg"
-        aria-label="Select mês"
-        [(ngModel)]="selectedMes"
-        (change)="onFilterChange()"
-        style="min-width: 100%; max-width: 100%;"
-      >
-        <option value="" selected>Todos</option>
-        <option *ngFor="let mes of getUniqueMonths()" [value]="mes">{{ mes }}</option>
-      </select>
-    </div>
-  </div>
-</div>
+            <!-- Filtro Mês -->
+            <div class="col-md-4">
+              <label for="mesSelect" class="form-label fw-semibold">Mês:</label>
+              <select id="mesSelect" class="form-select form-select-lg" aria-label="Select mês" [(ngModel)]="selectedMes" (change)="onFilterChange()" style="min-width: 100%; max-width: 100%;">
+                <option value="" selected>Todos</option>
+                <option *ngFor="let mes of getUniqueMonths()" [value]="mes">{{ mes }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
         <div class="text-center mt-4">
           <h3 style="font-size: 1.4em; color: #2C3E50;">{{ currentMonth | titlecase }} {{ currentYear }}</h3>
@@ -118,22 +97,26 @@
                               <small class="border-bottom pb-2 d-block" style="font-size: 1em; font-weight: bold; color: #F39C12; border-color: #F39C12;">
                                 Ministério: {{ evento.ministerio.nome }}
                               </small>
-                                                            <br>
+                              <br>
                               <!-- Nome da Atividade -->
                               <strong style="font-size: 0.85; color: #2C3E50;">Atividade: {{ evento.atividades[atividadeKey].nome }}</strong>
                               <br>
-                              <!-- Membros -->
+                              <!-- Membros com botão de exclusão -->
                               <small style="font-size: 0.85em; color: #34495E;">Membros:</small>
                               <ul class="pl-3" style="list-style-type: none; font-size: 0.85em; margin-top: 4px;">
-                                <li *ngFor="let membro of evento.atividades[atividadeKey].membros" style="color: #2C3E50;">
-                                  - {{ membro }}
+                                <li *ngFor="let membro of evento.atividades[atividadeKey].membros" class="d-flex align-items-center justify-content-between" style="color: #2C3E50;">
+                                  <span>
+                                    <i class="fa-solid fa-arrow-right"></i> {{ membro.nome }}
+                                  </span>
+                                  <button (click)="deleteParticipacao(membro.id)" class="btn btn-danger btn-sm ms-2">
+                                    <i class="fa-solid fa-trash"></i>
+                                  </button>
                                 </li>
                               </ul>
                             </div>
                           </ng-container>
 
                         </div>
-
                       </div>
                     </ng-container>
                   </div>
@@ -141,7 +124,6 @@
               </td>
             </tr>
           </tbody>
-
         </table>
       </div>
     </div>

@@ -17,7 +17,7 @@ const prisma = new PrismaClient();
         },
       },
     });
-
+    console.log("Participações encontradas:", participacoes);
     // Retornar as participações com os relacionamentos incluídos
    return participacoes;
   } catch (error) {
