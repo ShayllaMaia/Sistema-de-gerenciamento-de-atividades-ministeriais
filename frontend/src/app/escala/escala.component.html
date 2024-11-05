@@ -22,7 +22,8 @@
             <!-- Filtro Nome -->
             <div class="col-md-4">
               <label for="usuarioSelect" class="form-label fw-semibold">Nome:</label>
-              <select id="usuarioSelect" class="form-select form-select-lg" aria-label="Select usuário" [(ngModel)]="selectedUsuarioId" (change)="onFilterChange()" style="min-width: 100%; max-width: 100%;">
+              <select id="usuarioSelect" class="form-select form-select-lg" aria-label="Select usuário"
+                [(ngModel)]="selectedUsuarioId" (change)="onFilterChange()" style="min-width: 100%; max-width: 100%;">
                 <option value="" selected>Todos</option>
                 <option *ngFor="let membro of membros" [value]="membro.id">{{ membro.nome }}</option>
               </select>
@@ -31,7 +32,9 @@
             <!-- Filtro Ministério -->
             <div class="col-md-4">
               <label for="ministerioSelect" class="form-label fw-semibold">Ministério:</label>
-              <select id="ministerioSelect" class="form-select form-select-lg" aria-label="Select ministério" [(ngModel)]="selectedMinisterioId" (change)="onFilterChange()" style="min-width: 100%; max-width: 100%;">
+              <select id="ministerioSelect" class="form-select form-select-lg" aria-label="Select ministério"
+                [(ngModel)]="selectedMinisterioId" (change)="onFilterChange()"
+                style="min-width: 100%; max-width: 100%;">
                 <option value="" selected>Todos</option>
                 <option *ngFor="let ministerio of ministerios" [value]="ministerio.id">{{ ministerio.nome }}</option>
               </select>
@@ -40,7 +43,8 @@
             <!-- Filtro Mês -->
             <div class="col-md-4">
               <label for="mesSelect" class="form-label fw-semibold">Mês:</label>
-              <select id="mesSelect" class="form-select form-select-lg" aria-label="Select mês" [(ngModel)]="selectedMes" (change)="onFilterChange()" style="min-width: 100%; max-width: 100%;">
+              <select id="mesSelect" class="form-select form-select-lg" aria-label="Select mês"
+                [(ngModel)]="selectedMes" (change)="onFilterChange()" style="min-width: 100%; max-width: 100%;">
                 <option value="" selected>Todos</option>
                 <option *ngFor="let mes of getUniqueMonths()" [value]="mes">{{ mes }}</option>
               </select>
@@ -72,14 +76,16 @@
 
                   <div *ngIf="day && eventsByDate[day.dateKey]" class="events mt-2">
                     <ng-container *ngFor="let evento of eventsByDate[day.dateKey]">
-                      <div class="event mb-2 p-2" style="border-left: 4px solid #F39C12; background-color: #ECF0F1; border-radius: 5px;">
+                      <div class="event mb-2 p-2"
+                        style="border-left: 4px solid #F39C12; background-color: #ECF0F1; border-radius: 5px;">
                         <!-- Tipo de Evento -->
                         <span class="badge" style="background-color: #F39C12; color: white; font-size: 0.9em;">
                           {{ evento.tipoEvento }}
                         </span>
                         <br>
                         <!-- Nome do Evento -->
-                        <strong (click)="toggleExpand(evento.evento_id)" style="cursor: pointer; font-size: 1.2em; color: #2C3E50;">
+                        <strong (click)="toggleExpand(evento.evento_id)"
+                          style="cursor: pointer; font-size: 1.2em; color: #2C3E50;">
                           {{ evento.nome }}
                         </strong>
                         <br>
@@ -94,23 +100,28 @@
                           <ng-container *ngFor="let atividadeKey of getObjectKeys(evento.atividades)">
                             <div class="atividade mt-3">
                               <!-- Ministério -->
-                              <small class="border-bottom pb-2 d-block" style="font-size: 1em; font-weight: bold; color: #F39C12; border-color: #F39C12;">
+                              <small class="border-bottom pb-2 d-block"
+                                style="font-size: 1em; font-weight: bold; color: #F39C12; border-color: #F39C12;">
                                 Ministério: {{ evento.ministerio.nome }}
                               </small>
                               <br>
                               <!-- Nome da Atividade -->
-                              <strong style="font-size: 0.85; color: #2C3E50;">Atividade: {{ evento.atividades[atividadeKey].nome }}</strong>
+                              <strong style="font-size: 0.85; color: #2C3E50;">Atividade: {{
+                                evento.atividades[atividadeKey].nome }}</strong>
                               <br>
                               <!-- Membros com botão de exclusão -->
                               <small style="font-size: 0.85em; color: #34495E;">Membros:</small>
                               <ul class="pl-3" style="list-style-type: none; font-size: 0.85em; margin-top: 4px;">
-                                <li *ngFor="let membro of evento.atividades[atividadeKey].membros" class="d-flex align-items-center justify-content-between" style="color: #2C3E50;">
+                                <li *ngFor="let membro of evento.atividades[atividadeKey].membros"
+                                  class="d-flex align-items-center justify-content-between" style="color: #2C3E50;">
                                   <span>
                                     <i class="fa-solid fa-arrow-right"></i> {{ membro.nome }}
                                   </span>
-                                  <button (click)="deleteParticipacao(membro.id)" class="btn btn-danger btn-sm ms-2">
+                                  <button *ngIf="isAdminOrLider()" (click)="deleteParticipacao(membro.id)"
+                                    style="background: none; border: none; color: red; cursor: pointer;" title="EXCLUIR">
                                     <i class="fa-solid fa-trash"></i>
                                   </button>
+
                                 </li>
                               </ul>
                             </div>
