@@ -30,6 +30,7 @@ import { TodosMinisteriosComponent } from './components/todos-ministerios/todos-
 import { EscalaComponent } from './escala/escala.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { MembroAtividadeComponent } from './membro-atividade/membro-atividade.component';
+import { MembroMinisterioListarComponent } from './components/membro-ministerio-listar/membro-ministerio-listar.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { MembroAtividadeComponent } from './membro-atividade/membro-atividade.co
     TodosMinisteriosComponent,
     EscalaComponent,
     PerfilComponent,
-    MembroAtividadeComponent
+    MembroAtividadeComponent,
+    MembroMinisterioListarComponent
     
   
   

@@ -42,7 +42,7 @@
                   </div>
                   <div class="col-md-4 text-center">
                     <!-- Botão "Ver Informações" que abre o modal -->
-                    <button type="button" class="btn mb-2 mr-3 btn-info" (click)="verLiderMinisterio(ministerio.id)">
+                    <button type="button" class="btn mb-2 mr-3 btn-info" (click)="verLiderMinisterio(ministerio.id);">
                       Visualizar <i class="fa-regular fa-eye"></i>
                     </button>
 
@@ -111,9 +111,12 @@
 
                         <button *ngIf="isAdmin()" type="button" (click)="confirmarExclusao(ministerio.id)"
                           class="btn btn-danger pr-2">Excluir</button>
-
+                        
                         <button [routerLink]="['/lista-atividade']" [queryParams]="{ idMinisterio: ministerio.id }"
                           class="btn btn-atividade pr-2">Atividades</button>
+                      
+                          <button [routerLink]="['/membros-ministerio-listar']" [queryParams]="{ idMinisterio: ministerio.id }"
+                          class="btn btn-atividade pr-2">Ver membros</button>
                       </div>
                     </div>
                   </div>
@@ -143,7 +146,13 @@
                           <textarea class="form-control" id="descricaoMinisterio" [(ngModel)]="ministerio.descricao"
                             name="descricaoMinisterio"></textarea>
                         </div>
-
+                        Lider:
+                        <div *ngFor="let user of possibleLiders">
+                          <label>
+                            <input type="checkbox" [value]="user.id" (change)="onLiderChange($event, user.id)">
+                            {{ user.nome }} ({{ user.email }})
+                          </label>
+                        </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" (click)="salvarEdicaoMinisterio(ministerio)"
